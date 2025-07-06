@@ -1,0 +1,110 @@
+<style>
+  .breadcrumb {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  .breadcrumb * {
+    font-size: 11px;
+    text-decoration: none;
+  }
+  .breadcrumb a {
+    color: #0000008c;
+  }
+  .breadcrumb span {
+    color: black;
+  }
+  .breadcrumWrapperCol .breadcrumb span.bd-title a {
+    color: black;
+    letter-spacing: 0.7px;
+  }
+  .breadcrumWrapperCol .breadcrumb .bd-title {
+    color: black;
+    font-weight: 600;
+  }
+  span.arrow {
+    color: #979797d1;
+    margin: 0 6px;
+  }
+  .breadcrumb span.arrow svg {
+    width: 9px;
+    height: 9px;
+    transform: rotate(270deg);
+  }
+  .breadcrumb span.bd-title a {
+    color: black;
+  }
+  @media(max-width:767px) {
+    .breadcrumb * {
+      font-size: 10px;
+    }
+  }
+</style>
+
+{% unless template == 'index' %}
+  <div class="breadcrumb">
+    <a class="home-bread-crumb" href="{{ routes.cart_url | split: 'cart' | first }}">Home</a>
+    {% if template contains 'product' %}
+
+      {% if collection %}
+        <span class="arrow">{% render 'icon-caret' %}</span>
+
+        {% if collection.handle %}
+          {% capture url %}
+            {{ collection.url }}{% endcapture %}
+          <span>{{ collection.title | split: '|' | first | link_to: url }}</span>
+        {% endif %}
+      {% endif %}
+
+      <span class="arrow">{% render 'icon-caret' %}</span>
+
+      <span>{{ product.title | split: '|' | first }}</span>
+
+    {% elsif template contains 'collection' and collection.handle %}
+      {% if current_tags %}
+        <span class="arrow">{% render 'icon-caret' %}</span>
+
+        {% capture url %}
+          {{ collection.url }}{% endcapture %}
+        <span class="bd-title">
+          <span>{{ collection.title | split: '|' | first | link_to: url }}</span>
+          <span class="arrow">{% render 'icon-caret' %}</span>
+          {% assign bd_tags = current_tags | join: " + " %}
+          <span>{{ bd_tags | split: '|' | first }}</span>
+        </span>
+
+      {% else %}
+
+        <span class="arrow">{% render 'icon-caret' %}</span>
+
+        <span class="bd-title">
+          <span>{{ collection.title | split: '|' | first | link_to: url }}</span>
+        </span>
+
+      {% endif %}
+
+    {% elsif template == 'cart' %}
+      <span class="arrow">{% render 'icon-caret' %}</span>
+      <span>Cart</span>
+
+    {% elsif template == 'article' %}
+
+      <span class="arrow">{% render 'icon-caret' %}</span>
+      <span>{{ blog.title | split: '|' | first | link_to: blog.url }}</span>
+      <span class="arrow"></span>
+
+      {% comment %}<span>{{ article.title | split: '|' | first }}</span>{% endcomment %}
+
+    {% elsif template contains 'page' %}
+
+      <span class="arrow">{% render 'icon-caret' %}</span>
+
+      <span>{{ page.title | split: '|' | first }}</span>
+
+    {% else %}
+      <span class="arrow">{% render 'icon-caret' %}</span>
+
+      <span>{{ page_title | split: '|' | first }}</span>
+    {% endif %}
+  </div>
+{% endunless %}

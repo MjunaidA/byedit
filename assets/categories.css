@@ -1,0 +1,65 @@
+
+  #ProductGridContainer .categories .swiper-slide a{
+     text-decoration:none;
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 22px;
+     text-transform:uppercase;
+     height: 4.1rem;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-weight: 400;
+     font-family: 'Sequel Sans Medium Disp' !important;
+  }
+   #ProductGridContainer .categoriesActive{
+     background: #000;
+     color: #fff!important;
+   }
+  #ProductGridContainer .categories {
+     margin-top: 2.7rem;
+     display: flex;
+     justify-content: center;
+     padding-left: 5rem;
+     padding-right: 5rem;
+  }
+   #ProductGridContainer .categories-prev, .categories-next{
+     display:block!important;
+     top: 54%;
+     width:unset;
+     height:unset;
+   }
+   #ProductGridContainer .categories-container{
+    width: 100%;
+    margin: 0 auto;
+   }
+   #ProductGridContainer .categories-wrapper{
+     position:relative
+   }
+   #ProductGridContainer .swiper-button-next:after, #ProductGridContainer .swiper-button-prev:after{
+    width: 20px;
+    height: 41px;
+    font-size: 12px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    }
+  #ProductGridContainer .categories-next{
+    right: -4rem;
+  }
+  #ProductGridContainer .categories-prev{
+    left: -4rem;
+  }
+  @media screen and (min-width:749px) and (max-width:991.9px){
+    #ProductGridContainer .categories{
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+  @media screen and (max-width:749px){
+    #ProductGridContainer .categories {
+        display:none;
+     }
+  }

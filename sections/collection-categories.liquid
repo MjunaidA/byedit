@@ -1,0 +1,155 @@
+<style>
+  .categories-{{ section.id }} .swiper-slide{
+    text-align:center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background:{{ section.settings.bgcolor }};
+   }
+   .categories-{{ section.id }} .swiper-slide a{
+      color:{{ section.settings.textcolor }};
+      text-decoration:none;
+      text-transform:uppercase;
+   }
+  .categories-wrapper{
+    position:relative
+  }
+  .categories-next{
+    right:-4.3rem;
+  }
+  .categories-prev{
+    left: -4.3rem;
+  }
+   .categories-prev, .categories-next{
+     transform: translate(-16%, 16%);
+   }
+  .categories-wrapper .swiper-button-next:after, .categories-wrapper .swiper-button-prev:after{
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #000;
+  }
+  .categories-wrapper{
+       max-width: 100%;
+       margin: 0 auto;
+    }
+ .categories-prev, .categories-next{
+   z-index:1;
+ }
+  @media screen and (min-width:750px){
+    .categories-{{ section.id }}{
+         padding-bottom:{{ section.settings.padding-bottom-dk }}rem;
+    }
+    .categories-wrapper{
+       width: 86%;
+    }
+    .categories-{{ section.id }} .swiper-slide{
+      height:44px;
+    }
+    {% if section.settings.show_arrow == true %}
+      .categories-prev, .categories-next{
+        display:block!important;
+      }
+    {% endif %}
+     .categories-{{ section.id }} .swiper-slide a{
+       font-size:16px;
+     }
+  }
+   @media screen and (max-width:749px){
+      .categories-{{ section.id }}{
+          padding-bottom:{{ section.settings.padding-bottom-mb }}rem;
+    }
+    .categories-wrapper{
+        width: 100%;
+    }
+    .categories-{{ section.id }} .swiper-slide{
+      height:38px;
+    }
+     .categories-{{ section.id }} .swiper-wrapper{
+       padding-left: 2rem;
+       padding-right: 2rem;
+     }
+     .categories-{{ section.id }} .swiper-slide a{
+       font-size:12px;
+     }
+}
+</style>
+
+{% render "categories" %}
+
+<script>
+   var categories2swiper = new Swiper(".categories-{{ section.id }} .sub-coll-slider", {
+        slidesPerView: "4",
+        spaceBetween: 20,
+        navigation: {
+          nextEl: ".categories-next",  
+          prevEl: ".categories-prev",
+        },
+        breakpoints: {
+        200: {
+          slidesPerView: 2.5,
+          spaceBetween: 15,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 15,
+        },
+         992: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+        1024: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+        }
+      },
+    })
+</script>
+
+{% schema %}
+  {
+    "name": "collection categories",
+    "settings": [
+              {
+                "type": "checkbox",
+                "id": "show_arrow",
+                "label": "Show arrows on desktop",
+                "default": true
+             },
+             {
+                "type": "color",
+                "id": "bgcolor",
+                "label": "Select category background color",
+                "default": "#000"
+             },
+             {
+                "type": "color",
+                "id": "textcolor",
+                "label": "Select category text color",
+                "default": "#fff"
+             },
+             {
+                "type": "text",
+                "id": "padding-bottom-dk",
+                "label": "padding-bottom desktop",
+                "info":"unit rem"
+            },
+            {
+                "type": "text",
+                "id": "padding-bottom-mb",
+                "label": "padding-bottom mobile",
+                "info":"unit rem"
+            },
+    ],
+    "presets": [
+      {
+        "name":"collection categories"
+      }
+    ]
+  }
+{% endschema %}

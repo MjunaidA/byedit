@@ -1,0 +1,63 @@
+
+<style> 
+  .brand-img-desktop{
+    display: block;
+  }
+  .brand-banner-main img{
+    width: 100%;
+    height: auto;
+  }
+  .brand-img-mobile{
+    display: none;
+  }
+  @media(max-width: 750px){
+
+    {% if section.settings.brand_img_mobile != blank %}
+      .brand-img-desktop{
+        display: none;
+      }
+      .brand-img-mobile{
+        display: block;
+      }
+    {% endif %}
+  }
+</style>
+
+{% if section.settings.brand_img_desktop %}
+  <div class="brand-banner-main">
+    <img class="brand-img-desktop" src="{{ section.settings.brand_img_desktop | img_url: 'master' }}" 
+      height="{{ section.settings.brand_img_desktop.height }}" 
+      width="{{ section.settings.brand_img_desktop.width }}"
+      alt="{{ section.settings.brand_img_desktop.alt | default: shop.name }}"
+    >
+    <img class="brand-img-mobile" src="{{ section.settings.brand_img_mobile | img_url: 'master' }}" 
+      height="{{ section.settings.brand_img_mobile.height }}" 
+      width="{{ section.settings.brand_img_mobile.width }}"
+      alt="{{ section.settings.brand_img_mobile.alt | default: shop.name }}"
+    >
+  </div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Brand Banner",
+    "class": "brand-banner",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "brand_img_desktop",
+        "label": "Brand Banner Image Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "brand_img_mobile",
+        "label": "Brand Banner Image Mobile"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Brand Banner",
+        "category": "Banner"
+      }
+    ]
+  }
+{% endschema %}

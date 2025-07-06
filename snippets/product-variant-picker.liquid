@@ -1,0 +1,194 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+{%- unless product.has_only_default_variant -%}
+  {%- if block.settings.picker_type == 'button' -%}
+    <variant-radios
+      id="variant-radios-{{ section.id }}"
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <fieldset class="js product-form__input {% if option.name contains 'color' or option.name contains 'Select color' or option.name contains 'Color' %}select-color{% else %}{{ option.name | handle }}{% endif %}">
+          {% if section.settings.size-guide != blank %}
+            {% if option.name contains 'size' or option.name contains 'Select your size' or option.name contains 'Size' %}
+              <div id="simplified_sizechart_wrap" data-shop-name="{{ shop.permanent_domain }}" data-product-tags="{{ product.tags | join:',' | escape }}" data-sizechart-type="popup" data-sizechart-metafields="{% assign product_tags_string = product.tags | join: ' ' | downcase %}{% if product_tags_string contains 'simplifiedsizechart' %}true{% else %}false{% endif %}"> </div>
+              <div class="size-guide">{{ section.settings.size-guide }}</div>
+            {% endif %}
+          {% endif %}
+          <legend class="form__label">{{ option.name }}</legend>
+          {% render 'product-variant-options', product: product, option: option, block: block %}
+        </fieldset>
+      {%- endfor -%}
+
+      {% comment %} Variant based updating specifications metafield {% endcomment %}
+      <ul data-selected-variant-id = "{{ product.selected_or_first_available_variant.id }}" class="spec-metafield-selector hidden">
+        {% for variant in product.variants %}
+          {% if variant.metafields.custom.specifications.value != blank %}
+            <li data-spec-id="{{ variant.id }}" data-option1 = "{{ variant.option1 }}" data-option2 = "{{ variant.option2 }}" data-option3 = "{{ variant.option3 }}">{{ variant.metafields.custom.specifications.value }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% comment %} Variant based updating product title metafield {% endcomment %}
+      <ul data-selected-variant-id = "{{ product.selected_or_first_available_variant.id }}" class="pt-metafield-selector hidden">
+        {% for variant in product.variants %}
+          {% if variant.metafields.custom.product_title.value != blank %}
+            <li data-pt-id="{{ variant.id }}" data-option1 = "{{ variant.option1 }}" data-option2 = "{{ variant.option2 }}" data-option3 = "{{ variant.option3 }}">{{ variant.metafields.custom.product_title.value }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% comment %} Change metafield text on page load {% endcomment %}
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          var specVariantId = document.querySelector('.spec-metafield-selector').getAttribute('data-selected-variant-id')
+          const specMetafield = document.querySelectorAll('.spec-metafield-selector option')
+          if(specMetafield){
+            var metafieldValue = document.querySelector(`[data-spec-id="${specVariantId}"]`).innerText
+            const SpecificationTab = document.querySelector('.product__accordion.specifications')
+            if(SpecificationTab){
+              SpecificationTab.querySelector('.accordion__content').innerText = metafieldValue
+            }
+          }
+
+          {% comment %} var ptVariantId = document.querySelector('.pt-metafield-selector').getAttribute('data-selected-variant-id')
+          const ptMetafield = document.querySelectorAll('.pt-metafield-selector option')
+          if(ptMetafield){
+            var metafieldValue = document.querySelector(`[data-pt-id="${ptVariantId}"]`).innerText
+            const productTitle = document.querySelector('.product__title h1')
+            if(productTitle){
+              productTitle.querySelector('.accordion__content').innerText = metafieldValue
+            }
+          } {% endcomment %}
+        })
+      </script>
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-radios>
+  {%- else -%}
+    <variant-selects
+      id="variant-selects-{{ section.id }}"
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+          </label>
+          <div class="select">
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options', product: product, option: option, block: block %}
+            </select>
+            {% render 'icon-caret' %}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-selects>
+  {%- endif -%}
+{%- endunless -%}
+
+<noscript class="product-form__noscript-wrapper-{{ section.id }}">
+  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+    <label class="form__label" for="Variants-{{ section.id }}">
+      {{- 'products.product.product_variants' | t -}}
+    </label>
+    <div class="select">
+      <select
+        name="id"
+        id="Variants-{{ section.id }}"
+        class="select__select"
+        form="{{ product_form_id }}"
+      >
+        {%- for variant in product.variants -%}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}
+              selected="selected"
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+            value="{{ variant.id }}"
+          >
+            {%- liquid
+              echo variant.title
+              echo variant.price | money | strip_html | prepend: ' - '
+              if variant.available == false
+                echo 'products.product.sold_out' | t | prepend: ' - '
+              endif
+              if variant.quantity_rule.increment > 1
+                echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
+              endif
+              if variant.quantity_rule.min > 1
+                echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
+              endif
+              if variant.quantity_rule.max != null
+                echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
+              endif
+              # TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter
+              # theme-check-disable
+              assign cart_quantity = cart | item_count_for_variant: variant.id
+              # theme-check-enable
+              if cart_quantity > 0
+                echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
+              endif
+            -%}
+          </option>
+        {%- endfor -%}
+      </select>
+      {% render 'icon-caret' %}
+    </div>
+  </div>
+</noscript>
+
+{% if template == 'product' %}
+  <div class="promotionalDivCard">
+    {% for tag in product.tags %}
+  
+      {% if tag contains 'PromoKey' %}
+        {% assign tagParts = tag | split: 'PromoKey |' %}
+        {% if tagParts.size > 1 %}
+          <p class="promotionText">{{ tagParts[1] }}</p>
+        {% endif %}
+      {% endif %}
+      
+      {% if tag contains 'BuyOneGetOneKey' %}
+        {% assign tagParts2 = tag | split: 'BuyOneGetOneKey |' %}
+        {% if tagParts2.size > 1 %}
+          <p class="promotionText">{{ tagParts2[1] }}</p>
+        {% endif %}
+      {% endif %}
+   
+    {% endfor %}
+  </div>
+{% endif %}

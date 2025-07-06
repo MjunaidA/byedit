@@ -1,0 +1,207 @@
+
+<div class="comfort-home-slider" id="comfort-home-slider" section="comfort-home-slider">
+  <div class="comfort-home-slider-main">
+    <div class="swiper-wrappers">
+      {% for block in section.blocks %}
+        <div class="swiper-slide" promo-banner data-promo-id="" data-promo-name="" data-creative-name="" data-creative-id="">
+          <div class="slide-wrapper-comfort">
+            <a style="all:none;cursor:pointer;" href="{{block.settings.linkimg}}">
+              {% if block.settings.image1 != blank %}
+                <img
+                  class="dektopSlideImage"
+                  srcset="{%- if block.settings.image1.width >= 375 -%}
+                  {{ block.settings.image1 | image_url: width: 375 }} 375w,{%- endif -%}
+                {%- if block.settings.image1.width >= 750 -%}
+                  {{ block.settings.image1 | image_url: width: 750 }} 750w,{%- endif -%}
+                {%- if block.settings.image1.width >= 1100 -%}
+                  {{ block.settings.image1 | image_url: width: 1100 }} 1100w,{%- endif -%}
+                {%- if block.settings.image1.width >= 1500 -%}
+                  {{ block.settings.image1 | image_url: width: 1500 }} 1500w,{%- endif -%}
+                {%- if block.settings.image1.width >= 1780 -%}
+                  {{ block.settings.image1 | image_url: width: 1780 }} 1780w,{%- endif -%}
+                {%- if block.settings.image1.width >= 2000 -%}
+                  {{ block.settings.image1 | image_url: width: 2000 }} 2000w,{%- endif -%}
+                {%- if block.settings.image1.width >= 3000 -%}
+                  {{ block.settings.image1 | image_url: width: 3000 }} 3000w,{%- endif -%}
+                {%- if block.settings.image1.width >= 3840 -%}
+                  {{ block.settings.image1 | image_url: width: 3840 }} 3840w,{%- endif -%}
+                {{ block.settings.image1 | image_url }} {{ block.settings.image1.width }}w"
+                sizes="100vw"
+                src="{{ block.settings.image1 | image_url: 'master' }}"
+                alt="{{ block.settings.image1.alt | escape }}"
+                width="{{ block.settings.image1.width }}"
+                height="{{ block.settings.image1.width | divided_by: block.settings.image1.aspect_ratio }}" fetchpriority="high" >
+              {% elsif block.settings.vid1 != blank %}
+                <video width="100%" height="auto" class="dektopSlideImage" preload="none" autoplay muted loop playsinline>
+                  <source src="{{ block.settings.vid1.sources[1].url }}" type="video/mp4">
+                </video>
+              {% endif %}
+            </a>
+            <a style="all:none" href="{{block.settings.linkimg}}">
+              {% if block.settings.image2 != blank %}
+                <img
+                  class="mobileSlideImage"
+                  srcset="{%- if block.settings.image1.width >= 375 -%}
+                  {{ block.settings.image2 | image_url: width: 375 }} 375w,{%- endif -%}
+                {%- if block.settings.image2.width >= 750 -%}
+                  {{ block.settings.image2 | image_url: width: 750 }} 750w,{%- endif -%}
+                {%- if block.settings.image2.width >= 1100 -%}
+                  {{ block.settings.image2 | image_url: width: 1100 }} 1100w,{%- endif -%}
+                {%- if block.settings.image2.width >= 1500 -%}
+                  {{ block.settings.image2 | image_url: width: 1500 }} 1500w,{%- endif -%}
+                {%- if block.settings.image2.width >= 1780 -%}
+                  {{ block.settings.image2 | image_url: width: 1780 }} 1780w,{%- endif -%}
+                {%- if block.settings.image2.width >= 2000 -%}
+                  {{ block.settings.image2 | image_url: width: 2000 }} 2000w,{%- endif -%}
+                {%- if block.settings.image2.width >= 3000 -%}
+                  {{ block.settings.image2 | image_url: width: 3000 }} 3000w,{%- endif -%}
+                {%- if block.settings.image2.width >= 3840 -%}
+                  {{ block.settings.image2 | image_url: width: 3840 }} 3840w,{%- endif -%}
+                {{ block.settings.image2 | image_url }} {{ block.settings.image2.width }}w"
+                sizes="100vw"
+                src="{{ block.settings.image2 | image_url: 'master' }}"
+                alt="{{ block.settings.image2.alt | escape }}"
+                width="{{ block.settings.image2.width }}"
+                height="{{ block.settings.image2.width | divided_by: block.settings.image2.aspect_ratio }}" fetchpriority="high" >
+              {% elsif block.settings.vid2 != blank %}
+                <video width="100%" height="auto" class="mobileSlideImage" preload="none" autoplay muted loop playsinline>
+                  <source src="{{ block.settings.vid2.sources[1].url }}" type="video/mp4">
+                </video>
+              {% endif %}
+            </a>
+            <div class="textBoxSlider">
+              <h2 class="heading-cstm desktop_only" style="color:{{block.settings.color1}}">
+                {{ block.settings.heading1 }}
+              </h2>
+              <h2 class="heading-cstm mobile_only" style="color:{{block.settings.color1}}">
+                {{ block.settings.heading1_mobile }}
+              </h2>
+              <p style="color:{{block.settings.color1}}" class="subtext-cstm">{{ block.settings.sub-heading1 }}</p>
+              <div class="cstm-buttons-slider banner__buttons">
+                <a href="{{block.settings.linkimg}}" class="{% if block.settings.color1 == "#000" or block.settings.color1 == "#000000" %}cstmBtnBlack{% else %}cstmBtnWhite{% endif %}">{{ block.settings.btnTxt }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+  (function(){
+    let element =  document.querySelector('#comfort-home-slider');
+    
+    dataLayer.push({ ecommerce: null });
+    window.dataLayer.push({
+     event: 'view_promotion',
+     ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}",
+         "promotion_name" : "{{ section.blocks[0].settings.heading1 }}"
+       }]
+     }
+    });
+
+    //click events
+    element.addEventListener('click', () => {
+      dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+       event: 'select_promotion',
+       ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}",
+         "promotion_name" : "{{ section.blocks[0].settings.heading1 }}"
+       }]
+       }
+      });
+      console.log('select_promotion')
+    })
+    
+  })()
+</script>
+
+
+{% schema %}
+  {
+    "name": "Edit-Home-Slider",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Add Slider Image",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Slide Image Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Slide Image Mobile"
+          },
+          {
+            "type": "video",
+            "id": "vid1",
+            "label": "Slide Video Desktop"
+          },
+          {
+            "type": "video",
+            "id": "vid2",
+            "label": "Slide Video Mobile"
+          },
+          {
+            "type": "text",
+            "id": "heading1",
+            "default": "Elevate your style with our watches and jewelry",
+            "label": "Banner Heading Desktop"
+          },
+          {
+            "type": "text",
+            "id": "heading1_mobile",
+            "default": "Luxury Timepieces for the World",
+            "label": "Banner Heading Mobile"
+          }, {
+            "type": "text",
+            "id": "color1",
+            "default": "#6F6698",
+            "label": "Heading Color"
+          }, {
+            "type": "text",
+            "id": "sub-heading1",
+            "default": "Crafted with precision and designed for elegance",
+            "label": "Banner Sub Heading"
+          }, {
+            "type": "text",
+            "id": "btnTxt",
+            "default": "Shop Now",
+            "label": "Banner Button Text"
+          }, {
+            "type": "url",
+            "id": "linkimg",
+            "label": "Banner Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Edit-Home-Slider",
+        "category": "Theme"
+      }
+    ]
+  }
+{% endschema %}

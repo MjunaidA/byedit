@@ -1,0 +1,243 @@
+{{ 'order-return-app.css' | asset_url | stylesheet_tag }}
+    
+<div class="app-ajax-loader hidden"><svg width="50" height="50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="aplds-rolling" style="background:0 0"><circle cx="50" cy="50" fill="none" stroke="#000" stroke-width="4" r="44" stroke-dasharray="207.34511513692632 71.11503837897544" transform="rotate(175.95 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1.5s" begin="0s" repeatCount="indefinite"/></circle></svg></div>
+<section class="order-return-app">
+    <div class="return-app-header parent-step" data-order="{{ order.name }}">
+        <h3>Order {{ order.name }}</h3>
+        <p class="text__fade">Ordered on {{ order.created_at | time_tag: format: 'date' }}</p>
+    </div>
+    <div class="after-return-request hidden"> 
+        <h3>Return History</h3>
+        <div class="return-product-card">
+            <div class="pro-card-wrapper">
+                <span class="return-status-badge"></span>
+                <h4 class="sub__title"></h4>
+                <p class="info__text"></p>
+                <button type="button" class="view-returned-item">View Returned Item</button>
+            </div>
+        </div>
+    </div>
+    <div class="after-return-request-details hidden">
+        <div class="back-button">
+            <span class="back-Icon">
+                <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M12 16a.997.997 0 0 1-.707-.293l-5-5a.999.999 0 0 1 0-1.414l5-5a.999.999 0 1 1 1.414 1.414L8.414 10l4.293 4.293A.999.999 0 0 1 12 16" fill-rule="evenodd"></path></svg>
+                BACK
+            </span>
+        </div>
+        <div class="status__flex">
+            <div class="status__timeline">
+                <ul class="StepProgress">
+                    <li class="StepProgress-item is-done return-request-raised">
+                        <strong>Return request raised</strong>
+                    </li>
+                    <li class="StepProgress-item is-done return-initiated">
+                        <strong>Return Initiated</strong>
+                    </li>
+                    <li class="StepProgress-item false return-in-process">
+                        <strong>Return in process</strong>
+                    </li>
+                    <li class="StepProgress-item false returned-successfully">
+                        <strong>Returned Successfully</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="status__details">
+                <div class="flex__wrap request-date">
+                    <div class="flex__one">
+                        <strong>Request Date</strong>
+                    </div>
+                    <div class="flex__two">
+                        <p class="info__text"></p>
+                    </div>
+                </div>
+                <div class="flex__wrap items-returned">
+                    <div class="flex__one">
+                        <strong>Items returned</strong>
+                    </div>
+                    <div class="flex__two">
+                        <div class="order__wrapper">
+                            <div class="order__desc">
+                            </div>
+                            <div class="order__img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex__wrap return-reason">
+                    <div class="flex__one">
+                        <strong>Return Reason</strong>
+                    </div>
+                    <div class="flex__two">
+                        <p class="info__text"></p>
+                    </div>
+                </div>
+                <div class="flex__wrap refund-mode">
+                    <div class="flex__one">
+                        <strong>Refund mode</strong>
+                    </div>
+                    <div class="flex__two">
+                        <p class="info__text">
+                            <span>Original</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex__wrap return-address">
+                    <div class="flex__one">
+                        <strong>Address</strong>
+                    </div>
+                    <div class="flex__two">
+                        <address class="info__text">
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="request-submitted hidden">
+        <h3>Your request is submitted successfully</h3>
+        <button onClick = "window.location.reload()">View Details</button>
+    </div>
+    <div class="before-return-request hidden">
+        <div class="return-app-steps both-steps hidden">
+            <div class="steps-wrapper">
+                <ul class="return-steps">
+                    <li class="step-1 active">1</li>
+                    <li class="step-1-completed completed hidden">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 00-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"></path></svg>
+                    </li>
+                    <li class="step-2-completed completed hidden">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 00-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"></path></svg>
+                    </li>
+                    <li class="step-2">2</li>
+                </ul>
+            </div>
+        </div>
+        <div class="return-app-main">
+            <h3 class="return-header parent-step">Returnable Products</h3>
+            <h3 class="steps-heading return-heading first-step hidden">Why do you want to Return ?</h3>
+            <h3 class="steps-heading address-heading second-step hidden">Verify Your Address</h3>
+            <div class="order-card-main">
+                <p class="item-return-label both-steps hidden">Item(s) you will return</p> 
+                {% for item in order.line_items %} 
+                    <div data-price="{{ item.price | money }}" data-variant="{{ item.variant.title }}" data-url="{{ item.url }}" data-title="{{ item.title }}" data-image="{{ item.image | product_img_url: '70x' }}" data-sku="{{ item.sku }}" data-id="{{ item.id }}" data-quantity="{{ item.quantity }}" class="order__card{% if order.line_items.size == 1 %} selected{% endif %}">
+                        <input {% if order.line_items.size == 1 %}checked{% endif %} class="select-item parent-step" type="checkbox" name="select product">
+                        <div class="card__img">
+                            <img src="{{ item.image | product_img_url: '70x' }}" alt="{{ item.title }}">
+                        </div>
+                        <div class="card__desc">
+                            <h4 class="sub__title">{{ item.product.title }}</h4> 
+                            <p class="text__fade">{{ item.variant.title }}</p>
+                            <p class="text__fade">{{ item.quantity }} x {{ item.price | money }}</p>
+                        </div>
+                        <div class="order__qty both-steps hidden">
+                            <div class="select__field">
+                                <label>Return Qty</label>
+                                <select>
+                                    <option value="{{ item.quantity }}">{{ item.quantity }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <p class="p-error selected-p-error hidden">*Please select at least one item</p>
+                <div class="reason__field first-step hidden">
+                    <div class="select__field">
+                        <label>Reason</label>
+                        <select>
+                            <option value="Quality not satisfactory">Quality not satisfactory</option>
+                            <option value="Change of mind" selected>Change of mind</option>
+                            <option value="Damaged">Damaged</option>
+                            <option value="Fits too big">Fits too big</option>
+                            <option value="Fits too small">Fits too small</option>
+                            <option value="Wrong item">Wrong item</option>
+                            <option value="Other">Other</option>
+                            <option value="Not as pictured/described">Not as pictured/described</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="quality-not-satisfactory reason-description hidden first-step">
+                    <div class="select__field">
+                        <label>Enter the reason for your return or exchange.</label>
+                        <textarea name="quality not satisfactory" placeholder="Enter the reason for your return or exchange."></textarea>
+                    </div>
+                </div>
+                <div class="damaged reason-description hidden first-step">
+                    <div class="select__field">
+                        <label>Upload Image</label>
+                        <input name="damaged" type="file" accept="image">
+                    </div>
+                </div>
+                <div class="wrong-item reason-description hidden first-step">
+                    <div class="select__field">
+                        <label>Upload Image</label>
+                        <input name="wrong item" type="file" accept="image">
+                    </div>
+                </div>
+            </div>
+            <div class="pickup__address second-step hidden"> 
+                <address>{{ order.shipping_address.name }}, <br> {{ order.shipping_address.address1 }}, <br> {{ order.shipping_address.province }},  -  {{ order.shipping_address.city }} <br>Phone No : {{ order.shipping_address.phone }}</address>
+                <button type="button" class="change__address">Change</button>
+                <div class="edit-address-form hidden">
+                    <div class="group-field">
+                        <div class="field-wrapper Name">
+                            <label for="FullName">Name</label>
+                            <input placeholder="Enter your name" type="text" value="{{ order.shipping_address.name }}">
+                        </div>
+                    </div>
+                    <div class="group-field">
+                        <div class="field-wrapper Address">
+                            <label for="FullAddress">Address</label>
+                            <input placeholder="Enter your Address" type="text" value="{{ order.shipping_address.address1 }}">
+                        </div>
+                    </div>
+                    <div class="group-field">
+                        <div class="field-wrapper Appartment">
+                            <label for="FullAppartment">Apartment, suite, etc, (optional)</label>
+                            <input placeholder="Enter your appartment, suite details" type="text" value="{{ order.shipping_address.address2 }}">
+                        </div>
+                    </div>
+                    <div class="group-field split-group">
+                        <div class="field-wrapper Zipcode">
+                            <label for="FullZipcode">Zipcode</label>
+                            <input placeholder="Enter your zipcode" type="text" value="{{ order.shipping_address.zip }}">
+                        </div>
+                        <div class="field-wrapper City">
+                            <label for="FullCity">City</label>
+                            <input placeholder="Enter your city" type="text" value="{{ order.shipping_address.city }}">
+                        </div>
+                    </div>
+                    <div class="group-field split-group">
+                        <div class="field-wrapper State">
+                            <label for="FullState">State/Province</label>
+                            <input placeholder="Enter your state/province" type="text" value="{{ order.shipping_address.province }}">
+                        </div>
+                        <div class="field-wrapper Country">
+                            <label for="FullCountry">Country</label>
+                            <input placeholder="Enter your country" type="text" value="{{ order.shipping_address.country }}">
+                        </div>
+                    </div>
+                    <div class="group-field">
+                        <div class="field-wrapper Phonenumber">
+                            <label for="FullPhonenumber">Phone No</label>
+                            <input placeholder="Enter your Phone No" type="tell" value="{{ order.shipping_address.phone }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card__btn parent-step">
+                <button type="button" class="btn return__btn">
+                    <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true"><path d="M13.5 13H5.414l1.293 1.293a.999.999 0 1 1-1.414 1.414l-3-3a.999.999 0 0 1 0-1.414l3-3a.997.997 0 0 1 1.414 0 .999.999 0 0 1 0 1.414L5.414 11H13.5c1.379 0 2.5-1.121 2.5-2.5S14.879 6 13.5 6H3a1 1 0 1 1 0-2h10.5C15.981 4 18 6.019 18 8.5S15.981 13 13.5 13"></path></svg>
+                    RETURN
+                </button>
+            </div>
+            <div class="action__btns-wrapper both-steps hidden">
+                <div class="action__btns">
+                    <button type="button" name="Back" class="button button__primary back-btn">BACK</button>
+                    <button type="button" name="Next" class="button button__primary next-btn">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ 'order-return-app.js' | asset_url | script_tag }}

@@ -1,0 +1,56 @@
+
+<style> 
+  .about-us-section img{
+    width: 100%;
+    height: auto;
+  }
+  .about-us-content {
+    margin: 3rem 0px 0;
+    font-size: 14px;
+}
+.about-us-content strong {
+  font-family: 'Sequel Sans Heavy Disp' !important;
+  font-weight: 400;
+}
+</style>
+
+<section class="about-us-section page-width">
+{% if section.settings.image %}
+    <div class="about-us-image">
+        <img loading="lazy" class="desktop-only" src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.image.alt | default: shop.name }}">
+        <img loading="lazy" class="mobile-only" src="{{ section.settings.image-mb | img_url: 'master' }}" alt="{{ section.settings.image-mb.alt | default: shop.name }}">
+    </div>
+{% endif %}
+
+{% if section.settings.text %}
+    <div class="about-us-content">{{ section.settings.text }}</div>
+{% endif %}
+</section>
+
+{% schema %}
+  {
+    "name": "About Us",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "image-mb",
+        "label": "Image Mobile"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Add Text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "About Us"
+      }
+    ]
+  }
+{% endschema %}

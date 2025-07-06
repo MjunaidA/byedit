@@ -1,0 +1,273 @@
+<style>
+  @media screen and (min-width: 750px){
+    .custom-banner-padding--{{ section.id }} {
+  padding-top:{{section.settings.padding-top}}px;
+    padding-bottom:{{section.settings.padding-bottom}}px;
+}
+    .custom-banner div:empty {
+      display:block;
+    }
+.custom-banner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: {{section.settings.custom_banner_color}};
+    padding: 40px;
+    width: 100%;
+    max-width: 88%;
+    margin: 0 auto;
+}
+
+.custom-banner__content {
+    text-align: center;
+    z-index: 1; /* Bring content in front of lines */
+    width: 45%;
+}
+
+.custom-banner__content h2 {
+    font-size: 32px;
+    line-height:42px;
+    font-weight: 700;
+    margin: 0px;
+    color: {{section.settings.custom_heading_color}}; /* Heading color */
+}
+
+.custom-banner__content p {
+    font-size: 16px;
+    line-height:25px;
+    font-weight: 400;
+    color: {{section.settings.custom_subtitle_color}}; /* Paragraph color */
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.custom-banner__button {
+    all:unset;
+    cursor:pointer;
+    display: inline-block;
+    padding: 14px 30px 14px 30px;
+    background-color: {{section.settings.custom_btn_background}}; /* Button background */
+    color: {{section.settings.custom_btntext_color}}; /* Button text color */
+    border: 1px solid {{section.settings.custom_btnborder_color}};
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 300;
+    font-size:14px;
+    line-height:24px;
+    border-radius: 2px;
+    letter-spacing:.18rem;
+}
+
+.custom-banner__button:hover {
+    background-color: #333; /* Change color on hover */
+}
+
+ /* Left and Right lines containers */
+    .custom-banner__left-lines-container,
+    .custom-banner__right-lines-container {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(8, 1fr);;
+      flex-direction: column;
+      position: absolute;
+      height: 100%;
+      top: 0;
+    }
+
+    .custom-banner__left-lines-container {
+      left: 9%;
+    }
+
+    .custom-banner__right-lines-container {
+      right: 9%;
+    }
+
+    /* Individual line styling */
+    .custom-banner__line {
+      width: 4px;
+      height: 100%;
+      background-color: rgba(232, 230, 228, 1); /* Line color */
+    }
+  }
+    @media screen and (max-width: 750px){
+.custom-banner-padding--{{ section.id }} {
+  padding-top:{{section.settings.mobile-padding-top}}px;
+    padding-bottom:{{section.settings.mobile-padding-bottom}}px;
+}
+.custom-banner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: {{section.settings.custom_banner_color}};
+    padding: 40px;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.custom-banner__content {
+    text-align: center;
+}
+
+.custom-banner__content h2 {
+    font-size: 24px;
+    line-height:32px;
+    font-weight: 700;
+    margin: 0;
+    color: {{section.settings.custom_heading_color}}; /* Heading color */
+}
+
+.custom-banner__content p {
+    font-size: 14px;
+    color:{{section.settings.custom_subtitle_color}}; /* Paragraph color */
+    margin-bottom: 20px;
+    line-height:24px;
+    margin-top: 0;
+}
+
+.custom-banner__button {
+    all:unset;
+    cursor:pointer;
+    display: inline-block;
+    padding: 14px 30px 14px 30px;
+     background-color: {{section.settings.custom_btn_background}}; /* Button background */
+    color: {{section.settings.custom_btntext_color}}; /* Button text color */
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 400;
+    font-size:12px;
+    line-height:22px;
+    border-radius: 2px;
+    letter-spacing:.18rem;
+    border: 1px solid {{section.settings.custom_btnborder_color}};
+}
+
+.custom-banner__button:hover {
+    background-color: #333; /* Change color on hover */
+}
+  }
+</style>
+<div class="custom-banner-padding--{{ section.id }}">
+<div class="custom-banner">
+    <!-- Left lines -->
+    <div class="custom-banner__left-lines-container">
+      {% for i in (1..8) %}
+        <div class="custom-banner__line"></div>
+      {% endfor %}
+    </div>
+    <div class="custom-banner__content">
+        <h2>{{ section.settings.banner_heading }}</h2>
+        <p>{{ section.settings.banner_subheading }}</p>
+        <a href="{{ section.settings.button_link }}" class="custom-banner__button">{{ section.settings.button_text }}</a>
+    </div>
+   
+    <!-- Right lines -->
+    <div class="custom-banner__right-lines-container">
+      {% for i in (1..8) %}
+        <div class="custom-banner__line"></div>
+      {% endfor %}
+    </div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "New Edit Custom Banner",
+  "settings": [
+     {
+      "type": "color",
+      "id": "custom_banner_color",
+      "label": "Add Background Color"
+    },{
+      "type": "color",
+      "id": "custom_heading_color",
+      "label": "Add Heading Color"
+    },{
+      "type": "color",
+      "id": "custom_subtitle_color",
+      "label": "Add SubTitle Color"
+    },{
+      "type": "color",
+      "id": "custom_btn_background",
+      "label": "Add Button Backround Color"
+    },{
+      "type": "color",
+      "id": "custom_btnborder_color",
+      "label": "Add Button Border Color"
+    },{
+      "type": "color",
+      "id": "custom_btntext_color",
+      "label": "Add Button Text Color"
+    },{
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Heading",
+      "default": "40% THE BEST OF CATEGORY"
+    }, {
+      "type": "text",
+      "id": "banner_subheading",
+      "label": "Subheading",
+      "default": "Experience the perfect blend of traditional craftsmanship and contemporary design with GC Watches"
+    }, {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    }, {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },{
+      "type": "header",
+      "content": "Desktop Padding"
+    },{
+      "type": "range",
+      "id": "padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 50     
+    },{
+      "type": "range",
+      "id": "padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 50
+    },{
+      "type": "header",
+      "content": "Mobile Padding"
+    },{
+      "type": "range",
+      "id": "mobile-padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 25
+    },{
+      "type": "range",
+      "id": "mobile-padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 25
+    }
+  ],
+  "presets": [
+    {
+        "name": "New Edit Custom Banner",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

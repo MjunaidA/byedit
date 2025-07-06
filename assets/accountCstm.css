@@ -1,0 +1,55 @@
+.accountMain {
+    width: 88%;
+    margin: 0 auto;
+}
+
+.accountWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accountNav {
+    width: 20%;
+    background: aliceblue;
+    padding: 6rem 0px;
+}
+
+.menuitemCstm {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    margin: 20px auto;
+}
+
+.accountNavTxt {
+    margin-left: 10px;
+    font-size: 14px;
+    font-family: 'Sequel Sans Light Disp';
+    font-weight: 600;
+    color: black;
+}
+
+.customer.account {
+    width: 75%;
+    margin: 0;
+    padding: 0;
+}
+
+.welName {
+    color: #404040;
+    font-size: 24px;
+    font-weight: 700 !important;
+    font-family: 'Sequel Sans' !important;
+    line-height: 5px;
+
+
+}
+
+.welPara {
+    color: #40404072;
+    font-size: 12px;
+    font-family: 'Sequel Sans' !important;
+    padding: 0;
+margin: 0;
+}

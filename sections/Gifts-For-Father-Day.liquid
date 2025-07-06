@@ -1,0 +1,505 @@
+
+ <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<style>
+  @media screen and (min-width: 750px) {
+
+
+    .padding-{{ section.id }} {
+      padding-top: {{ section.settings.padding-top }}px;
+      padding-bottom: {{ section.settings.padding-bottom }}px;
+    }
+
+    .gift-heading h1 {
+      margin: 0;
+    }
+
+    .gift-description p {
+      margin: 0;
+    }
+
+  .gift-main-wrapper {
+    width: 100%;
+    max-width: 88%;
+    margin: 0 auto;
+}
+
+    .gift-content-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      background: {{ section.settings.gift-background-color }};
+    }
+    .gift-content-wrapper.section-{{ section.id }} {
+      flex-direction:{{section.settings.gift-direction}}
+    }
+
+    .gift-img,
+    .gift-product-grid {
+      width: 50%;
+    }
+
+    .gift-img img {
+      width: 100%;
+      height: 100%; /* Ensure image maintains its aspect ratio */
+    }
+
+ .gift-product-grid {
+    /* display: grid;
+    grid-template-columns: repeat(2, 2fr); */
+    padding: 30px 0px 0 0px;
+    /* display: flex;
+    flex-wrap: wrap; */
+}
+    .gift-heading-description-wrapper {
+    margin-bottom: 40px;
+}
+
+    .product-item {
+    padding: 8px 8px 0px 8px;
+    width: 43%;
+    max-width: 50%;
+}
+
+    .mobile-gift-img,
+    .mobile-gift-video,
+    .mobile-background-wrapper,
+    .mobile-gift-description{
+      display: none;
+    }
+
+    .gift-img,
+    .desktop-gift-video,
+    .gift-desktop-slider,
+    .gift-description,
+    .gift-fallback-svg{
+      display: block;
+    }
+    .swiper-slide, swiper-slide {
+      height:auto;
+    }
+    .swiper-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin:0;
+}
+     .gift-description{
+      line-height:22px;
+      font-size:14px;
+      font-weight:300;
+       color:rgba(0, 0, 0, 0.7);
+    }
+    .gift-fallback-svg {
+    width: 50%;
+    height: auto;
+}
+  }
+
+  @media screen and (max-width: 750px) {
+
+    .padding-{{ section.id }} {
+      padding-top: {{ section.settings.mobile-padding-top }}px;
+      padding-bottom: {{ section.settings.mobile-padding-bottom }}px;
+    }
+    .gift-product-grid  {
+      background: {{ section.settings.gift-background-color }};
+    }
+
+    .product-item {
+      padding: 4px;
+      width: 100% !important;
+      max-width:47.6% !important;
+}
+    .gift-heading-description-wrapper{
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+}
+    .mobile-gift-img {
+    width: 100%;
+    max-width: 91%;
+    margin: 0 auto;
+}
+
+.mobile-gift-wrapper {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+    .gift-img,
+    .desktop-gift-video,
+    .gift-desktop-slider,
+    .gift-description,
+    .gift-fallback-svg{
+      display: none;
+    }
+
+    .mobile-gift-img,
+    .mobile-gift-video,
+    .mobile-background-wrapper,
+    .mobile-gift-description{
+      display: block;
+    }
+    .gift-product-grid.swiper.swiper-container.swiper-initialized.swiper-horizontal.swiper-backface-hidden div:empty {
+      display: block;
+}
+    .swiper-wrapper {
+      padding:0;
+      margin:1em 0 0 ;
+    }
+    .gift-heading h2 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    font-family: 'SharpGrotesk';
+    margin: 0;
+}
+.mobile-background-wrapper{
+  background: {{ section.settings.gift-background-color }};
+}
+    .mobile-gift-description{
+      line-height:20px;
+      font-size:12px;
+      font-weight:300;
+      color:rgba(0, 0, 0, 0.7);
+      margin-bottom: 1.5em;
+    }
+  }
+</style>
+
+<div class="gift-main-wrapper padding-{{ section.id }}">
+  <!-- for heading and description -->
+  <div class="gift-heading-description-wrapper">
+    <div class="gift-heading">
+      <h2>{{ section.settings.gift_heading }}</h2>
+    </div>
+    <div class="gift-description">
+      <span>{{ section.settings.gift_description }}</span>
+    </div>
+    <div class="mobile-gift-description">
+      <span>{{ section.settings.mobile_gift_description }}</span>
+    </div>
+  </div>
+  <!-- here end -->
+  <!-- Wrapper for image and products -->
+  <div class="gift-content-wrapper section-{{ section.id }}">
+    <!-- Desktop Video or Image -->
+{% if section.settings.gift_img %}
+  <div class="gift-img">
+    <img src="{{ section.settings.gift_img | img_url: 'master' }}" alt="{{ section.settings.gift_img }}">
+  </div>
+{% elsif section.settings.desktop_gift_video.sources[1].url %}
+  <div class="desktop-gift-video">
+    <video width="100%" height="auto" preload="none" autoplay muted loop playsinline>
+      <source src="{{ section.settings.desktop_gift_video.sources[1].url }}" type="video/mp4">
+    </video>
+  </div>
+{% else %}
+  <!-- Fallback Placeholder SVG for Desktop -->
+  <div class="gift-fallback-svg">
+    {{ 'image' | placeholder_svg_tag }}
+  </div>
+{% endif %}
+
+<!-- Mobile Video or Image -->
+{% if section.settings.mobile_gift_img %}
+  <div class="mobile-gift-img">
+    <img src="{{ section.settings.mobile_gift_img | img_url: 'master' }}" alt="{{ section.settings.mobile_gift_img }}">
+  </div>
+{% elsif section.settings.mobile_gift_video.sources[1].url %}
+  <div class="mobile-gift-video">
+    <video width="100%" height="auto" preload="none" autoplay muted loop playsinline>
+      <source src="{{ section.settings.mobile_gift_video.sources[1].url }}" type="video/mp4">
+    </video>
+  </div>
+{% else %}
+  <!-- Fallback Placeholder SVG for Mobile -->
+  <div class="mobile-gift-fallback-svg">
+    {{ 'image' | placeholder_svg_tag }}
+  </div>
+{% endif %}
+
+    
+    <div class="gift-desktop-slider gift-product-grid swiper swiper-container">
+      <ul class="swiper-wrapper">
+      {% for product in section.settings.gift_products %}
+        <li class="swiper-slide product-item">
+          {% render 'card-product',
+            card_product: product,
+            media_aspect_ratio: section.settings.gift_image_ratio,
+            show_secondary_image: section.settings.gift_show_secondary_image,
+            show_vendor: section.settings.gift_show_vendor,
+            show_rating: section.settings.gift_show_rating,
+            show_quick_add: section.settings.gift_enable_quick_add,
+            section_id: section.id
+          %}
+        </li>
+      {% endfor %}
+        </ul>
+      <div class="swiper-scrollbar"></div>
+    </div>
+
+    <div class="mobile-background-wrapper">
+    <div class="mobile-gift-wrapper">
+    <div class="gift-product-grid swiper swiper-container">
+      <ul class="swiper-wrapper">
+      {% for product in section.settings.gift_products %}
+        <li class="swiper-slide product-item">
+          {% render 'card-product',
+            card_product: product,
+            media_aspect_ratio: section.settings.gift_image_ratio,
+            show_secondary_image: section.settings.gift_show_secondary_image,
+            show_vendor: section.settings.gift_show_vendor,
+            show_rating: section.settings.gift_show_rating,
+            show_quick_add: section.settings.gift_enable_quick_add,
+            section_id: section.id
+          %}
+        </li>
+      {% endfor %}
+        </ul>
+      <div class="swiper-scrollbar"></div>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var swiperInstance;
+
+    function initializeSwiper() {
+      if (window.innerWidth <= 749 && !swiperInstance) { // Mobile breakpoint, adjust if needed
+        swiperInstance = new Swiper('.swiper-container', {
+          slidesPerView: 2, // Display 2 slides per view
+          scrollbar: {
+            el: '.swiper-scrollbar',
+            draggable: true,
+          },
+        });
+      } else if (window.innerWidth > 750 && swiperInstance) {
+        swiperInstance.destroy(true, true); // Destroy Swiper instance on desktop
+        swiperInstance = null; // Reset instance variable
+      }
+    }
+
+    // Initialize Swiper on page load
+    initializeSwiper();
+
+    // Recheck on window resize
+    window.addEventListener('resize', initializeSwiper);
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Gift Father Day",
+    "settings": [
+      {
+        "type": "text",
+        "id": "gift_heading",
+        "label": "Add Heading",
+        "default": "Gifts for Father’s Day"
+      },
+      {
+        "type": "richtext",
+        "id": "gift_description",
+        "label": "Add Description"
+      },
+       {
+        "type": "richtext",
+        "id": "mobile_gift_description",
+        "label": "Add Mobile Description"
+      },
+       {
+      "type": "header",
+      "content": "Layout Change"
+    },
+       {
+      "type": "select",
+      "id": "gift-direction",
+      "label": " Change Layout",
+      "options": [
+        {
+          "value": "row",
+          "label": "Image Left, Product Right"
+        },
+        {
+          "value": "row-reverse",
+          "label": "Image Right, Product Left"
+        }
+      ],
+      "default": "row"
+    },
+      {
+      "type": "select",
+      "id": "mobile_flex_direction",
+      "label": "Mobile Layout",
+      "options": [
+        {
+          "value": "column",
+          "label": "Video Top, Image Bottom"
+        },
+        {
+          "value": "column-reverse",
+          "label": "Image Top, Video Bottom"
+        }
+      ],
+      "default": "column"
+    },
+       {
+      "type": "header",
+      "content": "Checkbox"
+    },
+       {
+      "type": "select",
+      "id": "gift_image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+    },
+       {
+      "type": "checkbox",
+      "id": "gift_show_vendor",
+      "default": true,
+      "label": "t:sections.main-collection-product-grid.settings.show_vendor.label",
+      "info": "If You Want to Show Vendor Name then you can checkbox checked."
+    },
+       {
+      "type": "checkbox",
+      "id": "gift_show_rating",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "gift_enable_quick_add",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.enable_quick_buy.label"
+    },
+       {
+      "type": "checkbox",
+      "id": "gift_show_secondary_image",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+       {
+      "type": "header",
+      "content": "Video"
+    },
+       {
+        "type": "video",
+        "id": "desktop_gift_video",
+        "label": "Add Desktop Video"
+      },
+       {
+        "type": "video",
+        "id": "mobile_gift_video",
+        "label": "Add Mobile Video"
+      },
+       {
+      "type": "header",
+      "content": "Image"
+    },
+      {
+        "type": "image_picker",
+        "id": "gift_img",
+        "label": "Add Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_gift_img",
+        "label": "Add Mobile Image"
+      },
+      {
+        "type": "product_list",
+        "id": "gift_products",
+        "label": "Add Products"
+      },
+         {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+       {
+      "type": "range",
+      "id": "padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 1
+         
+    },
+       {
+      "type": "range",
+      "id": "padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 1
+    },
+         {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+      {
+      "type": "range",
+      "id": "mobile-padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 1
+         
+    },
+       {
+      "type": "range",
+      "id": "mobile-padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 1
+    },
+      {
+        "type": "header",
+      "content": "Color"
+      },
+      {
+        "type": "color",
+        "id": "gift-background-color",
+        "label": "Add Background"
+      },
+    ],
+    "presets": [
+      {
+        "name": "Gift Father Day",
+      }
+    ]
+  }
+{% endschema %}

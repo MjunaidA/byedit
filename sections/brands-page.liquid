@@ -1,0 +1,76 @@
+<style>
+.edit-brands.page-width {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+.brand-grid {
+    border: 1px solid rgba(0,0,0,0.1);
+    margin: 1rem;
+    height: 7.5rem;
+    width: 17rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.brand-grid a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.brand-grid img {
+    {% comment %} height: 4.5rem; {% endcomment %}
+    object-fit: contain;
+    width: 100%;
+}
+@media(max-width:767px){
+    .brand-grid {
+    width: 44%;
+    }
+}
+</style>
+
+<div class="edit-brands page-width">
+    {% for block in section.blocks %}
+        <div class="brand-grid">
+            <a href="{{ block.settings.url }}" class="brand-link">
+                {% if block.settings.image != blank %}
+                    <img loading="lazy" alt="Brand Logo {{ forloop.index }}" src="{{ block.settings.image.src | img_url: 'master' }}"/>
+                {% endif %}
+            </a> 
+        </div>
+    {% endfor %}
+</div>                                               
+
+{% schema %}
+  {
+    "name": "Brands",
+    "settings": [	   
+	],
+    "blocks" : [
+        {
+            "type" : "Brand",
+            "name" : "Brand",
+            "settings":[
+            {
+                "type" : "image_picker",
+                "id" : "image",
+                "label" : "Upload Brand Logo"
+            },
+            {
+                "type" : "url",
+                "id" : "url",
+                "label" : "Enter Link"
+            }        
+        ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Brands Page"
+      }
+    ]
+  }
+{% endschema %}
+
+

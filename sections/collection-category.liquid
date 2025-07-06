@@ -1,0 +1,312 @@
+<style>
+    .headingtxt{
+      font-weight: 800;
+      text-transform: uppercase;
+      font-family: 'Sequel Sans Black Disp' !important;
+    }
+    .btnmain{
+      font-weight: 600;
+      color: #000;
+      font-family: 'Sequel Sans Roman Disp' !important;
+      letter-spacing: 3px;
+    }
+    .newshopbycategory--{{section.id}}{
+      background: {{section.settings.shopbycategorybackg}};
+    }
+    .newshopbycategory--{{section.id}} h2.headingtxt , .newshopbycategory--{{section.id}} p.descriptiontxt{
+      text-align:center;
+    }
+    .newshopbycategory--{{section.id}} .newBtnDiv .btnmain {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding:0 2rem;
+      cursor: pointer;
+      font-size: 1.4rem;
+      text-decoration: none;
+      letter-spacing: .18rem;
+      line-height: 24px;
+      border-radius: 2px;
+      min-width: 110px;
+      width: 100%;
+      height: 35px;
+      max-width: 18%;
+      margin: 0 auto;
+}
+
+    .newshopbycategory--{{section.id}} {
+       width: 100%;
+}
+
+
+    .newshopbycategory--{{section.id}} .newcategoryColumn .categoryImg {
+     width: 100%;
+}
+    .newshopbycategory--{{section.id}} .categoryColumn:last-of-type {
+      border-right: none;
+}
+
+    .newshopbycategory--{{section.id}} h2.headingtxt {
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: 400;
+      margin-bottom: 0;
+}
+    .newshopbycategory--{{section.id}} p.descriptiontxt {
+      margin-top: 0;
+}
+@media screen and (min-width:750px){
+     .newshopbycategory--{{section.id}} .newshopbycategoryRow.two-columns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      margin-bottom: 0rem;
+      gap: 10rem;
+      box-sizing: border-box;
+}
+  .shopbycategoryContainer{
+    padding-bottom:1rem;
+  }
+      .newshopbycategoryRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      margin-bottom: 0rem;
+      gap:30px;
+      box-sizing: border-box; 
+    
+}
+      .newshopbycategory--{{section.id}} .newshopbycategoryRow.two-columns .categoryColumn {
+      width: 50%; /* Adjust for 2 columns */
+      /* padding-right: 5rem; */
+     }
+      .newshopbycategoryRow .categoryColumn {
+      width: 32%;
+      position: relative;
+      /* border-right: 1px solid {{section.settings.mainbordercolor}}; */
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .categoryColumn.newcategoryColumn:not(:first-child):after {
+        content: " ";
+        position: absolute;
+        left: -5rem;
+        border-left: 1px solid {{section.settings.mainbordercolor}};
+        top: 0;
+        width: 1px;
+        height: 100%;
+}
+  
+}
+@media screen and (max-width:749px){
+  .newcategoryColumn{
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .shopbycategoryContainer{
+    width:100%!important;
+  }
+  .categoryImg{
+    padding:0rem 2rem;
+  }
+}
+
+ {% for block in section.blocks %}
+    .newshopbycategory--{{section.id}} .newBtnDiv .btnmain-{{ block.id }}{
+       color:{{block.settings.newbtncolr}};
+       background-color: {{block.settings.newbtnbackg}};
+       border: 1px solid {{block.settings.newbtnbordercolr}};
+    }
+    .newshopbycategory--{{section.id}} h2.headingtxt-{{ block.id }}{
+       color:{{block.settings.newheadingtxtcolr}};
+    }
+     .newshopbycategory--{{section.id}} p.descriptiontxt-{{block.id}}{
+        color:{{block.settings.subheadingtxtcolr}};
+    }
+    @media screen and (max-width:749px){
+      .newcategoryColumn-{{ block.id }}{
+      background-color:{{block.settings.bgcolor}};
+    }
+    }
+ {% endfor %}
+
+ 
+</style>
+<div class="newshopbycategory--{{ section.id }}" id="shopbycategory">
+  <div class="shopbycategoryContainer">
+    <div class="headingSecCategory">
+      <p class="categorySubtext subparaCstm">{{ section.settings.newsubtxt1 }}</p>
+      <h2 class="categoryheading">{{ section.settings.newheading1 }}</h2>
+    </div>
+    <div class="newshopbycategoryRow {% if section.blocks.size == 2 %}two-columns{% endif %}">
+      {% for block in section.blocks %}
+        {% if block.type == 'image' %}
+          
+          <div class="categoryColumn newcategoryColumn newcategoryColumn-{{ block.id }}">
+            <a href="{{block.settings.newbtnLink}}">  
+              <img class="categoryImg" src="{{block.settings.newimage1 | img_url: 'master'}}" loading="lazy" alt="edit" width="600" height="800"/>
+            </a>
+            <div class="newheadingtxtDiv">
+              <h2 class="headingtxt headingtxt-{{ block.id }}">{{ block.settings.newheadingtxt }}</h2>
+          </div>
+            <div class="newdescriptiontxtDiv">
+              <p class="descriptiontxt descriptiontxt-{{ block.id }}">{{ block.settings.newdescriptiontxt }}</p>
+          </div>
+          <div class="newBtnDiv">
+            <a href="{{block.settings.newbtnLink}}" class="btnmain btnmain-{{ block.id }}">{{ block.settings.newbtnTxt }}
+            </a>
+          </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+ 
+    </div>
+
+
+
+{% schema %}
+  {
+    "name": "collection list category",
+    "settings": [
+      {
+        "type": "color",
+        "id": "shopbycategorybackg",
+        "label": "Add Background"
+      },{
+        "type": "color",
+        "id": "mainbordercolor",
+        "label": "Add Border color"
+      },{
+        "type": "text",
+        "id": "newsubtxt1",
+        "default": "Discover Our Luxury Collections",
+        "label": "Image Category Subtext"
+      }, {
+        "type": "text",
+        "id": "newheading1",
+        "default": "SHOP BY CATEGORY",
+        "label": "Image Category Heading"
+      }
+      ,{
+        "type": "header",
+        "content": "Desktop Padding"
+      },{
+        "type": "range",
+        "id": "padding-top",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "label": "padding top",
+        "unit": "px",
+        "default": 50     
+      },{
+        "type": "range",
+        "id": "padding-bottom",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "label": "padding bottom",
+        "unit": "px",
+        "default": 50
+      },{
+        "type": "header",
+        "content": "Mobile Padding"
+      },{
+        "type": "range",
+        "id": "mobile-padding-top",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "label": "padding top",
+        "unit": "px",
+        "default": 25
+      },{
+        "type": "range",
+        "id": "mobile-padding-bottom",
+        "min": 1,
+        "max": 100,
+        "step": 1,
+        "label": "padding bottom",
+        "unit": "px",
+        "default": 25
+      }
+    ],
+    "limit": 2,
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Add Image Section",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "newimage1",
+            "label": "Category Image"
+          }, {
+            "type": "text",
+            "id": "newheadingtxt",
+            "label": "Heading Text"
+          },{
+            "type": "text",
+            "id": "newdescriptiontxt",
+            "label": "SubTitle Text"
+          },{
+            "type": "text",
+            "id": "newbtnTxt",
+            "default": "SHOP NOW",
+            "label": "Button Text"
+          }, {
+            "type": "url",
+            "id": "newbtnLink",
+            "label": "Category LInk"
+          },{
+            "type": "header",
+            "content": "Color"
+          },{
+            "type": "color",
+            "id": "newheadingtxtcolr",
+            "label": "Add Heading Color"
+          },{
+            "type": "color",
+            "id": "subheadingtxtcolr",
+            "label": "Add subHeading Color"
+          },{
+            "type": "color",
+            "id": "newbtnbackg",
+            "label": "Add Button Background Color"
+          },{
+            "type": "color",
+            "id": "newbtncolr",
+            "label": "Add Button Text Color"
+          },
+          {
+            "type": "color",
+            "id": "newbtnbordercolr",
+            "label": "Add Button Border Color"
+          },
+          {
+            "type": "color",
+            "id": "bgcolor",
+            "label": "image background color",
+            "info":"it works only on mobile"
+          },
+
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "collection list category",
+      }
+    ]
+  }
+{% endschema %}
+
+
+
+

@@ -1,0 +1,54 @@
+{%- capture payloadProductCard -%}
+  {
+    "event": "add_to_wishlist",
+    "ecommerce": {
+      "currency": "{{- shop.currency -}}",
+      "value" : "",
+      "items":[
+        {%- assign couponCode = "" -%}
+        {%- for tag in product.tags -%}
+          {%- if tag contains 'PromoKey' -%}
+            {%- assign couponCode = tag | split: ': ' | last -%}
+          {%- endif -%}
+        {%- endfor -%}
+    
+        {% assign original_price = product.selected_or_first_available_variant.price | divided_by:100.0  %}
+        {% assign sale_price = product.selected_or_first_available_variant.compare_at_price | divided_by:100.0  %}
+        
+        {%- if sale_price != blank and sale_price != original_price -%}
+          {% assign discount_percentage = original_price | divided_by: sale_price %}
+          {% assign discount_percentage = 1 | minus : discount_percentage %}
+          {% assign discount_percentage = discount_percentage | times : 100 | round: 2 | append: "%" %}
+        {%- else -%}
+          {%- assign discount_percentage = 0 | append : "%" -%}
+        {%- endif -%}
+        {
+          "item_id": {{- product.id -}},
+          "item_name": "{{- product.title | escape -}}",
+          "item_brand": "{{- product.vendor -}}",
+          "coupon": "{{- couponCode -}}",
+          "index" : "{{ index }}",
+          "type": "{{- product.type -}}",
+          "item_category": "{{- product.collections[0].title -}}",
+          "item_category2": "{{- product.collections[1].title -}}",
+          "item_category3": "{{- product.collections[2].title -}}",
+          "item_category4": "{{- product.collections[3].title -}}",
+          "item_category5": "{{- product.collections[4].title -}}",
+          "item_list_id": "{{ item_list_id }}",
+          "item_list_name": "{{ item_list_name }}",
+          "item_variant": "{{- product.first_available_variant.title -}}",
+          "item_variant_id": "{{- product.first_available_variant.id -}}",
+          "price": "{{- product.price | divided_by:100 -}}",
+          "value": "{{- product.price | divided_by:100 -}}",
+          "product_size": "{{- product.first_available_variant.option1 -}}",
+          "quantity": " {%- if quantity -%} {{- quantity -}} {%- else -%} 1 {%- endif -%}",
+          "sale_status": {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price and product.selected_or_first_available_variant.available -%}"On Offer"{%- else -%}"No Offer"{%- endif -%},
+          "stock_status": {%- if product.selected_or_first_available_variant -%}"In Stock"{%- else -%}"Out of Stock"{%- endif -%},
+          "discount_percent": "{{- discount_percentage -}}",
+          "product_gender": {% if product.tags contains 'Men' %}"Men" {% elsif product.tags contains "Women" %} "Women" {% else %} "Unisex" {% endif %}
+        }
+      ]
+    }
+  }
+{%- endcapture -%}
+<input class="gtmPayload" type="hidden" value='{{- payloadProductCard -}}' />

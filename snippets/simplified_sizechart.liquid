@@ -1,0 +1,370 @@
+
+        <style>
+	#simplify_sizechart_table_wrap {
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+	}
+
+	#simplify_sizechart_table_wrap>table {
+		width: 100%;
+		margin-bottom: 0;
+		width: 100%;
+	}
+
+	#simplify_sizechart_table_wrap>table td {
+		font-size: 14px;
+	}
+
+	#simplified_sizechart_wrap .sizechart-inner-wrap
+	{
+		min-height: 100px;
+		display: none;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	.simplified-sizechart-modal {
+		position: fixed;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		padding: 30px 15px;
+		/* display: none; */
+		display: flex;
+		align-items: center;
+		/* background-color: rgba(0, 0, 0, 0.4); */
+		-webkit-backdrop-filter: saturate(180%) blur(10px);
+		backdrop-filter: saturate(180%) blur(10px);
+		background-color: rgba(0, 0, 0, .50);
+		z-index: -1;
+		opacity: 0;
+	}
+
+	.simplified-sizechart-modal.popupOpen {
+		z-index: 9999;
+		opacity: 1;
+	}
+
+	.simplified-sizechart-modal .simplified-sizechart-modal-dialog {
+		margin: auto;
+		background-color: #fff;
+		padding: 20px;
+		max-width: 700px;
+		width: 100%;
+		text-align: left;
+		z-index: 999;
+		box-shadow: 0px 0px 30px 6px rgba(0, 0, 0, 0.1);
+		border-radius: 15px;
+		transform: translateY(-100);
+		opacity: 0;
+		-webkit-transition: 0.3s all;
+		-moz-transition: 0.3s all;
+		-o-transition: 0.3s all;
+		-ms-transition: 0.3s all;
+		transition: 0.3s all;
+	}
+
+	.simplified-sizechart-modal.popupOpen .simplified-sizechart-modal-dialog {
+		transform: translateY(0);
+		opacity: 1;
+	}
+
+	.simplified-sizechart-modal.popupOpen .simplified-sizechart-modal-dialog .simplified-sizechart-modal-header
+	{
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 15px;
+	}
+
+	.simplified-sizechart-modal.popupOpen .simplified-sizechart-modal-dialog .simplified-sizechart-modal-body {
+		min-height: 100px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	#as_popup_loader {
+		border: 4px solid transparent;
+		border-top: 4px solid #000;
+		border-left: 4px solid #000;
+		border-right: 4px solid #000;
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		animation: spin .7s linear infinite;
+	}
+
+	#find_your_size_btn,
+	#find_your_bmi_btn
+	{
+		font-weight: bold;
+		text-decoration: underline;
+		margin-top: 10px;
+		background: transparent;
+		border: none;
+		align-self: start;
+	}
+
+	#sizechart_dismiss_modal
+	{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		background-color: transparent;
+	}
+
+	.find-use-wrap--popup-slide,
+	.find-BMI-wrap--popup-slide
+	{
+		max-width: 350px;
+		width: 100%;
+		/* margin-top: 20px; */
+	}
+
+	.find-use-wrap--popup-slide h3,
+	.find-BMI-wrap--popup-slide h3
+	{
+		margin-top: 20px;
+	}
+
+	.ss-find-your-size-fields
+	{
+		width: 100%;
+	}
+
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+
+	/* body
+    {
+      background-color: green;
+    } */
+</style>
+
+<div id="simplified_sizechart_popup_wrap"></div>
+
+
+<script>
+
+	console.log('Size Chart Revamp--------------------');
+	// SizeChart main container
+	var sizechartContainer = document.getElementById('simplified_sizechart_wrap');
+	var sizechartPopupContainer = document.getElementById('simplified_sizechart_popup_wrap');
+	var sizechartTags = document.getElementById('simplified_sizechart_wrap').getAttribute('data-product-tags');
+
+	console.log(sizechartTags);
+
+	// Shop URL get from main container
+	var shopURL = sizechartContainer.getAttribute('data-shop-name');
+
+	// Backend server URL
+	//   var backend_url  = 'https://size-chart-be.alche.cloud';
+	var backend_url = 'https://sizechart-revamp-be.alche.cloud';
+
+	// API endpoint for sizechart data
+	var api_URL_sizeChart = '/ajax_call_sizechart?shop=' + shopURL + '&tags=';
+
+	// API endpoint for sizechart style
+	var api_URL_style = '/settings_sizechart?shop=' + shopURL;
+
+	// String for API request
+	var perms = String({{ product.tags | downcase | join: ','}}) + ",{{ product.title }},{{ product.variants[0].sku | split: '-' | first | downcase }}";
+	console.log(perms);
+
+	let sizeChart_url = backend_url + api_URL_sizeChart + sizechartTags;
+	let styleSizeChart_url = backend_url + api_URL_style;
+
+	let popupLoader = document.createElement('div');
+	popupLoader.setAttribute('id', 'as_popup_loader');
+
+	if (sizechartContainer.getAttribute('data-sizechart-metafields') === 'true') {
+		sizechartPOPUP()
+		if (sizechartContainer.getAttribute('data-sizechart-type') === 'popup') {
+			// Sizechart popup open trigger Element...
+			let sizechart_popup_trigger = document.createElement('button');
+			sizechart_popup_trigger.setAttribute('type', 'button');
+			sizechart_popup_trigger.setAttribute('id', 'sizechart_popup_trigger')
+			sizechart_popup_trigger.textContent = "SIZECHART";
+			sizechartContainer.appendChild(sizechart_popup_trigger);
+
+			// Sizechart trigger Event...
+			sizechart_popup_trigger.addEventListener('click', () => {
+				console.log('POPUP Trigger Trigger...')
+				console.log(document.querySelectorAll('.simplified-sizechart-modal-body').length)
+				if (document.querySelector('.simplified-sizechart-modal-body').hasChildNodes() === false) {
+					document.querySelector('.simplified-sizechart-modal-body').appendChild(popupLoader);
+					getSizeChart();
+				}
+				document.getElementById('simplified_sizechart_modal').classList.add('popupOpen');
+				document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+			})
+		}
+		else if (sizechartContainer.getAttribute('data-sizechart-type') === 'slide') {
+
+			let sizechart_slide_trigger = document.createElement('button');
+			sizechart_slide_trigger.setAttribute('type', 'button');
+			sizechart_slide_trigger.setAttribute('id', 'sizechart_slide_trigger')
+			sizechart_slide_trigger.textContent = "SIZECHART";
+			sizechartContainer.appendChild(sizechart_slide_trigger);
+
+
+			let slideWrapper = document.createElement('div');
+			slideWrapper.classList.add('sizechart-inner-wrap');
+			sizechartContainer.appendChild(slideWrapper);
+
+			sizechart_slide_trigger.addEventListener('click', () => {
+				console.log('Slide Trigger Trigger...')
+				debugger;
+
+				if (slideWrapper.hasChildNodes() === false) {
+					slideWrapper.appendChild(popupLoader);
+					var tableElement = document.createElement('div');
+					tableElement.setAttribute('id', 'simplify_sizechart_table_wrap');
+					document.querySelector('.sizechart-inner-wrap').appendChild(tableElement)
+					getSizeChart();
+					console.log('Size chart style INLINE');
+				}
+
+				if (document.querySelector('.sizechart-inner-wrap').style.display == 'flex')
+				{
+					document.querySelector('.sizechart-inner-wrap').style.display = 'none'
+				}
+				else
+				{
+					document.querySelector('.sizechart-inner-wrap').style.display = 'flex'
+				}
+			})
+		}
+	}
+
+	let modalCloseBtn = document.getElementById('sizechart_dismiss_modal')
+
+	modalCloseBtn.addEventListener('click', function () {
+		console.log('Close Button CLick------------------------------');
+		document.getElementById('simplified_sizechart_modal').classList.remove('popupOpen');
+		document.getElementsByTagName('body')[0].style.overflow = 'visible';
+	})
+
+
+	function getSizeChart() {
+		fetch(sizeChart_url)
+			.then((response) => {
+				return response.json()
+			})
+			.then((data) => {
+				console.log('Success Repsonse: ------------------------', data)
+				populateSizeChart(data.size_chart, data.style_data)
+			})
+			.catch((error) => {
+				console.log('Error: ------------------------- ', error)
+			})
+	}
+
+	function populateSizeChart(sizeChartData, styleData) {
+		let table = document.createElement('table');
+		let tbody = document.createElement('tbody');
+
+		sizeChartData.grid_sizechart.forEach((value, index, list) => {
+			let tr = document.createElement('tr');
+
+			value.forEach((innerValue, innerIndex, innerList) => {
+				if (sizeChartData) {
+
+					if (sizeChartData.top_header && index === 0 || sizeChartData.bottom_header && index === list.length - 1 || sizeChartData.left_header && innerIndex === 0 || sizeChartData.right_header && innerIndex === innerList.length - 1) {
+						let th = document.createElement('th');
+						th.textContent = innerValue;
+						th.style.backgroundColor = styleData.backgroundColor;
+						th.style.borderColor = styleData.borderColor;
+						th.style.color = styleData.gridHeaderColor;
+						tr.appendChild(th)
+					}
+					else {
+						let td = document.createElement('td');
+						td.textContent = innerValue;
+						td.style.backgroundColor = styleData.gridBackgroundColor;
+						td.style.borderColor = styleData.borderColor;
+						td.style.color = styleData.textColor;
+						tr.appendChild(td)
+					}
+				}
+			});
+			tbody.appendChild(tr)
+		});
+
+		table.appendChild(tbody)
+
+		if (sizechartContainer.getAttribute('data-sizechart-type') === 'popup') {
+			// tableElement.appendChild(table);
+			let popup_table_wrap = document.createElement('div');
+			popup_table_wrap.setAttribute('id', 'simplify_sizechart_table_wrap')
+			popup_table_wrap.appendChild(table)
+			// sizechartPOPUP(popup_table_wrap)
+			popupLoader.remove();
+			document.querySelector('.simplified-sizechart-modal-body').appendChild(popup_table_wrap);
+			console.log('POPUP');
+		}
+		else if (sizechartContainer.getAttribute('data-sizechart-type') === 'slide') {
+			document.getElementById('simplify_sizechart_table_wrap').appendChild(table);
+			popupLoader.remove();
+			console.log('slide');
+		}
+		
+	}
+
+	function sizechartPOPUP() {
+		let dismissBtn = document.createElement('button');
+		dismissBtn.setAttribute('type', 'button');
+		dismissBtn.setAttribute('id', 'sizechart_dismiss_modal');
+		dismissBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
+
+		// Create Modal Element
+		let modal = document.createElement('div');
+		modal.classList.add('simplified-sizechart-modal');
+		modal.setAttribute('id', 'simplified_sizechart_modal');
+
+		// Create Modal Dialog
+		let modalDialog = document.createElement('div');
+		modalDialog.classList.add('simplified-sizechart-modal-dialog');
+
+		// Create Modal Content
+		let modalContent = document.createElement('div');
+		modalContent.classList.add('simplified-sizechart-modal-content');
+
+		// Create Modal Header
+		let modalHeader = document.createElement('div');
+		modalHeader.classList.add('simplified-sizechart-modal-header');
+
+		// Create Modal Body
+		let modalBody = document.createElement('div');
+		modalBody.classList.add('simplified-sizechart-modal-body');
+
+		modalHeader.appendChild(dismissBtn);
+		modalContent.appendChild(modalHeader);
+		modalContent.appendChild(modalBody);
+		modalDialog.appendChild(modalContent);
+		modal.appendChild(modalDialog);
+		sizechartPopupContainer.appendChild(modal)
+	}
+
+	
+</script>
+    

@@ -1,0 +1,251 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<style>
+.product-recommendations-wrapper {
+    padding: 5rem 0 4rem;
+    overflow: hidden;
+    margin-top: 4rem;
+}
+.product-recommendations-wrapper .swiper-slide {
+        flex: 0 0 18.8%;
+    width: 18.8%;
+    padding-right: 2rem;
+}
+.complete-sub-title {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.8);
+    letter-spacing: 0;
+}
+h3.complete-title {
+    font-family: 'SharpGrotesk' !important;
+    text-transform: uppercase;
+    color: black;
+    font-size: 25px;
+    margin: 10px 0 3rem;
+}
+.product-recommendations-wrapper .swiper {
+    z-index: 2;
+        {% comment %} width: 100vw; {% endcomment %}
+        padding-bottom: 4.5rem;
+}
+.product-recommendations-wrapper .swiper-button{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid black;
+    top: auto;
+    left: auto;
+    bottom: 17px;
+        right: 1rem;
+}
+.product-recommendations-wrapper .swiper-button-prev.swiper-button {
+        right: 6rem;
+}
+.product-recommendations-wrapper .swiper-button:after {
+    font-size: 10px;
+    font-weight: 600;
+}
+.swiper-slide .swiper-slide {
+    display: none;
+}
+@media(max-width:1024px){
+    .product-recommendations-wrapper .swiper-slide {
+        flex: 0 0 31.33%;
+        width: 31.33%;
+    }
+    h3.complete-title {
+    font-size: 24px;
+    }
+    .product-recommendations-wrapper .swiper-button-prev.swiper-button {
+        6rem;
+    }
+}
+@media(max-width: 850px){
+    h3.complete-title {
+    margin-bottom: 2rem;
+}
+}
+@media(max-width:767px){
+    h3.complete-title {
+    text-align: left;
+    font-size: 23px;
+    margin-bottom: 2.8rem;
+}
+.complete-sub-title {
+    font-size: 13px;
+}
+.product-recommendations-wrapper .swiper-slide {
+        flex: 0 0 47.5%;
+    width: 47.5%;
+}
+.product-recommendations-wrapper .card__heading {
+    width: 100%;
+}
+.product-recommendations-wrapper .swiper {
+    width: auto;
+    padding-bottom: 0;
+}
+.product-recommendations-wrapper .swiper-button {
+    display: none !important;
+}
+.product-recommendations-wrapper {
+    padding: 3rem 0 2rem;
+    margin-top: 3rem;
+}
+}
+</style>
+
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+    assign currentProduct = product
+    assign url = request.path
+    if url contains 'collections'
+        assign collectionHandle = url | split: '/collections/' | last | split: '/products/' | first
+        assign collection = collections[collectionHandle]
+    else
+        for collection in product.collections
+            assign collection = collection
+            assign handle = collection.handle
+        endfor
+    endif
+    assign productsCount = collection.all_products_count
+    assign productsToShow = 8
+    if productsCount > productsToShow
+        assign max = 8
+    else
+        assign max = productsCount
+    endif
+    assign min = 1 
+    assign max = max 
+    assign diff = max | minus: min 
+    assign randomNumber = "now" | date: "%N" | modulo: diff | plus: min 
+%}
+
+<div style="background: {{ section.settings.bg-color }};" class="product-recommendations-wrapper">
+    <div class="page-width">
+        {% if section.settings.sub-title != blank %}
+            <div class="complete-sub-title">{{ section.settings.sub-title }}</div>    
+        {% endif %}
+        {% if section.settings.title != blank %}
+            <h3 class="complete-title">{{ section.settings.title }}</h3>    
+        {% endif %}
+        <div class="swiper product-recommendations {{ max }}-{{ randomNumber }}">
+            <div class="swiper-wrapper">
+                {% for product in collection.products limit:8 offset:randomNumber %}
+                    {% unless currentProduct == product %}
+                        <div class="swiper-slide">
+                            <div class="recommended-product">
+                                {% render 'card-product',
+                                    card_product: product,
+                                    media_aspect_ratio: section.settings.image_ratio,
+                                    show_secondary_image: section.settings.show_secondary_image,
+                                    show_vendor: section.settings.show_vendor,
+                                    show_rating: section.settings.show_rating,
+                                    show_quick_add: true,
+                                    section_id: section.id,
+                                    index: forloop.index
+                                %}
+                            </div>
+                        </div>
+                    {% endunless %}
+                {% endfor %}
+            </div>
+            <div class="swiper-button-next swiper-button"></div>
+            <div class="swiper-button-prev swiper-button"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var swiper = new Swiper(".product-recommendations", {
+        slidesPerView: 'auto',
+        navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
+
+{% schema %}
+{
+    "name" : "Product Recommendations",
+    "settings":[
+        {
+           "type": "color",
+           "id": "bg-color",
+           "label": "Background",
+           "default": "#f5f5f5"
+       },
+       {
+           "type": "text",
+           "id": "title",
+           "label": "Enter Title",
+           "default": "This might also interest you"
+       },
+       {
+           "type": "text",
+           "id": "sub-title",
+           "label": "Enter Sub Title",
+           "default": "Discover Your Next Favorite Watch or Jewelry Piece!"
+       },
+       {
+        "type": "header",
+        "content": "Product Card"
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "options": [
+          {
+            "value": "adapt",
+            "label": "Adapt"
+          },
+          {
+            "value": "portrait",
+            "label": "Portrait"
+          },
+          {
+            "value": "square",
+            "label": "Square"
+          }
+        ],
+        "default": "adapt",
+        "label": "Adapt"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_secondary_image",
+        "default": true,
+        "label": "Show secondary image on hover"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "default": true,
+        "label": "Show vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rating",
+        "default": false,
+        "label": "Show product ratings"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_add",
+        "default": true,
+        "label": "Enable Quick Add"
+      }
+    ],
+    "presets": [
+       {
+           "name": "Product Recommendations"
+       }
+    ]
+}
+{% endschema %}

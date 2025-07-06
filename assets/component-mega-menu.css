@@ -1,0 +1,349 @@
+.mega-menu {
+  position: static;
+}
+
+.mega-menu__content {
+  background-color: rgb(var(--color-background));
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  left: 0;
+  overflow-y: auto;
+  padding-bottom: 3.4rem;
+  padding-top: 3.4rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.wrapperMegaMenu {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.condensed-mm .CstmCondensed {
+  min-width: 13vw !important;
+  padding: 10px 10px;
+}
+
+.condensed-mm .CstmCondensed .mega-menu__list--condensed {
+  margin: 0;
+  padding: 0;
+  width: 100% !important;
+}
+
+.mega-menu__list--condensed .mega-menu__link {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* .shopify-section-header-sticky .mega-menu__content {
+  max-height: calc(100vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
+} */
+
+.header-wrapper--border-bottom .mega-menu__content {
+  border-top: 0;
+}
+
+.js .mega-menu__content {
+  opacity: 0;
+  transform: translateY(-1.5rem);
+}
+
+.mega-menu[open] .mega-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mega-menu__list {
+  display: grid;
+  gap: 6rem 4rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  list-style: none;
+  width: 70%;
+}
+
+.mega-menu__link {
+  display: block;
+    font-size: 12px;
+    line-height: calc(1 + .3 / var(--font-body-scale));
+    padding-bottom: 1rem;
+    padding-top: 0.6rem;
+    text-decoration: none;
+    transition: text-decoration var(--duration-short) ease;
+    word-wrap: break-word;
+    color: #000000a6;
+}
+
+.mega-menu__link--level-2 {
+  font-size: 1.2rem;
+  color:#000!important;
+}
+
+.mega-menu__link--level-2:not(:only-child) {
+  margin-bottom: 1.7rem;
+  font-size: 12px;
+  font-family: 'Sequel Sans Heavy Disp';
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.header--top-center .mega-menu__list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 0;
+}
+
+.header--top-center .mega-menu__list>li {
+  width: 16%;
+  padding-right: 2.4rem;
+}
+
+.mega-menu__link:hover,
+.mega-menu__link--active {
+  color: rgb(var(--color-foreground));
+  /* text-decoration: underline; */
+}
+
+.mega-menu__link--active:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+.mega-menu .mega-menu__list--condensed {
+  display: block;
+}
+
+.mega-menu__list--condensed .mega-menu__link {
+  font-weight: normal;
+}
+
+.cstm_wrapperMegaMenu {
+  width: 88%;
+  padding: 0 !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 88%;
+  padding: 0 !important;
+
+
+}
+
+
+.cstm_megamenu_list {
+  padding: 0;
+  width: 48%;
+  max-width: 48%;
+  min-width: 48%;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.brands-Mmenu {
+
+  width: 20%;
+  max-width: 20%;
+  min-width: 20%;
+}
+
+.imageHandle {
+  width: 24%;
+  max-width: 24%;
+  min-width: 24%;
+
+}
+
+.branTitle {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+  font-family: 'Sequel Sans Heavy Disp';
+  margin-bottom: 2.5rem;
+  color: black;
+  letter-spacing: 0;
+}
+
+.brands_flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-right: 30px;
+}
+
+.cstmBrand {
+  width: 95px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.brands-Mmenu .cstmBrand a img{
+  width:100%;
+}
+
+.imgTextArea {
+  width: 100%;
+  text-align: center;
+  line-height: 0.3;
+}
+
+.lineThrough {
+  display: block !important;
+  width: 1px;
+  max-width: 1px;
+  min-width: 1px;
+  height: 240px;
+  background-color: #d3d3d3;
+  margin-top: 22px;
+  opacity: 0.7;
+  margin-left: -5rem;
+    margin-right: 4rem;
+}
+.imgTextArea .imgHeadingMM{
+  font-size: 12px;
+    color: #000;
+    text-transform: uppercase;
+    font-family: 'Sequel Sans Heavy Disp';
+    margin: 0.4rem 0 2rem;
+    letter-spacing: 0;
+}
+.imgTextArea .imgParaMM{
+  font-size:11px;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.5px;
+}
+ /* Start Desktop Brand Mega Menu  */
+.brandcstmBrand {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.brands_grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    align-items: center;
+    gap:10px;
+    width: 75%;
+    max-width: 75%;
+}
+.brand_mega-menu__list{
+  width:100%;
+  max-width:50%;
+}
+a.brandlinkBrandCstm {
+    /* width: 100%;
+    height: 100%; */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.brandmegaviewall a {
+    all: unset;
+    margin-top: 12em;
+    color: #1a1818;
+    background: #ffffff;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: Sequel Sans Medium Disp;
+    letter-spacing: .15rem;
+    border: 1px solid;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 30%; */
+    height: 50px;
+    border-radius: 2px;
+    padding: 0 2rem;
+}
+.brandmegaviewall {
+    width: 45%;
+    max-width: 37%;
+}
+.brandmegaviewall a:hover{
+    background: #0000000d !important;
+    transition: all .3s ease-in-out !important;
+}
+.brandtitle {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+    font-family: 'Sequel Sans Heavy Disp';
+    margin-bottom: 2rem;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 1);
+}
+.brandmegamenu-update-image {
+  display:flex;
+  gap: 40px
+}
+.brandmegamenu-update-image-1 p,
+.brandmegamenu-update-image-2 p{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-wrap: balance;
+    text-transform: uppercase;
+    font-family: 'Sequel Sans Heavy Disp';
+    cursor: pointer;
+    color: rgba(0, 0, 0, 1);
+
+}
+.brand_lineThrough {
+    display: block!important;
+    width: 1px;
+    max-width: 1px;
+    min-width: 1px;
+    height: 300px;
+    background-color: #d3d3d3;
+    margin-top: 51px;
+    opacity: .7;
+    margin-left: -5rem;
+    margin-right: 4rem;
+}
+a.brand-button {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid rgba(242, 241, 241, 1);
+    padding:7px 20px 7px 20px;
+    margin-top: -7px;
+
+}
+.brand_button_title {
+    display: flex;
+    flex-direction: column;
+}
+.brand_button_title .brand_name{
+    font-size: 14px;
+    font-family: 'Sequel Sans Heavy Disp';
+    line-height: 22px;
+    text-transform:uppercase;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+}
+.brand_button_title .brand_desc{
+  font-size:12px;
+  line-height:20px;
+  font-weight:400;
+  font-family:'Sequel Sans'
+}

@@ -1,0 +1,263 @@
+{% comment %}
+  Renders a header search modal. Should be used with 'header.liquid'
+
+  Accepts:
+  - input_id: {String} Id for the search input element (required)
+
+  Usage:
+  {% render 'header-search', input_id: 'My-Id'%}
+{% endcomment %}
+
+<style>
+
+  div#predictive-search-results-groups-wrapper {
+    gap: 50px;
+}
+  span#predictive-search-products1 {
+    position: relative !important;
+    top: 16px !important;
+    left: 22px !important;
+}
+  @media screen and (min-width: 990px) {
+    .search-modal__form {
+        max-width: 1200px !important;
+    }
+}
+  .field {
+    position: relative;
+    width: 100%;
+    display: flex;
+    transition: box-shadow var(--duration-short) ease;
+    left: 6px ;
+}
+  .search__input.field__input {
+    padding-right: 9.8rem;
+    background: #fffef2;
+    color: #333333;
+    border: 0px;
+    padding-top: 6px !important;
+}
+  input#Search-In-Modal+label {
+    display: none;
+  }
+  div#predictive-search-results {
+    max-width: 90%;
+    margin: auto;
+    padding-top: 30px;
+   
+}
+  span.search-total {
+    width: 80%;
+        margin: 17px 0;
+}
+  h3#predictive-search-products1 {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+ul#predictive-search-results-products-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+        row-gap: 20px;
+}
+
+.predictive-search__item.predictive-search__item--link-with-thumbnail {
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 15px;
+}
+
+.predictive-search__image {
+    flex: 1 1 100%;
+    width: 100%;
+}
+.predictive-search__item-content--centered {
+    justify-content: center;
+}
+.search_holder_custom {
+    width: 100%;
+}
+.search-modal.modal__content.gradient svg path {
+    fill: none;
+}
+details-modal.header__search details {
+    display: contents;
+}
+details-modal.header__search .modal__content {
+        background: #FFFEF2;
+}
+.search__input.field__input {
+    padding-right: 9.8rem;
+    background: #fffef2;
+    color: #333333;
+    border: 0px;
+}
+.search-modal__content {
+    padding: 0rem;
+}
+form.search.search-modal__form .field::after {
+    box-shadow: unset;
+    border: none;
+}
+form.search.search-modal__form .field__label{
+  left: 0px;
+  color: #333333;
+    font-size: 14px;
+}
+form.search.search-modal__form .field__input:focus {
+  box-shadow: unset;
+  padding-left: 0px;
+}
+/* form.search.search-modal__form .field__input:focus ~ .field__label{
+  display: none;
+} */
+button.search-modal__close-button.modal__close-button{
+  position: relative;
+}
+/* button.search-modal__close-button.modal__close-button::after{
+    content: '';
+    position: absolute;
+    border-right: 0.1rem solid transparent;
+    width: 1px;
+    height: 100%;
+    background: #666;
+    top: 0;
+    right: -10px;
+} */
+  @media screen and (max-width: 749px) {
+    .predictive-search--header {
+        right: 0;
+        left: 0;
+        top: 103%;
+    }
+}
+  details[open] .modal-overlay::after {
+    position: absolute;
+    content: '';
+    background-color: rgb(var(--color-foreground), 0.5);
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    backdrop-filter: blur(20px);
+}
+
+ @media screen and (max-width: 767px) { 
+  .search-modal__form {
+    width: 81%;
+}
+   .search__input.field__input {
+    padding-right: 30.8rem;
+    background: #fff;
+    color: #333333;
+    border: 0px;
+}
+     span#predictive-search-products1 {
+    display: none !important;
+}
+ 
+   details[open] .modal-overlay::after {
+    position: absolute;
+    content: '';
+    background-color: rgb(var(--color-foreground), 0.5);
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    backdrop-filter: blur(20px);
+}
+   .field {
+    position: relative;
+    width: auto;
+    display: flex;
+    transition: box-shadow var(--duration-short) ease;
+    left: 6px;
+}
+ }
+</style>
+
+<details-modal class="header__search">
+  <details>
+    <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+      <span>
+        <!-- <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+          <use href="#icon-search">
+        </svg> -->
+        <svg class="modal__toggle-open icon icon-search" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path id="Vector" d="M13.4487 12.2054C14.4943 10.8904 15.0684 9.226 15.0684 7.54108C15.0684 3.3904 11.6856 0 7.52392 0C3.36219 0 0 3.3904 0 7.54108C0 11.6917 3.38268 15.0822 7.52392 15.0822C9.18451 15.0822 10.8451 14.5068 12.1777 13.4588L16.7084 18L18 16.7054L13.4487 12.2054ZM7.52392 13.2944C4.38724 13.2944 1.8246 10.726 1.8246 7.58217C1.8246 4.43834 4.38724 1.86985 7.52392 1.86985C10.6606 1.86985 13.2232 4.43834 13.2232 7.58217C13.2232 10.726 10.6606 13.2944 7.52392 13.2944Z" fill="rgba(var(--color-foreground))"/>
+        </svg>
+        <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+          <use href="#icon-close">
+        </svg>
+      </span>
+    </summary>
+    <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+      <div class="modal-overlay"></div>
+      <div class="search_holder_custom">
+      <div class="search-modal__content{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} search-modal__content-top{% else %} search-modal__content-bottom{% endif %}" tabindex="-1">
+        {% render 'icon-search' %}
+        {%- if settings.predictive_search_enabled -%}
+          <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
+        {%- else -%}
+          <search-form class="search-modal__form">
+        {%- endif -%}
+            <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+              <div class="field">
+                <input class="search__input field__input"
+                  id="{{ input_id }}"
+                  type="search"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  placeholder="{{ 'general.search.search' | t }}"
+                  {%- if settings.predictive_search_enabled -%}
+                    role="combobox"
+                    aria-expanded="false"
+                    aria-owns="predictive-search-results"
+                    aria-controls="predictive-search-results"
+                    aria-haspopup="listbox"
+                    aria-autocomplete="list"
+                    autocorrect="off"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                  {%- endif -%}
+                >
+                <label class="field__label" for="{{ input_id }}">{{ 'general.search.search' | t }}</label>
+                <input type="hidden" name="options[prefix]" value="last">
+                <button type="reset" class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}" aria-label="{{ 'general.search.reset' | t }}">
+                  <svg class="icon icon-close" aria-hidden="true" focusable="false">
+                    <use xlink:href="#icon-reset">
+                  </svg>
+                </button>
+                <!-- <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+                  <svg class="icon icon-search" aria-hidden="true" focusable="false">
+                    <use href="#icon-search">
+                  </svg>
+                </button> -->
+              </div>
+
+              {%- if settings.predictive_search_enabled -%}
+                <div class="vv predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+                  <div class="predictive-search__loading-state">
+                    <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+                </div>
+
+                <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+              {%- endif -%}
+            </form>
+          {%- if settings.predictive_search_enabled -%}
+            </predictive-search>
+          {%- else -%}
+            </search-form>
+          {%- endif -%}
+          <button type="button" class="search-modal__close-button modal__close-button link link--text focus-inset" aria-label="{{ 'accessibility.close' | t }}">
+          {% render 'icon-close' %}
+          </button>
+      </div>
+     </div>
+    </div>
+  </details>
+</details-modal>

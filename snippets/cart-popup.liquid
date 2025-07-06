@@ -1,0 +1,354 @@
+<script class="cartFlagX"></script><style>
+  div#dropdown-cart {
+    border: 1px solid #f1f1f1;
+    background: #FAFAFA;
+    width: 38rem;
+    position: fixed;
+    right: 8.2rem;
+    top: 8.5rem;
+    padding: 1.5rem;
+    z-index: 9;
+    display: none;
+  }
+  .cart-popup-active div#dropdown-cart {
+    display: block;
+  }
+  .sticky-header-enable div#dropdown-cart {
+    top: 6rem;
+  }
+  div#dropdown-cart * {
+    color: black;
+    letter-spacing: 0;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  div#dropdown-cart .cart-title h5 {
+    text-transform: uppercase;
+    font-size: 17px;
+    margin: 0;
+    font-family: 'Sequel Sans Heavy Disp';
+  }
+  .cart-title {
+        display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem 0 1.5rem;
+  }
+  ol.mini-products-list::-webkit-scrollbar {
+    width: 2px;
+}
+ol.mini-products-list::-webkit-scrollbar-thumb {
+    background: #888;
+}
+ol.mini-products-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  ol.mini-products-list li img {
+    height: 7rem;
+    width: 100%;
+    object-fit: contain;
+  }
+  ol.mini-products-list {
+    padding: 0;
+    list-style: none;
+    margin: 0rem 0 1.5rem;
+    max-height: 31.6rem;
+    overflow: auto;
+  }
+  ol.mini-products-list .option {
+    margin: 0.6rem 0;
+}
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+        font-family: 'Sequel Sans Heavy Disp';
+  }
+div#dropdown-cart .product-details .cart-collateral .price {
+    font-family: 'Sequel Sans Medium Disp';
+    font-weight: 400;
+    font-size: 13px;
+}
+  a.product-image {
+    flex: 0 0 21%;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+  }
+  ol.mini-products-list li {
+    display: flex;
+    padding: 15px 10px 15px 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .product-details {
+    position: relative;
+    flex: 0 0 79%;
+    padding-left: 1.5rem;
+  }
+  a.btn-remove {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .total .label {
+    padding-right: 5px;
+  }
+  .actions {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  div#dropdown-cart .actions a.btn-view-cart {
+    text-decoration: underline;
+    display: inline-block;
+    margin-top: 1.5rem;
+    min-height: auto;
+  }
+  div#dropdown-cart a.button.btn-continue-shopping.close-cart {
+    background: transparent;
+    margin-top: 1rem;
+    min-height: 4rem;
+    font-size: 13px;
+    text-transform: uppercase;
+    width: 100%;
+    border: 1px solid;
+  }
+  div#dropdown-cart .actions a {
+    width: 100%;
+    text-transform: uppercase;
+    min-height: 4rem;
+    font-size: 13px;
+  }
+  div#dropdown-cart .actions .btn-checkout {
+    color: white;
+}
+  .cart-collateral {
+    position: absolute;
+    right: 0;
+    text-align: end;
+    bottom: 0;
+    width: 100%;
+    font-weight: 600;
+  }
+  div#dropdown-cart .descriptive-text {
+    font-size: 11px;
+    text-transform: uppercase;
+    line-height: 1.4rem;
+    margin-top: 1rem;
+  }
+  div#dropdown-cart .product-details * {
+    text-transform: capitalize;
+    font-size: 12px;
+    line-height: 2.1rem;
+  }
+  a.product-name {
+    margin-bottom: 0;
+    display: block;
+  }
+  div#dropdown-cart .cart-quantity {
+    margin-top: 1rem;
+        position: relative;
+    z-index: 1;
+  }
+  div#dropdown-cart .cart-quantity input.quantity__input {
+    pointer-events: none;
+    height: 3.5rem;
+    border: none;
+  }
+  div#dropdown-cart .cart-quantity .quantity {
+    width: calc(11rem / var(--font-body-scale) + var(--inputs-border-width) * 2);
+    min-height: 3.5rem;
+        border: 1px solid rgba(0,0,0,0.06);
+    background: #fafafa;
+  }
+  div#dropdown-cart .cart-quantity .quantity__button {
+    width: calc(3.5rem / var(--font-body-scale));
+    height: 3.5rem;
+  }
+  div#dropdown-cart .cart-quantity .quantity:after{
+    display:none;
+  }
+  .no-items {
+    text-align: center;
+  }
+  p.cart_empty {
+    margin-bottom: 0;
+  }
+  div#dropdown-cart .no-items a.button.btn-continue-shopping.close-cart {
+    background: black;
+    color: white;
+  }
+  .no-items {
+    margin: 2rem 0 1rem;
+  }
+  div#dropdown-cart .product-vendor {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 11px;
+}
+select.quantity-dropdown {
+  width: 4.5rem;
+  cursor: pointer;
+  height: 2.3rem;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+  @media(max-width:749px) {
+    div#dropdown-cart {
+      width: 82%;
+      right: 2.2rem;
+      top: 7.3rem;
+    }
+    div#dropdown-cart .cart-title h5 {
+    font-size: 15px;
+    }
+    .cart-title {
+    padding: 0rem 0 1.2rem;
+  }
+  ol.mini-products-list {
+    max-height: 26rem;
+  }
+  ol.mini-products-list li {
+    padding: 10px 10px 10px 0px;
+  }
+  a.product-image {
+    flex: 0 0 25%;
+    height: 7rem;
+  }
+  ol.mini-products-list li img {
+    height: 6rem;
+}
+.product-details {
+    padding-left: 1.2rem;
+    flex: 0 0 74%;
+}
+.actions {
+    margin-top: 1rem;
+}
+div#dropdown-cart .actions a.btn-view-cart {
+    margin-top: 1rem;
+}
+div#dropdown-cart .cart-quantity .quantity {
+    width: calc(10rem / var(--font-body-scale) + var(--inputs-border-width) * 2);
+    min-height: 3rem;
+}
+div#dropdown-cart .cart-quantity .quantity__button {
+    width: calc(3rem / var(--font-body-scale));
+    height: 3rem;
+}
+div#dropdown-cart .cart-quantity input.quantity__input {
+    height: 3rem;
+}
+.sticky-header-enable div#dropdown-cart {
+    top: 4.8rem;
+}
+  }
+</style>
+
+<div id="dropdown-cart">
+  <div class="cart-title">
+    <h5>SHOPPING CART
+    </h5>
+  </div>
+  <div class="no-items {% if cart.item_count > 0  %}hidden{% endif %}">
+    <p class="cart_empty">YOUR SHOPPING CART IS EMPTY
+    </p>
+    <div class="text-continue">
+      <a class="button btn-continue-shopping close-cart" href="/" title="Close">
+        CONTINUE SHOPPING
+      </a>
+    </div>
+  </div>
+  <div class="has-items {% if cart.item_count == 0  %}hidden{% endif %}">
+    <ol class="mini-products-list">
+      {% for item in cart.items %}
+        <li maxQuantity = "{{ item.variant.inventory_quantity }}" class="item" id="cart-item-{{ item.id }}" data-id="{{ item.id }}" data-line="{{ forloop.index }}">
+          {% render 'gtmProductCardPayload' product:item.product, variant_id: item.id  %}
+          <a href="{{ item.url }}" class="product-image">
+            <img loading="lazy" src="{{ item.image | product_img_url: '160x' }}" alt="{{ item.title }}">
+          </a>
+
+          <div class="product-details">
+            <a onclick="window.gtm_removeFromCart(this)" href="/" title="Remove" class="btn-remove">
+              {% render 'icon-remove' %}
+            </a>
+            <div class="product-vendor">
+              {{ item.product.vendor }}
+            </div>
+            <div class="product-name" href="{{item.url}}">
+              {{ item.product.title }}
+<span class=tdf-cart-item-t></span>             </a>
+            <div class="option">
+              {% if item.product.variants.size != 0 %}
+                {% unless item.variant.title contains 'Default' %}
+                  <small>{{ item.variant.title }}
+                  </small>
+                {% endunless %}
+              {% endif %}
+            </div>
+            <div class="cart-quantity tt">
+              <select class="quantity-dropdown {% if item.variant.inventory_quantity < 1 %}hidden{% endif %}">
+                {% assign quantity = item.variant.inventory_quantity %}
+                {% for i in (1..quantity) %}
+                  <option {% if item.quantity == i %}selected{% endif %} value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+              {% comment %} <div class="quantity">
+                <button class="quantity__button icon-minus" name="minus" type="button">
+                  {% render 'icon-minus' %}
+                </button>
+                <input
+                  class="quantity__input"
+                  type="number"
+                  value="{{ item.quantity }}"
+                  min="1"
+                >
+                <button class="quantity__button icon-plus" name="plus" type="button">
+                  {% render 'icon-plus' %}
+                </button>
+              </div> {% endcomment %}
+            </div>
+            <div class="cart-collateral">
+              <span class="price">
+                <span class=tdf-cart-item-p-p>{{ item.price | money }}</span>
+              </span>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+    <div class="summary">
+      <div class="total">
+        <span class="label">
+          <span>Grand Total
+          </span>
+        </span>
+        <span class="price"><span style="display:none" class="tdf-cart-total-flag"></span>
+          {{ cart.total_price | money }}
+        </span>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="button btn-continue-shopping btn-checkout" href="/checkout" title="CHECKOUT">
+        CHECKOUT
+      </a>
+      <a class="btn-view-cart" href="/cart" title="VIEW FULL CART">
+        VIEW FULL CART
+      </a>
+    </div>
+  </div>
+</div> 
+{% comment %}
+{% render 'gtm', 
+  event: "cartView", 
+  section_name: "Cart Dropdown", 
+  section_id: "cart_dropdown", 
+  product_list: cart.items,
+  products_per_page: 99999999   
+%}
+{% endcomment %}

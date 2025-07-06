@@ -1,0 +1,223 @@
+{% if template == 'collection.category' %}
+  <style>
+    /* Experience */
+    /* ================================================================ */
+    .experienceWrapper {
+      width: 100%;
+      padding: 7rem 0 6rem;
+      margin-top: 1.5rem;
+    }
+
+    .experienceContainer {
+      margin: 0 auto;
+    }
+
+    slider-component.slider-mobile-gutter.slider-component-desktop {
+      margin-left: 9rem;
+    }
+
+    .experienceWrapper .collection__title.title-wrapper--self-padded-tablet-down {
+      padding: 5rem 0 0;
+      width: 45rem;
+      margin: 0;
+    }
+
+    .experienceWrapper .slider-component-full-width .slider--desktop .slider__slide:first-child {
+      margin-left: 0;
+      scroll-margin-left: 0;
+    }
+
+    .experienceWrapper .slider--desktop .slider__slide:first-child {
+      margin-left: 0;
+      scroll-margin-left: 0;
+    }
+
+    .experienceWrapper .slider-component-full-width .slider--desktop {
+      scroll-padding-left: 0;
+    }
+
+    .experienceWrapper .slider-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-right: 9rem;
+      margin-top: -1rem;
+    }
+
+    .experienceTxtImg2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin: auto;
+      padding-bottom: 0;
+      background-color: black;
+      border-top: 8px solid #44AC34;
+    }
+    .col-leftCategory {
+      width: 50%;
+      padding: 13.5rem;
+      background: black;
+    }
+
+    .experienceTxtImg2 .title {
+      font-size: 32px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .experienceTxtImg2 .collection__description {
+      font-size: 14px;
+      width: 85%;
+      color: #fff;
+    }
+
+    .experienceTxtImg2 .expericceRightImg {
+      width: 50%;
+    }
+
+    .expiRimg {
+      width: 100%;
+    }
+    .col-leftCategory {
+      width: 31%;
+      padding: 0;
+      background: black;
+      margin: 0 auto;
+    }
+    .btnShopNow {
+      width: 145px;
+      height: 48px;
+      background: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media(max-width:767px) {
+      .experienceTxtImg2 {
+        flex-direction: column;
+      }
+      .btnShopNow {
+        display: none;
+      }
+
+      .experienceWrapper .collection__title.title-wrapper--self-padded-tablet-down {
+        width: 100%;
+        padding-top: 0;
+      }
+      .experienceTxtImg2 {
+        width: 100%;
+        padding-bottom: 0;
+        margin-bottom: 15px;
+      }
+      .grid--2-col-tablet-down .grid__item {
+        padding: 0 6px;
+      }
+      .slider--tablet.grid--peek.grid--2-col-tablet-down .grid__item,
+      .grid--peek .grid__item {
+        width: calc(50% - var(--grid-mobile-horizontal-spacing) - 2rem);
+      }
+
+      .experienceTxtImg2 .expericceRightImg {
+        width: 100%;
+        margin-top: 25px;
+        background: white;
+      }
+      .experienceTxtImg2 .collection__description {
+        font-size: 12px;
+      }
+
+      .experienceWrapper {
+        padding: 3.8rem 0 0;
+        margin-top: 30px;
+      }
+      .brandsWrapper {
+        padding: 25px 0 30px;
+      }
+
+      .experienceTxtImg2 .title {
+        font-size: 24px;
+      }
+      .col-leftCategory {
+        width: 90%;
+        padding: 0;
+        background: black;
+      }
+      .experienceTxtImg2 .collection__description {
+        font-size: 14px;
+        width: 98%;
+        color: #fff;
+      }
+
+    }
+  </style>
+{% endif %}
+<div class="experienceTxtImg2">
+  <div class="col-leftCategory">
+    {%- if section.settings.title != blank -%}
+      <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    <div class="collection__description subparaCstm {{ section.settings.description_style }} rte">
+      {{ section.settings.description -}}
+    </div>
+    <a class="btnShopNow" href="{{section.settings.btnTxtLink}}">{{ section.settings.btnTxt }}</a>
+  </div>
+  <div class="expericceRightImg">
+    <img
+      src="{{section.settings.rimg | img_url: 'master'}}"
+      class="expiRimg"
+      loading="lazy"
+      alt="edit"
+      width="{{ section.settings.rimg.width }}"
+      height="{{ section.settings.rimg.height }}"
+      />
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Category two Side",
+    "tag": "section",
+    "class": "section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+        "type": "inline_richtext",
+        "id": "title",
+        "default": "Featured collection",
+        "label": "t:sections.featured-collection.settings.title.label"
+      },
+      {
+        "type": "inline_richtext",
+        "id": "description",
+        "default": "Elevate your style and performance with our collection of Adidas watches, designed with high-performance features and sleek design.",
+        "label": "t:sections.featured-collection.settings.description.label"
+      },
+      {
+        "type": "image_picker",
+        "id": "rimg",
+        "label": "Right Image"
+      },
+      {
+        "type": "text",
+        "id": "btnTxt",
+        "label": "Button Text"
+      }, {
+        "type": "url",
+        "id": "btnTxtLink",
+        "label": "Button Text Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Category two Side"
+      }
+    ]
+  }
+{% endschema %}

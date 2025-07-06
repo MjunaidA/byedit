@@ -1,0 +1,293 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.enable_quick_add -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<style>
+.video-with-swiper-container img, .video-with-swiper-container video{
+   width:100%;
+   height:100%;
+}
+{% if section.settings.show_arrow == true %}
+    .prev-preminum, .next-preminum{
+      display:block!important;
+    }
+{% endif %}
+.video-with-swiper-wrapper .next-preminum:after, .video-with-swiper-wrapper .prev-preminum:after{
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #000;
+  }
+
+.video-with-swiper-wrapper .optionSize{
+    justify-content: center!important;
+    align-items: center!important;
+}
+.video-with-swiper-wrapper .price__container,.video-with-swiper-wrapper .card__heading, .video-with-swiper-wrapper  .price-item{
+  text-align:center;
+  display:block;
+}
+.video-with-swiper-wrapper .swiper-button-next.swiper-button-disabled, .video-with-swiper-wrapper .swiper-button-prev.swiper-button-disabled{
+  pointer-events: unset;
+}
+.video-with-swiper-wrapper .card--standard{
+  margin:0 auto
+}
+@media screen and (min-width:750px) and (max-width:991.9px){
+  .video-with-swiper-wrapper .card--standard{
+    max-width:35.5%;
+  }
+  .video-with-swiper-container .card__information {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+ 
+}
+@media screen and (min-width:992px) and (max-width:1400px){
+  .video-with-swiper-wrapper .card--standard{
+    max-width:41.5%;
+  }
+  .video-with-swiper-container .card__information {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+@media screen and (min-width:1401px){
+  .video-with-swiper-wrapper .card--standard{
+    max-width:50.5%;
+  }
+}
+@media screen and (min-width:750px){
+   .video-with-swiper-wrapper{
+      display:flex;
+      border-top: 1px solid #0000001A;
+   }
+   .video-main-con, .swiper-main-con{
+      width:50%;
+   }
+  .{{section.id}}{
+     padding-bottom:{{ section.settings.padding-bottom-dk }}rem;
+  }
+  .cstm-media-mb{
+        display:none;
+    }
+  .next-preminum{
+     right:25%
+  }
+  .prev-preminum{
+     left:25%;
+  }
+}
+@media screen and (max-width:749px){
+   .{{section.id}}{
+       padding-bottom:{{ section.settings.padding-bottom-mb }}rem;
+    }
+   .cstm-media-dk{
+      display:none;
+    }
+    .next-preminum{
+      right:4%
+    }
+    .prev-preminum{
+      left:4%;
+    }
+    .video-with-swiper-wrapper .card--standard{
+      max-width:70%;
+    }
+}
+</style>
+
+
+
+<div class="video-with-swiper-container {{ section.id }}">
+     <div class="video-with-swiper-wrapper">
+         <div class="video-main-con">
+               {% if section.settings.url != blank %}
+                 <a href="{{ section.settings.url }}">
+               {% endif %}
+                        {% if section.settings.video-dk != blank %}
+                              <div class="cstm-banner-video">
+                                     <video class="cstm-media-dk" preload="none" class="banner-v" autoplay muted loop playsinline data-src="{{ section.settings.video-dk.sources.last.url  }}" >
+                                         <source src="{{ section.settings.video-dk.sources.last.url  }}" type="video/mp4" >
+                                     </video>
+                                     {% if section.settings.video-mb.sources.last.url  %}
+                                        <video class="cstm-media-mb" class="banner-mb" preload="none" autoplay muted loop playsinline  playsinline data-src="{{ section.settings.video-mb.sources.last.url  }}">
+                                             <source src="{{ section.settings.video-mb.sources.last.url  }}" type="video/mp4" >
+                                        </video>
+                                     {% endif %}
+                              </div>
+                          {% else section.settings.image != blank %}
+                               <div class="cstm-banner-img">  
+                                      <img class="desktopImage cstm-media-dk" src="{{ section.settings.image | img_url:"master" }}" width="100%" height="100%" alt="{{ collection.handle }}">
+                                    {% if section.settings.image-mb != blank %}
+                                      <img class="mobileImage cstm-media-mb" src="{{ section.settings.image-mb | img_url:"master" }}" width="100%" height="100%" alt="{{ collection.handle }}">
+                                    {% endif %}
+                               </div>
+                         {% endif %}
+               {% if section.settings.url != blank %}
+                </a>
+               {% endif %}
+         </div>
+          <div class="swiper-main-con">
+               <div class="swiper premium-swiper">
+                   <div class="swiper-wrapper">
+                       {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+                             {% assign lazy_load = false %}
+                              {%- if forloop.index > 2 -%}
+                                {%- assign lazy_load = true -%}
+                              {%- endif -%}
+                             <div class="swiper-slide">
+                                 {% render 'card-product',
+                                    card_product: product,
+                                    media_aspect_ratio: section.settings.image_ratio,
+                                    show_secondary_image: section.settings.show_secondary_image,
+                                    show_vendor: section.settings.show_vendor,
+                                    show_rating: section.settings.show_rating,
+                                    lazy_load: lazy_load,
+                                    show_quick_add: section.settings.enable_quick_add,
+                                    section_id: section.id
+                                  %}
+                             </div>
+                        {% endfor %}
+                   </div>
+                 <div class="swiper-button-next next-preminum"></div>
+                <div class="swiper-button-prev prev-preminum"></div>
+               </div>
+          </div>
+     </div>
+</div>
+
+
+<script>
+   var swiper = new Swiper(".{{ section.id }} .premium-swiper", {
+        slidesPerView: "1",
+        navigation: {
+          nextEl: ".next-preminum",  
+          prevEl: ".prev-preminum",
+        },
+    })
+</script>
+
+{% schema %}
+  {
+    "name": "Video with Swiper",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Default Collection Image Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "image-mb",
+            "label": "Default Collection Image Mobile"
+          },
+          {
+            "type": "video",
+            "id": "video-dk",
+            "label": "Select desktop video"
+          },
+          {
+            "type": "video",
+            "id": "video-mb",
+            "label": "Select mobile video"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Select Url"
+          },
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Select collection"
+          },
+          {
+          "type": "range",
+          "id": "products_to_show",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "label": "Maximum product to show"
+         },
+         {
+          "type": "select",
+          "id": "image_ratio",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+            },
+            {
+              "value": "portrait",
+              "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+            },
+            {
+              "value": "square",
+              "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+            }
+          ],
+          "default": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_secondary_image",
+            "default": false,
+            "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_vendor",
+            "default": false,
+            "label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_rating",
+            "default": false,
+            "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+            "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_quick_add",
+            "default": false,
+            "label": "t:sections.main-collection-product-grid.settings.enable_quick_buy.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_arrow",
+            "label": "Show arrows",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "padding-bottom-dk",
+            "label": "padding-bottom desktop",
+            "info":"unit rem"
+          },
+          {
+            "type": "text",
+            "id": "padding-bottom-mb",
+            "label": "padding-bottom mobile",
+            "info":"unit rem"
+          }
+
+    ],
+    "presets": [
+    {
+      "name":"Video with Swiper"
+    }
+  ]
+  }
+{% endschema %}

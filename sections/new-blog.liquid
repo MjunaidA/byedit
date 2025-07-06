@@ -1,0 +1,21 @@
+
+{% for blog in blog.articles %}
+  {{ blog.title }}
+  <a href="{{ blog.url }}">
+    <img src="{{ blog.image.src |img_url:"master" }}">
+  </a>
+  {% endfor %}
+
+
+
+{% schema %}
+  {
+    "name": "blog",
+    "settings": [],
+    "presets": [
+      {
+        "name":"blog"
+      }
+    ]
+  }
+{% endschema %}

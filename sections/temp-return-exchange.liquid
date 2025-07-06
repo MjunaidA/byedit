@@ -1,0 +1,146 @@
+{{ 'pageTemplate.css' | asset_url | stylesheet_tag }}
+<style>
+  .wrapperTxt {
+    margin-top: 2rem;
+  }
+  .subtxtMain {
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+  }
+  .ansTxtMain {
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 310;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .boxInfo ul li {
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 310;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .boxInfo {
+    margin-top: 1rem;
+  }
+</style>
+<div class="mainPageWrapper">
+  <div class="mainFlexWrapper">
+    <div class="navigationPageTemp contentHeight">
+      <div class="menuWrapper">
+        <div class="titleWrapper">
+          <h3 class="menuHeading">Customer Care</h3>
+          <div onclick="mobileCaret()" class="mobile-only iconHeader">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="8"
+              viewBox="0 0 12 8"
+              fill="none">
+              <path
+                d="M0.400391 0.959993L5.92923 7.19922L11.6004 0.799221"
+                stroke="black"
+                stroke-width="0.784409" />
+            </svg>
+          </div>
+        </div>
+         <div class="meniItemWrapper">
+          <a style="all:unset;cursor:pointer" href="/pages/faqs">
+            <p class="menuITEM">Faqs</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/contact-us">
+            <p class="menuITEM">Contact Us</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/track-your-order">
+            <p class="menuITEM">TRACK YOUR ORDER</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/shopify-store-locator">
+            <p class="menuITEM">Store Locator</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/return-and-exchange">
+            <p class="menuITEM active">Returns</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/shipping">
+            <p class="menuITEM">Shipping</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/terms-of-use">
+            <p class="menuITEM">Terms & Conditions</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/privacy-policy">
+            <p class="menuITEM">Privacy Policy</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contentPageTemp contentHeight">
+
+      <div class="page-tite-cstm">
+        <h3>Returns</h3>
+      </div>
+
+      <div class="content-for-page-layout">
+        <div class="wrapperTxt">
+          {% for block in section.blocks %}
+            <div class="boxInfo">
+              <p class="subtxtMain">{{ block.settings.heading }}</p>
+              <p class="ansTxtMain">{{ block.settings.desc }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<script src="{{ 'pageTemplate.js' | asset_url }}" defer="defer"></script>
+
+
+{% schema %}
+  {
+    "name": "Return & Exchange Temp",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "info",
+        "name": "Add Store Timing",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Title",
+            "default": "How can I add store credit to my account?"
+          }, {
+            "type": "textarea",
+            "id": "desc",
+            "label": "Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Return & Exchange Page",
+        "category": "Page"
+      }
+    ]
+
+  }
+{% endschema %}

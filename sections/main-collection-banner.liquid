@@ -1,0 +1,177 @@
+{% unless collection.metafields.custom.collection_banner_show_hide.value == false %}
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  @media screen and (max-width: 749px) {
+    .collection-hero--with-image .collection-hero__inner {
+      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
+    }
+
+  }
+   @media screen and (max-width: 767px) {
+    .banner-mb{
+    width: 410px !important;
+    height: 100% !important;
+     }
+  }
+  .banner-v{
+    width: 900px !important;
+    height: 100% !important;
+  }
+{%- endstyle -%}
+
+<div class="collection-hero{% if section.settings.show_collection_image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient {% if section.settings.collection_logo_img %}brand-hero{% endif %}">
+{% unless collection.handle == 'all' %}
+  <div class="collection-hero__inner">
+    <div class="collection-hero__text-wrapper {% if section.settings.collection_logo_img %}brand-banner-description{% endif %}">
+      {% render  'breadcrumb' %}
+      <div class="collectionTextbox">
+      {% if section.settings.collection_logo_img %}
+        <div class="collection-logo"> 
+          <img src="{{ section.settings.collection_logo_img | img_url: 'master' }}" 
+            height="{{ section.settings.collection_logo_img.height }}"
+            width="{{ section.settings.collection_logo_img.width }}"
+            alt="{{ section.settings.collection_logo_img.alt | default: collection.title }}"
+            >
+        </div>
+      {% else %}
+        <h1 class="collection-hero__title">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {{- collection.title | escape -}}
+        </h1>
+      {% endif %}
+  
+      {%- if section.settings.show_collection_description -%}
+        <div class="collection-hero__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+      </div>
+     <div style="display:block!important;" class="emp"></div>
+    </div>
+
+  {%- if section.settings.show_collection_image and collection.image -%}
+  <div class="collection-hero__image-div">
+    {% if collection.image != blank %}
+      <img
+        src="{{ collection.image | img_url: 'master' }}"
+        alt="{{ collection.handle }}"
+        width="{{ collection.image.width }}"
+        height="{{ collection.image.height }}"
+      >
+    {% endif %}
+  </div>
+{%- else -%}
+<div class="collection-hero__image-div desktop-only">
+  {% if section.settings.image != blank %}
+    <img
+      src="{{ section.settings.image | img_url: 'master' }}"
+      alt="{{ collection.handle }}"
+      width="{{ section.settings.image.width }}"
+      height="{{ section.settings.image.height }}"
+    >
+  {% elsif section.settings.video-dk != blank %}
+    <video preload="none" class="banner-v" autoplay muted loop playsinline data-src="{{ section.settings.video-dk.sources.last.url  }}" >
+        <source src="{{ section.settings.video-dk.sources.last.url  }}" type="video/mp4" >
+    </video>
+  {% endif %}
+</div>
+
+  <div class="collection-hero__image-div mobile-only">
+    {% if section.settings.image-mb != blank %}
+      <img
+        src="{{ section.settings.image-mb | img_url: 'master' }}"
+        alt="{{ collection.handle }}"
+        width="{{ section.settings.image-mb.width }}"
+        height="{{ section.settings.image-mb.height }}"
+      >
+    {% else %}
+     <video class="banner-mb" preload="none" autoplay muted loop playsinline  playsinline data-src="{{ section.settings.video-mb.sources.last.url  }}">
+      <source src="{{ section.settings.video-mb.sources.last.url  }}" type="video/mp4" >
+    </video>
+    {% endif %}
+  </div>
+{%- endif -%}
+    
+  </div>
+  {% endunless %}
+</div>
+{% endunless %}
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_logo_img",
+      "label": "Collection Logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": false,
+      "label": "t:sections.main-collection-banner.settings.show_collection_image.label",
+      "info": "t:sections.main-collection-banner.settings.show_collection_image.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Default Collection Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "image-mb",
+      "label": "Default Collection Image Mobile"
+    },
+     {
+        "type": "video",
+        "id": "video-dk",
+        "label": "A Shopify-hosted video"
+      },
+    {
+        "type": "video",
+        "id": "video-mb",
+        "label": "A Shopify-hosted video"
+      },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+
+{% assign collectionHandle = collection.handle %}
+{% assign linkListAppend = "categories-" | append: collectionHandle %}
+{% if linkListAppend %}
+<div class="categories-container categories-{{ section.id }}">
+    <div class="categories-wrapper">
+        <div class="swiper sub-coll-slider">
+            <div class="swiper-wrapper">
+                      {% if collection.handle == collectionHandle %}
+                          {% for link in linklists[linkListAppend].links %}
+                             <div class="swiper-slide">
+                                   {% assign collectionHandle = collection.url | handle %}
+                                   {% assign linkHandle = link.url | handle %}
+                                   <a class="{% if linkHandle == collectionHandle %} categoriesActive {% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+                             </div>
+                          {% endfor %}
+                       {% endif %}
+            </div>
+            
+        </div>
+         <div class="swiper-button-next categories-next"></div>
+        <div class="swiper-button-prev categories-prev"></div>
+    </div>
+</div>
+
+
+{% endif %}

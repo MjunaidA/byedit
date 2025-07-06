@@ -1,0 +1,83 @@
+<style>
+    h3#igr-title, #igr-powered-by, .igr-image-stack-container {
+    display: none !important;
+}
+.instagram-header {
+    text-align: center;
+    margin: 3.5rem 0 1.7rem;
+}
+.instagram-header img {
+    max-width: 9%;
+}
+.cstm-title-heading {
+    font-size: 13px;
+    margin-bottom: 0.9rem;
+    letter-spacing: -0.05px;
+}
+#igr-post-container {
+    grid-gap: 2.7rem !important;
+}
+.igr-post-control button {
+    background: transparent !important;
+}
+#igr-post-container {
+    margin-left: -6.5rem !important;
+}
+@media(min-width: 768px) and (max-width:1199px){
+    .instagram-header img {
+        max-width: 100%;
+    }
+}
+@media(max-width:767px){
+    .instagram-header {
+    margin: 1rem 0 1.7rem;
+    }
+    .instagram-header img {
+    max-width: 33%;
+}
+#igr-post-container {
+    margin-left: -11.5rem !important;
+    grid-gap: 1rem !important;
+    grid-template-columns: calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px) calc(40% - 2px);
+}
+}
+</style>
+
+<section class="edit-instagram-feed">
+    <div class="instagram-header">
+        {% if section.settings.title != blank %}
+            <div class="cstm-title-heading">{{ section.settings.title  }}</div>
+        {% endif %}
+        {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image.src | img_url: 'master' }}" loading="lazy" alt="Instagram Logo">
+        {% endif %}
+    </div>
+    <div id="insta-feed" class="instafeed-slider"></div>
+</section>
+    
+{% schema %}
+{
+    "name":"Edit Instagrma Feed",
+    "settings":
+        [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Get inspired by our Instagram feed"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Add logo"
+            }
+        ],
+    "presets":
+        [
+            {
+                "name":"Edit Instagram Feed",
+                "category":"Instagram"
+            }
+        ]
+}
+{% endschema %}

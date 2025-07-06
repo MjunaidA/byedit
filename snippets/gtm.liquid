@@ -1,0 +1,375 @@
+{% case event %}
+  {% when 'checkout' %}
+
+  {%- capture payload -%}
+    [
+    {%- for item in product_list limit: products_per_page -%}
+      {%- assign couponCode = "" -%}
+      {%- for tag in item.product.tags -%}
+        {%- if tag contains 'PromoKey' -%}
+          {%- assign couponCode = tag | split: ': ' | last -%}
+      {%- endif -%}
+      {%- endfor -%}
+
+      {% assign selected_variant = item.variant %}
+  
+      {% assign original_price = item.variant.price | divided_by:100.0  %}
+      {% assign sale_price = item.variant.compare_at_price | divided_by:100.0  %}
+      
+      {% if sale_price != blank and sale_price != original_price %}
+        {% assign discount_percentage = original_price | divided_by: sale_price %}
+        {% assign discount_percentage = 1 | minus : discount_percentage %}
+        {% assign discount_percentage = discount_percentage | times : 100 | round: 2 | append: "%" %}
+      {% else %}
+        {% assign discount_percentage = 0 | append : "%" %}
+      {% endif %}
+
+      
+      {% if selected_variant.compare_at_price > selected_variant.price and selected_variant.available %}
+        {% assign sale_status = "On Offer" %}
+      {% else %}
+        {% assign sale_status = "No Offer" %}
+      {% endif %}
+      {% if selected_variant.available %}
+        {% assign stock_status = "In Stock" %}
+      {% else %}
+        {% assign stock_status = "Out of Stock" %}
+      {% endif %}
+      
+      
+        {
+          "item_id": "{{ item.product_id }}",
+          "item_name": "{{ item.title }}",
+          "item_brand": "{{ item.vendor }}",
+          "coupon": "{{ couponCode }}",
+          "index": "",
+          "item_category": "{{ item.product.type }}",
+          "item_category2": "{{ item.product.collections[1].title }}",
+          "item_category3": "{{ item.product.collections[2].title }}",
+          "item_category4": "{{ item.product.collections[3].title }}",
+          "item_category5": "{{ item.product.collections[4].title }}",
+          "item_variant_id":"{{ item.variant_id }}",
+          "item_variant": "{{ item.variant.title }}",
+          "item_list_id": "{{ section_id }}",
+          "product_size": "{{ item.variant.option1 }}",
+          "item_list_name": "{{ section_name }}",
+          "price": "{{ item.price | divided_by: 100 }}",
+          "quantity": {{ item.quantity }},
+          "sale_status": "{{ sale_status }}",
+          "stock_status": "{{ stock_status }}",
+          "discount_percent": "{{ discount_percentage }}",
+          "product_gender": {% if item.product.tags contains 'Men' %}"Men" {% elsif item.product.tags contains "Women" %} "Women" {% else %} "Unisex" {% endif %}
+        }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+        ]
+      {%- endcapture -%}
+
+  <script>
+
+  
+    var checkoutItems = JSON.parse({{- payload | strip | json -}})
+    var tempCheckoutPayload = {
+      event: "",
+      ecommerce: {
+        currency: "{{ shop.currency }}",
+        value: {{ checkout.total_price | divided_by: 100 }},
+        coupon: "",
+        items: checkoutItems
+      }
+    }
+
+    if (Shopify.Checkout.step === 'contact_information') {      
+      tempCheckoutPayload.event = "begin_checkout"
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push(tempCheckoutPayload);    
+
+    }
+    else if (Shopify.Checkout.step === 'shipping_method') {      
+      tempCheckoutPayload.event = "add_shipping_info";
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push(tempCheckoutPayload); 
+    }
+    else if (Shopify.Checkout.step === 'payment_method') {      
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+        event: "add_payment_info",
+        ecommerce: {
+          currency: "{{ shop.currency }}",
+          value: {{ checkout.total_price | divided_by: 100 }},
+          coupon: "",
+          items: checkoutItems
+        }
+      }); 
+    }
+    else if (Shopify.Checkout.step === 'thank_you') {
+      let tempPurchasePayload = Object.assign({}, tempCheckoutPayload)
+      tempPurchasePayload.event = "purchase"
+      tempPurchasePayload.ecommerce['shipping_tier'] = "{{ checkout.shipping_method.title }}"
+      tempPurchasePayload.ecommerce['shipping_country'] = "{{ checkout.shipping_address.country }}"
+      tempPurchasePayload.ecommerce['shipping_city'] = "{{ checkout.shipping_address.city }}"
+      tempPurchasePayload.ecommerce['tax'] = {{ checkout.tax_price }}
+      tempPurchasePayload.ecommerce['shipping'] = {{ checkout.shipping_method.price }}
+      tempPurchasePayload.ecommerce['transaction_id'] = "{{ checkout.transactions[0].id }}"
+      tempPurchasePayload.ecommerce['payment_method'] = "{{ checkout.transactions[0].gateway_display_name }}"
+    
+      // console.log(tempPurchasePayload)  
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push(tempPurchasePayload)
+      window.dataLayer.push(pageloadEvent)
+
+      {% assign userType = 'Anonymous' %}    
+      {% assign loggedInStatus = 'No' %}    
+      {% if customer %}
+        {% assign userType = 'Registered user' %}   
+      {% assign loggedInStatus = 'Yes' %}    
+      {% endif %}
+
+      let payload = {
+        'pageType': 'checkout', 
+        'pageCategory': Shopify.Checkout.step, 
+        'storeLanguage': '{{ shop.locale }}', 
+        'storeCurrency': '{{ shop.currency }}', 
+        'storeCountry': 'UAE',
+        'userId': '{{ customer.id }}', 
+        'userType': '{{ userType }}', 
+        'loggedInStatus': '{{ loggedInStatus }}', 
+        'hashedEmail': '{{ customer.email }}', 
+        'userEmail': '{{ customer.email }}'
+      }
+
+       window.dataLayer.push(payload)
+     }
+
+    
+  </script>
+  
+  {% when 'cartView' %}
+    {%- capture payload -%}
+    [
+    {%- for item in product_list limit: products_per_page -%}
+      {%- assign couponCode = "" -%}
+      {%- for tag in item.product.tags -%}
+        {%- if tag contains 'PromoKey' -%}
+          {%- assign couponCode = tag | split: ': ' | last -%}
+      {%- endif -%}
+      {%- endfor -%}
+  
+      {% assign original_price = item.product.selected_or_first_available_variant.price | divided_by:100.0  %}
+      {% assign sale_price = item.product.selected_or_first_available_variant.compare_at_price | divided_by:100.0  %}
+      
+      {% if sale_price != blank and sale_price != original_price %}
+        {% assign discount_percentage = original_price | divided_by: sale_price %}
+        {% assign discount_percentage = 1 | minus : discount_percentage %}
+        {% assign discount_percentage = discount_percentage | times : 100 | round: 2 | append: "%" %}
+      {% else %}
+        {% assign discount_percentage = 0 | append : "%" %}
+      {% endif %}
+
+      {% assign selected_variant = item.variant %}
+      {% if selected_variant.compare_at_price > selected_variant.price and selected_variant.available %}
+        {% assign sale_status = "On Offer" %}
+      {% else %}
+        {% assign sale_status = "No Offer" %}
+      {% endif %}
+      {% if selected_variant.available %}
+        {% assign stock_status = "In Stock" %}
+      {% else %}
+        {% assign stock_status = "Out of Stock" %}
+      {% endif %}
+      
+      
+        {
+          "item_id": "{{ item.product.id }}",
+          "item_name": "{{ item.title }}",
+          "item_brand": "{{ item.vendor }}",
+          "coupon": "{{ couponCode }}",
+          "index": "",
+          "item_category": "{{ item.product.type }}",
+          "item_category2": "{{ item.product.collections[1].title }}",
+          "item_category3": "{{ item.product.collections[2].title }}",
+          "item_category4": "{{ item.product.collections[3].title }}",
+          "item_category5": "{{ item.product.collections[4].title }}",
+          "item_list_id": "{{ section_id }}",
+          "item_list_name": "{{ section_name }}",
+          "item_variant_id":"{{ item.id }} ",
+          "item_variant":"{{ item.title }} ",
+          "price": "{{ item.price | divided_by: 100 }}",
+          "quantity": {{ item.quantity }},
+          "sale_status": "{{ sale_status }}",
+          "stock_status": "{{ stock_status }}",
+          "discount_percent": "{{ discount_percentage }}",
+          "product_size" : "{{ item.variant.option1 }}",
+          "product_gender": {% if item.product.tags contains 'Men' %}"Men" {% elsif item.product.tags contains "Women" %} "Women" {% else %} "Unisex" {% endif %}
+        }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+        ]
+      {%- endcapture -%}
+    
+    <!-- product.metafields.custom.gender -->
+    
+    <script>
+      // console.log('Cart View GTM---------- {{ section_name }}')
+      var cartPayload = JSON.parse({{- payload | strip | json -}})
+      // console.log(JSON.parse({{- payload | strip | json -}}));
+      var tempCartPayload = {
+        event: "view_cart",
+        ecommerce: {
+          currency: "{{ shop.currency }}",
+          value: {{ cart.total_price | divided_by: 100 }},
+          items: cartPayload
+        } 
+      }
+          
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push(tempCartPayload);    
+
+    </script>
+    
+  {% when 'productList' %}
+    {%- capture payload -%}
+    [
+    {%- for item in product_list limit: products_per_page -%}
+      {%- assign couponCode = "" -%}
+      {%- for tag in item.tags -%}
+        {%- if tag contains 'PromoKey' -%}
+          {%- assign couponCode = tag | split: ': ' | last -%}
+      {%- endif -%}
+      {%- endfor -%}
+  
+      {% assign original_price = item.selected_or_first_available_variant.price | divided_by:100.0  %}
+      {% assign sale_price = item.selected_or_first_available_variant.compare_at_price | divided_by:100.0 %}
+      
+      {% if sale_price != blank and sale_price != original_price %}
+        {% assign discount_percentage = original_price | divided_by: sale_price %}
+        {% assign discount_percentage = 1 | minus : discount_percentage %}
+        {% assign discount_percentage = discount_percentage | times : 100 | round: 2 | append: "%" %}
+      {% else %}
+        {% assign discount_percentage = 0 | append : "%" %}
+      {% endif %}
+        {
+          "item_id": {{ item.id }},
+          "item_name": "{{ item.title }}",
+          "item_brand": "{{ item.vendor }}",
+          "coupon": "{{ couponCode }}",
+          "index": "{{ forloop.index }}",
+          "item_category": "{{ item.type }}",
+          "item_category2": "{{ item.collections[1].title }}",
+          "item_category3": "{{ item.collections[2].title }}",
+          "item_category4": "{{ item.collections[3].title }}",
+          "item_category5": "{{ item.collections[4].title }}",
+          "item_list_id": "{{ section_id }}",
+          "item_list_name": "{{ section_name }}",
+          "item_variant" : "{{ item.selected_or_first_available_variant.title }}",
+          "item_variant_id" : "{{ item.selected_or_first_available_variant.id }}",
+          "price": "{{ item.selected_or_first_available_variant.price | divided_by: 100 }}",
+          "quantity": 1,
+          "sale_status": {% if item.selected_or_first_available_variant.compare_at_price > item.selected_or_first_available_variant.price and item.selected_or_first_available_variant.available %}"On Offer"{% else %}"No Offer"{% endif %},
+          "stock_status": {% if item.selected_or_first_available_variant.available %}"In Stock"{% else %}"Out of Stock"{% endif %},
+          "discount_percent": "{{ discount_percentage }}",
+          "product_gender": {% if item.tags contains 'Men' %}"Men" {% elsif item.tags contains "Women" %} "Women" {% else %} "Unisex" {% endif %}
+        }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+        ]
+      {%- endcapture -%}
+    
+    <!-- product.metafields.custom.gender -->
+    
+    <script>
+      // console.log('Productlist GTM payload', JSON.parse({{- payload | strip | json -}}));
+      var jsonSectionData = JSON.parse({{- payload | strip | json -}});
+      var tempPayload = {
+        event: "view_item_list",
+        ecommerce: {
+          item_list_id: "{{ section_id }}",
+          item_list_name: "{{ section_name }}",
+          items: jsonSectionData
+        }
+      } 
+      window.dataLayer.push(tempPayload);
+
+      // run on loadmore
+      function gtmLoadmore(el, pageNo, proPerPage = 16) {
+        var tempCardItemData = []
+        el.forEach((item, index) => {
+          index = index + 1;
+          let itemData = item.querySelector('.gtmPayload').value
+          let cardData = JSON.parse(itemData).ecommerce.items[0];
+          cardData.index = index  + ((pageNo - 1) * proPerPage)
+          tempCardItemData.push(cardData);
+        })
+
+        var tempPayloadLoadMore = {
+          event: "view_item_list",
+          ecommerce: {
+            item_list_id: "{{ section_id }}",
+            item_list_name: "{{ section_name }}",
+            items: tempCardItemData
+          }
+        }
+        window.dataLayer.push(tempPayloadLoadMore);
+      }
+    </script>
+  {% when 'productPage' %}
+    <!-- productPage -->
+    {%- capture payloadProductPage -%}
+      {
+        "event": "view_item",
+        "ecommerce": {
+          "currency": "{{ shop.currency }}",
+          "value" : "",
+          "items":[
+            {%- assign couponCode = "" -%}
+            {%- for tag in product.tags -%}
+              {%- if tag contains 'PromoKey' -%}
+                {%- assign couponCode = tag | split: ': ' | last -%}
+            {%- endif -%}
+            {%- endfor -%}
+        
+            {% assign original_price = product.selected_or_first_available_variant.price | divided_by:100.0  %}
+            {% assign sale_price = product.selected_or_first_available_variant.compare_at_price | divided_by:100.0  %}
+            
+            {% if sale_price != blank and sale_price != original_price %}
+              {% assign discount_percentage = original_price | divided_by: sale_price %}
+              {% assign discount_percentage = 1 | minus : discount_percentage %}
+              {% assign discount_percentage = discount_percentage | times : 100 | round: 2 | append: "%" %}
+            
+            {% else %}
+              {% assign discount_percentage = 0 | append : "%" %}
+            {% endif %}
+            {
+              "item_id": {{ product.id }},
+              "item_name": "{{ product.title }}",
+              "item_brand": "{{ product.vendor }}",
+              "coupon": "{{ couponCode }}",
+              "index" : "",
+              "type": "{{ product.type }}",
+              "item_category": "{{ product.collections[0].title }}",
+              "item_category2": "{{ product.collections[1].title }}",
+              "item_category3": "{{ product.collections[2].title }}",
+              "item_category4": "{{ product.collections[3].title }}",
+              "item_category5": "{{ product.collections[4].title }}",
+              "item_list_id" : "{{ section.id }}",
+              "item_list_name" : "pdp",
+              "item_variant": "{{ product.first_available_variant.title }}",
+              "item_variant_id": "{{ product.first_available_variant.id }}",
+              "price" : "{{ product.price | divided_by:100 }}",
+              "quantity" : 1,
+              "sale_status": {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price and product.selected_or_first_available_variant.available %}"On Offer"{% else %}"No Offer"{% endif %},
+              "stock_status": {% if product.selected_or_first_available_variant %}"In Stock"{% else %}"Out of Stock"{% endif %},
+              "discount_percent": "{{ discount_percentage }}",
+              "product_gender": {% if product.tags contains 'Men' %}"Men" {% elsif product.tags contains "Women" %} "Women" {% else %} "Unisex" {% endif %}
+            }
+          ]
+        }
+      }
+    {%- endcapture -%}
+    <script>
+      let data = JSON.parse({{- payloadProductPage | strip | json -}});
+      window.dataLayer.push(data);
+      // console.log('product page view event', data)
+    </script>
+    <!-- end productPage -->
+
+  {% when 'wishlist' %}
+    
+{% endcase %}

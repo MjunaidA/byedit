@@ -1,0 +1,354 @@
+<style>
+  .mobileBottomBarWrapper {
+    display: none;
+  }
+  @media(max-width:990px) {
+    .mobileBottomBarWrapper {
+      display: block;
+      position: fixed;
+      background: white;
+      bottom: 0;
+      width: 100%;
+      padding: 10px 0;
+      filter: drop-shadow(0px -2px 6px rgba(0, 0, 0, 0.7));
+      z-index: 9999;
+    }
+    .btmBarFlex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cstmBoxBtm {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      width: 24%;
+      margin: 0 auto;
+    }
+    .txtBtm {
+      font-size: 10px;
+      margin-top: -6px;
+    }
+    .greenOn path {
+      stroke: #44AC34 !important;
+    }
+
+  }
+
+@media(max-width:767px){
+  .languageConverter-mobile-wrapper {
+    margin: -1rem 1.5rem 0;
+    {% comment %} border-top: 1px solid rgba(0,0,0,0.1); {% endcomment %}
+    padding-top: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: none;
+}
+.is-customer .languageConverter-mobile-wrapper {
+  margin: -0.5rem 1.5rem 0;
+}
+.languageConverter-mobile-wrapper select {
+    background: transparent;
+    border: none;
+    text-transform: uppercase;
+    width: 1.6rem;
+    appearance: none;
+    font-size: 12px;
+}
+.languageConverter-mobile-wrapper svg path {
+    fill: black;
+}
+.languageConverter-mobile-wrapper svg {
+    width: 16px;
+    height: 16px;
+    display: none;
+}
+}
+</style>
+<div id="MainBottomBar" class="mobileBottomBarWrapper">
+  <div class="btmBarFlex">
+    <div id="btmHomeId" class="cstmBoxBtm btmHome">
+      <div class="iconBtm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none">
+          <path
+            d="M20.3878 9.86624L12.8878 2.78811L12.8794 2.78061C12.6384 2.55991 12.3235 2.4375 11.9967 2.4375C11.67 2.4375 11.3551 2.55991 11.1141 2.78061L11.1056 2.78811L3.60564 9.86624C3.47298 9.98974 3.36734 10.1394 3.29538 10.3057C3.22342 10.4721 3.18669 10.6516 3.18751 10.8328V19.5C3.18751 19.8481 3.32579 20.1819 3.57194 20.4281C3.81808 20.6742 4.15192 20.8125 4.50001 20.8125H9.00001C9.34811 20.8125 9.68195 20.6742 9.92809 20.4281C10.1742 20.1819 10.3125 19.8481 10.3125 19.5V15C10.3125 14.9503 10.3323 14.9026 10.3674 14.8674C10.4026 14.8322 10.4503 14.8125 10.5 14.8125H13.5C13.5497 14.8125 13.5974 14.8322 13.6326 14.8674C13.6678 14.9026 13.6875 14.9503 13.6875 15V19.5C13.6875 19.8481 13.8258 20.1819 14.0719 20.4281C14.3181 20.6742 14.6519 20.8125 15 20.8125H19.5C19.8481 20.8125 20.1819 20.6742 20.4281 20.4281C20.6742 20.1819 20.8125 19.8481 20.8125 19.5V10.8328C20.8125 10.6511 20.7747 10.4713 20.7016 10.3049C20.6285 10.1386 20.5217 9.98917 20.3878 9.86624ZM19.6875 19.5C19.6875 19.5497 19.6678 19.5974 19.6326 19.6326C19.5974 19.6677 19.5497 19.6875 19.5 19.6875H15C14.9503 19.6875 14.9026 19.6677 14.8674 19.6326C14.8323 19.5974 14.8125 19.5497 14.8125 19.5V15C14.8125 14.6519 14.6742 14.3181 14.4281 14.0719C14.1819 13.8258 13.8481 13.6875 13.5 13.6875H10.5C10.1519 13.6875 9.81808 13.8258 9.57194 14.0719C9.32579 14.3181 9.18751 14.6519 9.18751 15V19.5C9.18751 19.5497 9.16776 19.5974 9.1326 19.6326C9.09743 19.6677 9.04974 19.6875 9.00001 19.6875H4.50001C4.45029 19.6875 4.40259 19.6677 4.36743 19.6326C4.33227 19.5974 4.31251 19.5497 4.31251 19.5V10.8328C4.31246 10.8067 4.31785 10.7809 4.32834 10.757C4.33883 10.7331 4.3542 10.7117 4.37345 10.694L4.38189 10.6865L11.8763 3.6103C11.9104 3.58049 11.9542 3.56407 11.9995 3.56407C12.0449 3.56407 12.0887 3.58049 12.1228 3.6103L19.6181 10.6875L19.6256 10.695C19.6451 10.7125 19.6606 10.7339 19.6713 10.7578C19.6819 10.7817 19.6875 10.8076 19.6875 10.8337V19.5Z"
+            fill="black"
+            fill-opacity="0.5" />
+        </svg>
+      </div>
+      <div class="txtBtm">Home</div>
+    </div>
+    <div id="btmBrandId" class="cstmBoxBtm btmBrands">
+      <div class="iconBtm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="24"
+          viewBox="0 0 25 24"
+          fill="none">
+          <path
+            d="M22.1947 11.7572L12.8834 2.4459C12.7617 2.32378 12.6171 2.22694 12.4578 2.16097C12.2985 2.095 12.1277 2.06121 11.9553 2.06153H3.26563C3.11644 2.06153 2.97337 2.12079 2.86788 2.22628C2.76239 2.33177 2.70313 2.47484 2.70313 2.62403V11.3137C2.70281 11.4861 2.73661 11.6569 2.80257 11.8162C2.86854 11.9755 2.96538 12.1201 3.0875 12.2418L12.3988 21.5531C12.5206 21.675 12.6653 21.7717 12.8246 21.8376C12.9838 21.9036 13.1545 21.9376 13.3269 21.9376C13.4992 21.9376 13.6699 21.9036 13.8292 21.8376C13.9884 21.7717 14.1331 21.675 14.255 21.5531L22.1947 13.6134C22.3166 13.4915 22.4133 13.3468 22.4792 13.1876C22.5452 13.0283 22.5792 12.8576 22.5792 12.6853C22.5792 12.5129 22.5452 12.3422 22.4792 12.183C22.4133 12.0237 22.3166 11.879 22.1947 11.7572ZM21.3988 12.8175L13.4591 20.7572C13.4417 20.7746 13.421 20.7884 13.3982 20.7979C13.3754 20.8073 13.351 20.8121 13.3264 20.8121C13.3018 20.8121 13.2774 20.8073 13.2546 20.7979C13.2318 20.7884 13.2112 20.7746 13.1938 20.7572L3.88344 11.4459C3.84823 11.4109 3.82834 11.3634 3.82813 11.3137V3.18653H11.9553C12.005 3.18674 12.0525 3.20663 12.0875 3.24184L21.3988 12.5521C21.4162 12.5696 21.43 12.5902 21.4395 12.613C21.4489 12.6358 21.4537 12.6602 21.4537 12.6848C21.4537 12.7094 21.4489 12.7338 21.4395 12.7566C21.43 12.7794 21.4162 12.8 21.3988 12.8175ZM8.32813 6.74903C8.32813 6.93445 8.27314 7.1157 8.17013 7.26987C8.06712 7.42404 7.9207 7.54421 7.74939 7.61516C7.57809 7.68612 7.38959 7.70469 7.20773 7.66851C7.02587 7.63234 6.85883 7.54305 6.72771 7.41194C6.5966 7.28083 6.50731 7.11378 6.47114 6.93192C6.43497 6.75007 6.45353 6.56157 6.52449 6.39026C6.59545 6.21895 6.71561 6.07254 6.86978 5.96952C7.02395 5.86651 7.20521 5.81153 7.39063 5.81153C7.63927 5.81153 7.87772 5.9103 8.05354 6.08611C8.22936 6.26193 8.32813 6.50039 8.32813 6.74903Z"
+            fill="black"
+            fill-opacity="0.5" />
+        </svg>
+      </div>
+      <div class="txtBtm">Brands</div>
+
+    </div>
+    <div id="btmCategoryId" class="cstmBoxBtm btmCategory">
+      <div class="iconBtm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="25"
+          viewBox="0 0 25 25"
+          fill="none">
+          <path
+            d="M4.64941 6.33105H20.5601M4.64941 12.5185H20.5601M4.64941 18.706H20.5601"
+            stroke="black"
+            stroke-opacity="0.5"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="txtBtm">Category</div>
+
+    </div>
+    <div id="btmAccountId" class="cstmBoxBtm btmAccount">
+      <div class="iconBtm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none">
+          <path
+            d="M12 2.4375C10.1087 2.4375 8.25991 2.99833 6.68736 4.04907C5.11482 5.09981 3.88917 6.59327 3.16541 8.34059C2.44164 10.0879 2.25227 12.0106 2.62125 13.8656C2.99022 15.7205 3.90096 17.4244 5.2383 18.7617C6.57564 20.099 8.27951 21.0098 10.1345 21.3788C11.9894 21.7477 13.9121 21.5584 15.6594 20.8346C17.4067 20.1108 18.9002 18.8852 19.9509 17.3126C21.0017 15.7401 21.5625 13.8913 21.5625 12C21.5595 9.46478 20.5511 7.03425 18.7584 5.24158C16.9658 3.44891 14.5352 2.44048 12 2.4375ZM6.6975 18.5625C7.24762 17.6477 8.02503 16.8909 8.95417 16.3654C9.88331 15.84 10.9326 15.5638 12 15.5638C13.0674 15.5638 14.1167 15.84 15.0458 16.3654C15.975 16.8909 16.7524 17.6477 17.3025 18.5625C15.8028 19.7786 13.9308 20.4422 12 20.4422C10.0692 20.4422 8.19716 19.7786 6.6975 18.5625ZM8.8125 11.25C8.8125 10.6196 8.99945 10.0033 9.3497 9.47912C9.69994 8.95494 10.1978 8.54639 10.7802 8.30513C11.3626 8.06388 12.0035 8.00076 12.6219 8.12375C13.2402 8.24674 13.8081 8.55032 14.2539 8.9961C14.6997 9.44188 15.0033 10.0098 15.1263 10.6281C15.2492 11.2465 15.1861 11.8874 14.9449 12.4698C14.7036 13.0522 14.2951 13.5501 13.7709 13.9003C13.2467 14.2506 12.6304 14.4375 12 14.4375C11.1546 14.4375 10.3439 14.1017 9.7461 13.5039C9.14833 12.9061 8.8125 12.0954 8.8125 11.25ZM18.1416 17.7787C17.2578 16.4045 15.9367 15.3681 14.3916 14.8369C15.162 14.3237 15.7469 13.5762 16.0597 12.705C16.3726 11.8337 16.3967 10.8849 16.1287 9.99883C15.8606 9.11276 15.3145 8.33648 14.5712 7.78476C13.8278 7.23303 12.9267 6.93515 12.0009 6.93515C11.0752 6.93515 10.1741 7.23303 9.43072 7.78476C8.68737 8.33648 8.14129 9.11276 7.87322 9.99883C7.60514 10.8849 7.62931 11.8337 7.94214 12.705C8.25496 13.5762 8.83985 14.3237 9.61032 14.8369C8.06519 15.3681 6.74413 16.4045 5.86032 17.7787C4.73047 16.5798 3.97634 15.0762 3.69098 13.4537C3.40562 11.8311 3.60151 10.1605 4.25448 8.648C4.90745 7.13547 5.98893 5.84718 7.3655 4.94209C8.74206 4.037 10.3535 3.5547 12.0009 3.5547C13.6484 3.5547 15.2598 4.037 16.6364 4.94209C18.013 5.84718 19.0944 7.13547 19.7474 8.648C20.4004 10.1605 20.5963 11.8311 20.3109 13.4537C20.0255 15.0762 19.2714 16.5798 18.1416 17.7787Z"
+            fill="black"
+            fill-opacity="0.5" />
+        </svg>
+      </div>
+      <div class="txtBtm">Account</div>
+
+    </div>
+
+  </div>
+</div>
+<script>
+  let sidebar = document.getElementById('Details-menu-drawer-container');
+
+  let category = document.getElementById('btmCategoryId');
+  let brand = document.getElementById('btmBrandId');
+  let home = document.getElementById('btmHomeId');
+  let account = document.getElementById('btmAccountId');
+  // console.log("account", account)
+
+  let innerDrawer = sidebar.querySelector('#menu-drawer .menu-drawer__inner-container .menu-drawer__navigation-container');
+
+  let homeIcon = home.querySelector('.iconBtm svg');
+  homeIcon.classList.add("greenOn");
+  homeIcon.setAttribute("fill", "green");
+  let homeTxt = home.querySelector('.txtBtm');
+  homeTxt.style.color = "green";
+
+// category
+  category.onclick = function() {
+    sidebar.setAttribute("open", "open");
+    sidebar
+      .classList
+      .add('menu-opening')
+
+  // div management
+      innerDrawer
+      .classList
+      .remove('btmBrand2');
+    innerDrawer.classList.remove('btmAccount2');
+    innerDrawer.classList.add('btmCategory2');
+
+    let categoryBox = document.querySelector('#menu-drawer .menu-drawer__navigation-container.btmCategory2');
+    console.log("categoryBox", categoryBox)
+    let categoryShow = categoryBox.querySelector('.menu-drawer__navigation');
+    categoryShow.style.display = "block";
+    let accountBox = categoryBox.querySelector(".mobileAllAccounts");
+    accountBox.style.display = "none";
+    let brandBox = categoryBox.querySelector(".mobileAllBrands");
+    brandBox.style.display = "none";
+
+// color
+    let iconCat = category.querySelector('.iconBtm svg');
+    iconCat.classList.add("greenOn");
+    iconCat.setAttribute("fill", "green");
+    let catTxt = category.querySelector('.txtBtm');
+    catTxt.style.color = "#44AC34";
+
+    let iconAcc = account.querySelector('.iconBtm svg');
+    iconAcc.classList.remove("greenOn");
+    iconAcc.setAttribute("fill", "none");
+    let accTxt = account.querySelector('.txtBtm');
+    accTxt.style.color = "gray";
+
+    let iconBrand = brand.querySelector('.iconBtm svg');
+    iconBrand.classList.remove("greenOn");
+    iconBrand.setAttribute("fill", "none");
+    let brandTxt = brand.querySelector('.txtBtm');
+    brandTxt.style.color = "gray";
+
+    let iconHome = home.querySelector('.iconBtm svg');
+    iconHome.classList.remove("greenOn");
+    iconHome.setAttribute("fill", "none");
+    let homeTxt = home.querySelector('.txtBtm');
+    homeTxt.style.color = "gray";
+  };
+
+// account
+  account.onclick = function() {
+    sidebar.setAttribute("open", "open");
+    sidebar
+      .classList
+      .add('menu-opening')
+
+      innerDrawer
+      .classList
+      .remove('btmCategory2');
+    innerDrawer.classList.remove('btmBrand2');
+    innerDrawer.classList.add('btmAccount2');
+
+    let accountBox = document.querySelector('#menu-drawer .menu-drawer__navigation-container.btmAccount2');
+    console.log("accountBox", accountBox);
+    let accountShow = accountBox.querySelector('.mobileAllAccounts');
+    accountShow.style.display = "block";
+    let categorytBox = accountBox.querySelector(".menu-drawer__navigation");
+    categorytBox.style.display = "none";
+    let brandBox = accountBox.querySelector(".mobileAllBrands");
+    brandBox.style.display = "none";
+
+// color
+    let iconCat = category.querySelector('.iconBtm svg');
+    iconCat.classList.remove("greenOn");
+    iconCat.setAttribute("fill", "none");
+    let catTxt = category.querySelector('.txtBtm');
+    catTxt.style.color = "gray";
+
+    let iconAcc = account.querySelector('.iconBtm svg');
+    iconAcc.classList.add("greenOn");
+    iconAcc.setAttribute("fill", "green");
+    let accTxt = account.querySelector('.txtBtm');
+    accTxt.style.color = "green";
+
+    let iconBrand = brand.querySelector('.iconBtm svg');
+    iconBrand.classList.remove("greenOn");
+    iconBrand.setAttribute("fill", "none");
+    let brandTxt = brand.querySelector('.txtBtm');
+    brandTxt.style.color = "gray";
+
+    let iconHome = home.querySelector('.iconBtm svg');
+    iconHome.classList.remove("greenOn");
+    iconHome.setAttribute("fill", "none");
+    let homeTxt = home.querySelector('.txtBtm');
+    homeTxt.style.color = "gray";
+
+  };
+
+// brand
+  brand.onclick = function() {
+    sidebar.setAttribute("open", "open");
+    sidebar.classList.add('menu-opening');
+
+    innerDrawer.classList.remove('btmCategory2');
+    innerDrawer.classList.remove('btmAccount2');
+    innerDrawer.classList.add('btmBrand2');
+
+    let brandBox = document.querySelector('#menu-drawer .menu-drawer__navigation-container.btmBrand2');
+    console.log("brandBox", brandBox);
+    let brandShow = brandBox.querySelector('.mobileAllBrands')
+    brandShow.style.display = "block";
+    let categorytBox = brandBox.querySelector(".menu-drawer__navigation");
+    categorytBox.style.display = "none";
+    let accountBox = brandBox.querySelector(".mobileAllAccounts");
+    accountBox.style.display = "none";
+
+// color
+    let iconCat = category.querySelector('.iconBtm svg');
+    iconCat.classList.remove("greenOn");
+    iconCat.setAttribute("fill", "none");
+    let catTxt = category.querySelector('.txtBtm');
+    catTxt.style.color = "gray";
+
+    let iconAcc = account.querySelector('.iconBtm svg');
+    iconAcc.classList.remove("greenOn");
+    iconAcc.setAttribute("fill", "none");
+    let accTxt = account.querySelector('.txtBtm');
+    accTxt.style.color = "gray";
+
+    let iconBrand = brand.querySelector('.iconBtm svg');
+    iconBrand.classList.add("greenOn");
+    iconBrand.setAttribute("fill", "green");
+    let brandTxt = brand.querySelector('.txtBtm');
+    brandTxt.style.color = "green";
+
+    let iconHome = home.querySelector('.iconBtm svg');
+    iconHome.classList.remove("greenOn");
+    iconHome.setAttribute("fill", "none");
+    let homeTxt = home.querySelector('.txtBtm');
+    homeTxt.style.color = "gray";
+
+  };
+
+// home
+  home.onclick = function() {
+    window.location.href = '/'
+    {% comment %} sidebar
+      .classList
+      .remove('menu-opening')
+      innerDrawer
+      .classList
+      .remove('btmCategory2');
+    innerDrawer.classList.remove('btmBrand2');
+    innerDrawer.classList.remove('btmAccount2');
+
+// color
+    let iconCat = category.querySelector('.iconBtm svg');
+    iconCat.classList.remove("greenOn");
+    iconCat.setAttribute("fill", "none");
+    let catTxt = category.querySelector('.txtBtm');
+    catTxt.style.color = "gray";
+
+    let iconAcc = account.querySelector('.iconBtm svg');
+    iconAcc.classList.remove("greenOn");
+    iconAcc.setAttribute("fill", "none");
+    let accTxt = account.querySelector('.txtBtm');
+    accTxt.style.color = "gray";
+
+    let iconBrand = brand.querySelector('.iconBtm svg');
+    iconBrand.classList.remove("greenOn");
+    iconBrand.setAttribute("fill", "none");
+    let brandTxt = brand.querySelector('.txtBtm');
+    brandTxt.style.color = "gray";
+
+    let iconHome = home.querySelector('.iconBtm svg');
+    iconHome.classList.add("greenOn");
+    iconHome.setAttribute("fill", "green");
+    let homeTxt = home.querySelector('.txtBtm');
+    homeTxt.style.color = "green"; {% endcomment %}
+
+  };
+
+  {% comment %} language convertor on mobile view {% endcomment %}
+  if(window.innerWidth < 768){
+    var languagePicker = setInterval(() => {
+      if (document.querySelector('.gtranslate_wrapper')) {
+        clearInterval(languagePicker)
+        document.querySelector('.languageConverter-mobile').innerHTML = document.querySelector('.languageConverter').innerHTML
+      }
+    }, 100)
+  }
+</script>

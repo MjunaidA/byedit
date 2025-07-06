@@ -1,0 +1,1512 @@
+
+<style>
+  div#myModal {
+    visibility: inherit;
+    margin: 0px auto;
+    background: none;
+    width: 100%;
+    max-width: 100em;
+  }
+  .breadcrumb>li+li:before{display:none !important;}
+  .btn_head{
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+  .modal {
+    top: 25%;
+    box-shadow: none;
+  }
+  .modal-backdrop{visibility: inherit;}
+
+  .select2-container
+  {
+    width: 100% !important;
+  }
+
+  .select2-container .select2-selection--single
+  {
+    height: 40px;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered
+  {
+    line-height: 40px !important;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow
+  {
+    top: 6px !important;
+  }
+    .cityDropdownCustom
+  {
+    position: absolute;
+    left: 0;
+    top: 46px;
+    width: 100%;
+    overflow: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    z-index: 3;
+    padding: 5px 0;
+    display: none;
+    box-sizing: border-box;
+
+  }
+  
+  .cityDropdownCustom *
+  {
+    box-sizing: border-box;
+  }
+  
+  .cityDropdownCustom ul
+  {
+    max-height: 200px;
+    overflow: auto;
+  }
+  
+  .cityDropdownCustom ul li
+  {
+        padding: 5px 15px;
+    
+  }
+  
+  .cityDropdownCustom ul li:hover
+  {
+    background-color: blue;
+    color: #fff;
+  }
+  
+  .cityDropdownCustom .cityDropdownFieldWrap
+  {
+    padding: 5px 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .cityDropdownCustom .cityDropdownFieldWrap #cityDropdownField
+  {
+    width: 100%;
+    border: 1px solid #ddd;
+    height: 35px;
+    padding: 5px 10px;
+  }
+</style>
+
+<script>
+  $(document).ready(function () {
+    // City List Dropdown Functionality
+    var cityField = $('#checkout_shipping_address_city, #checkout_billing_address_city');
+    var cityFiledWrap = $('#checkout_shipping_address_city, #checkout_billing_address_city').parent('.field__input-wrapper');
+    var citydropdown = `<div class="cityDropdownCustom">
+      <div class="cityDropdownFieldWrap"><input type="text" id="cityDropdownField" placeholder="Search..."></div>
+        <ul>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mahawi">Mahawi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Samha Area">Samha Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Lulu Island">Lulu Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Merad">Al Merad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Qurm">Al Qurm</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Ras Al Akhdar">Al Ras Al Akhdar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ajban Farms">Ajban Farms</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wathba">Al Wathba</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Kifefah Street">Al Kifefah Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Haffar">Al Haffar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Grand Mosque District">Grand Mosque District</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Manasir">Manasir</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Safarat">Al Safarat</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rowdah Al Zaab">Al Rowdah Al Zaab</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalidiyah">Khalidiyah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mangrove Village">Mangrove Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Shabiya">Mussafah Shabiya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Maqta">Al Maqta</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Dhabi Gate City">Abu Dhabi Gate City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Motor World">Motor World</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Zeina">Al Zeina</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Thurayya">Al Thurayya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khor Al-Raha">Khor Al-Raha</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Yas Marina">Yas Marina</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rumaila">Al Rumaila</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Razeen">Al Razeen</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rayyana">Al Rayyana</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Bandar">Al Bandar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Forsan Village">Al Forsan Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Ghazal Golf Club">Al Ghazal Golf Club</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M21">Mussafah Industrial Area M21</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M20">Mussafah Industrial Area M20</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M22">Mussafah Industrial Area M22</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M31">Mussafah Industrial Area M31</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M30">Mussafah Industrial Area M30</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M29">Mussafah Industrial Area M29</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M28">Mussafah Industrial Area M28</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M27">Mussafah Industrial Area M27</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M26">Mussafah Industrial Area M26</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M25">Mussafah Industrial Area M25</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M24">Mussafah Industrial Area M24</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M32">Mussafah Industrial Area M32</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M33">Mussafah Industrial Area M33</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M35">Mussafah Industrial Area M35</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M34">Mussafah Industrial Area M34</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M23">Mussafah Industrial Area M23</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wathba South">Al Wathba South</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wathba North">Al Wathba North</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="New Al Nahda">New Al Nahda</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Nahda West">Al Nahda West</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Nahda East">Al Nahda East</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khateem">Al Khateem</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Shakhbout City">Shakhbout City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Sas Al Nakhl">Sas Al Nakhl</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Icad 3">Icad 3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Icad 2">Icad 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M46">Mussafah Industrial Area M46</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Icad 1">Icad 1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khaleej Ul Arab Street">Khaleej Ul Arab Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hadabat Al Zaafaran">Hadabat Al Zaafaran</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Qasr Al Bahr">Qasr Al Bahr</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Zayed City">Zayed City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Muzoon">Al Muzoon</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Seef">Al Seef</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Muntazah">Al Muntazah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Airport Road">Airport Road</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Madina Al Riyadiya">Al Madina Al Riyadiya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M10">Mussafah Industrial Area M10</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M11">Mussafah Industrial Area M11</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M12">Mussafah Industrial Area M12</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M2">Mussafah Industrial Area M2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M19">Mussafah Industrial Area M19</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M18">Mussafah Industrial Area M18</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M17">Mussafah Industrial Area M17</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M16">Mussafah Industrial Area M16</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M15">Mussafah Industrial Area M15</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M14">Mussafah Industrial Area M14</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M13">Mussafah Industrial Area M13</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M9">Mussafah Industrial Area M9</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M8">Mussafah Industrial Area M8</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M7">Mussafah Industrial Area M7</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M6">Mussafah Industrial Area M6</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M5">Mussafah Industrial Area M5</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M3">Mussafah Industrial Area M3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M4">Mussafah Industrial Area M4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M1">Mussafah Industrial Area M1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shahama Old">Al Shahama Old</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="New Shahama South">New Shahama South</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Rawadat Al Reef">Rawadat Al Reef</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rahba">Al Rahba</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shaleela">Al Shaleela</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Samha">Al Samha</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mazayed Village">Mazayed Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mohammed Bin Zayed City">Mohammed Bin Zayed City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Muroor Street">Muroor Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Southern Marina Village">Southern Marina Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Dhabi Beach">Abu Dhabi Beach</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Jubail Island">Al Jubail Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wahdah">Al Wahdah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Falah City">Al Falah City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M45">Mussafah Industrial Area M45</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M44">Mussafah Industrial Area M44</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M43">Mussafah Industrial Area M43</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M42">Mussafah Industrial Area M42</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M41">Mussafah Industrial Area M41</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M40">Mussafah Industrial Area M40</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M39">Mussafah Industrial Area M39</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M38">Mussafah Industrial Area M38</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M37">Mussafah Industrial Area M37</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Industrial Area M36">Mussafah Industrial Area M36</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mafraq Workers City">Mafraq Workers City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh">Al Shawamekh</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha East">Al Shamkha East</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mafraq Industrial Area">Al Mafraq Industrial Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Tourist Club Area">Tourist Club Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Port Zayed">Port Zayed</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mania">Al Mania</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Salam Street">Salam Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Liwa Street">Liwa Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Danah">Al Danah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dana">Al Dana</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Saadiyat Island">Saadiyat Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Yas Island">Yas Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Municipality Garage">Municipality Garage</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Icad 1 Residential City">Icad 1 Residential City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Shabia 9">Mussafah Shabia 9</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussahaf Shabia 10">Mussahaf Shabia 10</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Shabia 11">Mussafah Shabia 11</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mussafah Shabia 12">Mussafah Shabia 12</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mw4">Mw4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mw5">Mw5</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Sport City">Sport City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Old Al Falah City">Old Al Falah City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="New Al Falah City">New Al Falah City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Najda Street">Najda Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Hisn">Al Hisn</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Kasir">Al Kasir</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Zahiyah">Al Zahiyah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rawda">Al Rawda</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Saadah">Al Saadah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hadbat Al Zafaranah">Hadbat Al Zafaranah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Madinat Al Riyad">Madinat Al Riyad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rawdah">Al Rawdah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Tamouh">Tamouh</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Taweelah">Taweelah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mafraq Industrial Area">Mafraq Industrial Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas City">Bani Yas City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Tawelah">Al Tawelah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Kizad">Kizad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shalelah">Al Shalelah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mu'Azaz">Al Mu'Azaz</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Adla">Al Adla</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Zayed Military City">Zayed Military City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Masdar City">Masdar City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="New Shahama">New Shahama</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Adco Compound">Adco Compound</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Dhabi Exhibition Centre (Adnec)">Abu Dhabi Exhibition Centre (Adnec)</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Dhabi Media Co">Abu Dhabi Media Co</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Dhabi Muncipality">Abu Dhabi Muncipality</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Bus Station">Abu-Dhabi Bus Station</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Golf Club & Resort">Abu-Dhabi Golf Club & Resort</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Indian School">Abu-Dhabi Indian School</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Dhabi Intl Airport">Abu Dhabi Intl Airport</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Mall">Abu-Dhabi Mall</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Motor Co">Abu-Dhabi Motor Co</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Police Academy">Abu-Dhabi Police Academy</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu-Dhabi Traffic">Abu-Dhabi Traffic</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Airport Street">Airport Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Bateen">Al Bateen</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Bateen Airport">Al Bateen Airport</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Falah Street">Al Falah Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Hosn">Al Hosn</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Jaber Mafraq Camp">Al Jaber Mafraq Camp</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Karama">Al Karama</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khalidiyah">Al Khalidiyah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khubeirah">Al Khubeirah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Manaseer">Al Manaseer</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Manhal">Al Manhal</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Markaziya">Al Markaziya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Maryah Island">Al Maryah Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mina">Al Mina</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mushrif">Al Mushrif</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mushrif 1">Al Mushrif 1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mushrif 2">Al Mushrif 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mushrif 3">Al Mushrif 3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mushrif 4">Al Mushrif 4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mushrif 5">Al Mushrif 5</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Nahda">Al Nahda</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Nahyan">Al Nahyan</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Naser Street">Al Naser Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Raha Beach">Al Raha Beach</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Raha Gardens">Al Raha Gardens</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Reef">Al Reef</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Reef Downtown">Al Reef Downtown</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Reem Island">Al Reem Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rowdah">Al Rowdah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha South">Al Shamkha South</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamek">Al Shawamek</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 1">Al Shawamekh Block 1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 10">Al Shawamekh Block 10</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 11">Al Shawamekh Block 11</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 2">Al Shawamekh Block 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 3">Al Shawamekh Block 3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 4">Al Shawamekh Block 4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 5">Al Shawamekh Block 5</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 6">Al Shawamekh Block 6</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 7">Al Shawamekh Block 7</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 8">Al Shawamekh Block 8</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shawamekh Block 9">Al Shawamekh Block 9</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wahda">Al Wahda</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wathba South New">Al Wathba South New</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Yasat Complex">Al Yasat Complex</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Zaab">Al Zaab</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al-Bahia-A">Al-Bahia-A</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 9">Al Shamkha 9</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al-Falah City">Al-Falah City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al-Khaleej Al-Arabi St">Al-Khaleej Al-Arabi St</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al-Najda Street">Al-Najda Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al-Noor Hospital">Al-Noor Hospital</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al-Saada Street">Al-Saada Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Arabian Village">Arabian Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East">Bani Yas East</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 1">Bani Yas East 1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 10">Bani Yas East 10</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 11">Bani Yas East 11</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 13">Bani Yas East 13</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 2">Bani Yas East 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 2-01">Bani Yas East 2-01</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 2-02">Bani Yas East 2-02</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 2-03">Bani Yas East 2-03</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 2-04">Bani Yas East 2-04</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 2-05">Bani Yas East 2-05</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 3">Bani Yas East 3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 4">Bani Yas East 4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 5">Bani Yas East 5</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 6">Bani Yas East 6</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 7">Bani Yas East 7</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 8">Bani Yas East 8</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas East 9">Bani Yas East 9</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas West">Bani Yas West</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas West 2">Bani Yas West 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas West 3">Bani Yas West 3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bani Yas West 4">Bani Yas West 4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Baniyas City">Baniyas City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bateen Towers">Bateen Towers</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bawabat Al Sharq">Bawabat Al Sharq</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Baynoonah Street">Baynoonah Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Between The Bridges">Between The Bridges</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Building Material City">Building Material City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Carrefour Airport Road">Carrefour Airport Road</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Central Market">Central Market</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Coconut Island">Coconut Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Contemporary Village">Contemporary Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Corniche">Corniche</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Danet Gateway">Danet Gateway</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Daratul Mia">Daratul Mia</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Defence Road">Defence Road</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Delma Street">Delma Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Desert Village">Desert Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Diplomatic Area">Diplomatic Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Electra Street">Electra Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Embassy Area">Embassy Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Emirates Driving Co.">Emirates Driving Co.</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Emirates Palace Hotel">Emirates Palace Hotel</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Fairmont Residences">Fairmont Residences</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ferrari World">Ferrari World</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Garden Tower">Garden Tower</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hadbat Al Zaafarana">Hadbat Al Zaafarana</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Rahba">Rahba</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hamdan Post Office">Hamdan Post Office</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hamdan Street">Hamdan Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hazza Bin Zayed Street">Hazza Bin Zayed Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hoderiyyat">Hoderiyyat</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hydra Golf Walk">Hydra Golf Walk</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hydra Village">Hydra Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Industrial City Of Abu Dhabi">Industrial City Of Abu Dhabi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="International School Of Choueifat">International School Of Choueifat</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Istiklal Street">Istiklal Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalidiya Mall">Khalidiya Mall</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalidiya Village">Khalidiya Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalifa Energy Complex">Khalifa Energy Complex</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalifa Park">Khalifa Park</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalifa Street">Khalifa Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khalifa City B & A">Khalifa City B & A</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khor Al Maqta">Khor Al Maqta</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Bahya">Al Bahya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Bahya (New Bahya)">Al Bahya (New Bahya)</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dhafrah Auh City">Al Dhafrah Auh City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dhafra Air Base Area">Al Dhafra Air Base Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dhafra Workers Village">Al Dhafra Workers Village</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Falah 1">Al Falah 1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Falah 2">Al Falah 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Falah 4">Al Falah 4</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mafraq">Al Mafraq</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Samha East">Al Samha East</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Samha West">Al Samha West</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shahama">Al Shahama</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Shalila">Shalila</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha">Al Shamkha</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 1">Al Shamkha 1</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 16">Al Shamkha 16</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 17">Al Shamkha 17</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 19">Al Shamkha 19</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 2">Al Shamkha 2</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 22">Al Shamkha 22</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 24">Al Shamkha 24</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 3">Al Shamkha 3</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 6">Al Shamkha 6</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 7">Al Shamkha 7</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shamkha 8">Al Shamkha 8</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Foah Area">Al Foah Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Marakhaniya">Al Marakhaniya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Airport District">Airport District</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Agaabiya">Al Agaabiya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Ain Fun City">Al Ain Fun City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Ain Industrial Area">Al Ain Industrial Area</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Ain Zoo And Aquarium">Al Ain Zoo And Aquarium</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dahmaa">Al Dahmaa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dhaher">Al Dhaher</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dhaher 5">Al Dhaher 5</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Dhaher New">Al Dhaher New</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Grayyeh">Al Grayyeh</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Jimi">Al Jimi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khabisi">Al Khabisi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khaleef">Al Khaleef</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Masoudi">Al Masoudi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Mutarad">Al Mutarad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Muwaiji">Al Muwaiji</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Qattara">Al Qattara</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Rifaah Street">Al Rifaah Street</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Sarooj">Al Sarooj</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shuaibah">Al Shuaibah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Suwaifi">Al Suwaifi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Towayya">Al Towayya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Waha Al Amirah">Al Waha Al Amirah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Asharej">Asharej</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Central District ( Town Center )">Central District ( Town Center )</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Companies Camp Mezyad">Companies Camp Mezyad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Falaj Hazzaa">Falaj Hazzaa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Gafat Al Nayyar">Gafat Al Nayyar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ghrebah">Ghrebah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Green Mubazzarah">Green Mubazzarah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hai Jafeer Al Jadeed">Hai Jafeer Al Jadeed</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hai Zayed Mosque">Hai Zayed Mosque</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hazza Bin Zayed Stadium">Hazza Bin Zayed Stadium</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hili Sanaya">Hili Sanaya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Jebel Hafeet">Jebel Hafeet</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Magar Al Dhabi">Magar Al Dhabi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Msaibeekh">Msaibeekh</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Neima">Neima</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="New Al Sanaiya">New Al Sanaiya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="New Manasir">New Manasir</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Salamat">Salamat</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Shaabiyat Al Maqam">Shaabiyat Al Maqam</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Shiab Al Ashkhar">Shiab Al Ashkhar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Uae University New Campus">Uae University New Campus</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Um Ghafa">Um Ghafa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Um Ghaffa Farms">Um Ghaffa Farms</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Zakhir">Zakhir</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Daher">Al Daher</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Abu Samra">Abu Samra</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khalidiya">Al Khalidiya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Maqam">Al Maqam</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Saad">Al Saad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Yahar">Al Yahar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hili">Hili</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ramlat Zakher">Ramlat Zakher</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Wadi Al Ain 2 - Al Khrair">Wadi Al Ain 2 - Al Khrair</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Wadi Al Ain 3 - Al Khrair">Wadi Al Ain 3 - Al Khrair</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Alia">Al Alia</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Fouaa">Al Fouaa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khatm">Al Khatm</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Khazna">Al Khazna</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Malaqet">Al Malaqet</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Almabzarra">Almabzarra</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ramah">Ramah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Garayeh">Garayeh</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Hayer">Al Hayer</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Jabal Hafeet">Jabal Hafeet</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Khatm Al Shakla">Khatm Al Shakla</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mazyad">Mazyad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Nahel">Nahel</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Umm Ghaffa">Umm Ghaffa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Salamat">Al Salamat</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Markhaniya">Al Markhaniya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Zakher">Zakher</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Shoaibah">Al Shoaibah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Agabiyya">Al Agabiyya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ne'Mah">Ne'Mah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Sila">Al Sila</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Barakah">Barakah</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Habshan">Habshan</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ruwais">Ruwais</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ghayathi">Ghayathi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bada Zayed ( Madinat Zayed)">Bada Zayed ( Madinat Zayed)</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Dalma Island">Dalma Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Liwa">Liwa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Mirfa">Mirfa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Tarif">Tarif</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hamriya">Hamriya</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Hamra">Hamra</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Ghuwaifat, Al Sila - Abu Dhabi">Al Ghuwaifat, Al Sila - Abu Dhabi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Jebel Dhanna, Abu Dhabi">Jebel Dhanna, Abu Dhabi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Salam Living City">Al Salam Living City</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Asad">Asad</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Sahil">Sahil</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Umm Shatan">Umm Shatan</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Bad' Al Mutaw'Ah, Abu Dhabi">Bad' Al Mutaw'Ah, Abu Dhabi</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Siri Baniyas Island">Siri Baniyas Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Qasr Al Sehrab">Qasr Al Sehrab</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Nouf">Al Nouf</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Qutuf">Qutuf</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Bihouth">Al Bihouth</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Ras Ghurb Island">Ras Ghurb Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Delma Island">Delma Island</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Asab">Asab</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Quaa">Al Quaa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Wagan ( Al Waqan )">Al Wagan ( Al Waqan )</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Dhahira">Dhahira</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Shuwaib">Shuwaib</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Hiyar">Al Hiyar</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Sweihan">Sweihan</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Al Faqa">Al Faqa</li>
+          <li data-region="Abu Dhabi" data-city-item data-city-name="Sweihan ">Sweihan </li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Meadows">Ajman Meadows</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Police Headquarters">Ajman Police Headquarters</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman University">Ajman University</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Uptown">Ajman Uptown</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Villas">Ajman Villas</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman1 Tower">Ajman1 Tower</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Ameera Village">Al Ameera Village</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Bahia">Al Bahia</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Bustan">Al Bustan</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Butain">Al Butain</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Hamidiya">Al Hamidiya</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Hamidiya 1">Al Hamidiya 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Hamidiya 2">Al Hamidiya 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Humaid City">Al Humaid City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Ittihad Village">Al Ittihad Village</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jerf Gardens">Al Jerf Gardens</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jerf Industrial 1">Al Jerf Industrial 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jerf Industrial 2">Al Jerf Industrial 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jerf Industrial 3">Al Jerf Industrial 3</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jurf">Al Jurf</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jurf 1">Al Jurf 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Jurf 2">Al Jurf 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Muntazi 1">Al Muntazi 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Muntazi 2">Al Muntazi 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Mwaihat 1">Al Mwaihat 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Mwaihat 2">Al Mwaihat 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Mwaihat 3">Al Mwaihat 3</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nakhil">Al Nakhil</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nakhil 1">Al Nakhil 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nakhil 2">Al Nakhil 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Noor Tower Ajman">Al Noor Tower Ajman</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nuaimia">Al Nuaimia</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nuaimia 1">Al Nuaimia 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nuaimia 2">Al Nuaimia 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Nuaimia 3">Al Nuaimia 3</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Owan">Al Owan</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Raqaib 1">Al Raqaib 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Raqaib 2">Al Raqaib 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rashidiya">Al Rashidiya</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rashidiya 1">Al Rashidiya 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rashidiya 2">Al Rashidiya 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rashidiya 3">Al Rashidiya 3</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rawda 1">Al Rawda 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rawda 2">Al Rawda 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rawda 3">Al Rawda 3</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rumailah">Al Rumailah</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rumailah 1">Al Rumailah 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rumailah 2">Al Rumailah 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Rumailah 3">Al Rumailah 3</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Tallah 1">Al Tallah 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Tallah 2">Al Tallah 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Zorah">Al Zorah</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al-Zahra">Al-Zahra</li>
+          <li data-region="Ajman" data-city-item data-city-name="Aqua City">Aqua City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Awali City">Awali City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Chapal Village">Chapal Village</li>
+          <li data-region="Ajman" data-city-item data-city-name="Escape Ajman">Escape Ajman</li>
+          <li data-region="Ajman" data-city-item data-city-name="Eye Of Ajman">Eye Of Ajman</li>
+          <li data-region="Ajman" data-city-item data-city-name="Falcon Tower">Falcon Tower</li>
+          <li data-region="Ajman" data-city-item data-city-name="Fewa Ajman">Fewa Ajman</li>
+          <li data-region="Ajman" data-city-item data-city-name="Freej Balushi">Freej Balushi</li>
+          <li data-region="Ajman" data-city-item data-city-name="Gmc">Gmc</li>
+          <li data-region="Ajman" data-city-item data-city-name="Green City">Green City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Liwara">Liwara</li>
+          <li data-region="Ajman" data-city-item data-city-name="Liwara 1">Liwara 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Liwara 2">Liwara 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Marmooka City">Marmooka City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Mishrif City">Mishrif City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Mishrif Villas">Mishrif Villas</li>
+          <li data-region="Ajman" data-city-item data-city-name="Mwaihat">Mwaihat</li>
+          <li data-region="Ajman" data-city-item data-city-name="New Industrial Area">New Industrial Area</li>
+          <li data-region="Ajman" data-city-item data-city-name="New Industrial City">New Industrial City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Old Industrial Area">Old Industrial Area</li>
+          <li data-region="Ajman" data-city-item data-city-name="Onyx City">Onyx City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Park View City">Park View City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Safia">Safia</li>
+          <li data-region="Ajman" data-city-item data-city-name="Sanaya Industrial Area">Sanaya Industrial Area</li>
+          <li data-region="Ajman" data-city-item data-city-name="Sowan">Sowan</li>
+          <li data-region="Ajman" data-city-item data-city-name="Yasmeen">Yasmeen</li>
+          <li data-region="Ajman" data-city-item data-city-name="Aamra">Aamra</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ain Ajman">Ain Ajman</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Freezone">Ajman Freezone</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Industrial 1">Ajman Industrial 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Industrial 2">Ajman Industrial 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Zahya">Al Zahya</li>
+          <li data-region="Ajman" data-city-item data-city-name="Hamriya Town">Hamriya Town</li>
+          <li data-region="Ajman" data-city-item data-city-name="Helaiw">Helaiw</li>
+          <li data-region="Ajman" data-city-item data-city-name="Hadhf">Hadhf</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ma'Ali">Ma'Ali</li>
+          <li data-region="Ajman" data-city-item data-city-name="Shariyah">Shariyah</li>
+          <li data-region="Ajman" data-city-item data-city-name="Sinadil">Sinadil</li>
+          <li data-region="Ajman" data-city-item data-city-name="Sufayri">Sufayri</li>
+          <li data-region="Ajman" data-city-item data-city-name="Suhaylah">Suhaylah</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Karama">Al Karama</li>
+          <li data-region="Ajman" data-city-item data-city-name="Ajman Marina">Ajman Marina</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Amera">Al Amera</li>
+          <li data-region="Ajman" data-city-item data-city-name="Musheirif">Musheirif</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Alya">Al Alya</li>
+          <li data-region="Ajman" data-city-item data-city-name="Sayh Mudayrah">Sayh Mudayrah</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Khaznah">Al Khaznah</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Sawan">Al Sawan</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Helio 1">Al Helio 1</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Helio 2">Al Helio 2</li>
+          <li data-region="Ajman" data-city-item data-city-name="Al Helio City">Al Helio City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Hamriya Freezone">Hamriya Freezone</li>
+          <li data-region="Ajman" data-city-item data-city-name="Emirates City">Emirates City</li>
+          <li data-region="Ajman" data-city-item data-city-name="Manama">Manama</li>
+          <li data-region="Ajman" data-city-item data-city-name="Masfut">Masfut</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Biyatah">Al Biyatah</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Brerat">Al Brerat</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Dhait North">Al Dhait North</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Dhait South">Al Dhait South</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Ghub">Al Ghub</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Khor Road">Al Khor Road</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Mamourah">Al Mamourah</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Mareed">Al Mareed</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Qasmi Corniche Road">Al Qasmi Corniche Road</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Rams">Al Rams</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Riffa">Al Riffa</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Dafan Al Khor">Dafan Al Khor</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Jazirat Al Hamra">Jazirat Al Hamra</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Jazirat Al Hamra-Free Zone 1">Jazirat Al Hamra-Free Zone 1</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Jazirat Al Hamra-Free Zone 2">Jazirat Al Hamra-Free Zone 2</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Julan">Julan</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Kharran">Kharran</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Khor Khwair">Khor Khwair</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Khuzam">Khuzam</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Marjan Island">Marjan Island</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Mina Al Arab">Mina Al Arab</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Nakheel">Nakheel</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Old Ras Al Khaimah">Old Ras Al Khaimah</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Qusaidat">Qusaidat</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Shamal">Shamal</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Bin Majid Beach Resort">Bin Majid Beach Resort</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Shaam">Shaam</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Wadi Kub">Wadi Kub</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Ghail">Al Ghail</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Umm Al Nar">Umm Al Nar</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Aden">Aden</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Jeer">Al Jeer</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Chup Chup">Chup Chup</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Defence Camp">Defence Camp</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Filayya">Filayya</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Ghalila">Ghalila</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Hamraniya">Hamraniya</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Hub Hub">Hub Hub</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Khorkhuwair">Khorkhuwair</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Saadi">Saadi</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Seih Al Barerath">Seih Al Barerath</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Seih Al Bir">Seih Al Bir</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Steven Roack Area">Steven Roack Area</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Thoween">Thoween</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Thoween Hub Hub">Thoween Hub Hub</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Umm Urge">Umm Urge</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Wadi Koob">Wadi Koob</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Wadi Shaem">Wadi Shaem</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Rak Airport Area">Rak Airport Area</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Hamraniya">Al Hamraniya</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Khatt">Khatt</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Digdagga">Digdagga</li>
+          <li data-region="Ras al-Khaimah" data-city-item data-city-name="Al Fahlain">Al Fahlain</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Abu Shaghara">Abu Shaghara</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Abar">Al Abar</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Atain">Al Atain</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Azra">Al Azra</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Darari">Al Darari</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Fallah Suburb">Al Fallah Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Fayha">Al Fayha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Fisht">Al Fisht</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ghafia">Al Ghafia</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Gharb">Al Gharb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ghuwair">Al Ghuwair</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Goaz">Al Goaz</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Hazzanah">Al Hazzanah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Heera">Al Heera</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Houmah">Al Houmah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Jazzat">Al Jazzat</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Juraina 1">Al Juraina 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Juraina 2">Al Juraina 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Juraina 3">Al Juraina 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Juraina 4">Al Juraina 4</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khaildia Suburb">Al Khaildia Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khan">Al Khan</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khezamia">Al Khezamia</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Layyah Suburb">Al Layyah Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Mahatah">Al Mahatah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Majarah">Al Majarah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Majaz 1">Al Majaz 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Majaz 1,2,3">Al Majaz 1,2,3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Majaz 2">Al Majaz 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Majaz 3">Al Majaz 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Mamzar">Al Mamzar</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Manakh">Al Manakh</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Manazel">Al Manazel</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Mansoura">Al Mansoura</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Mareija">Al Mareija</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Mirgab">Al Mirgab</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Muntazah">Al Muntazah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Musalla">Al Musalla</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Nabba">Al Nabba</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Nahda">Al Nahda</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Nahda Sharjah Areas">Al Nahda Sharjah Areas</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Nasserya">Al Nasserya</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Nekhailat">Al Nekhailat</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Noof 1">Al Noof 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Noof 2">Al Noof 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Noof 3">Al Noof 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Noof 4">Al Noof 4</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Nud">Al Nud</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Qadisiya">Al Qadisiya</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Qasimia">Al Qasimia</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Qulayaah">Al Qulayaah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya">Al Rahmanya</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 1">Al Rahmanya 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 10">Al Rahmanya 10</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 2">Al Rahmanya 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 3">Al Rahmanya 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 4">Al Rahmanya 4</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 5">Al Rahmanya 5</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 6">Al Rahmanya 6</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 7">Al Rahmanya 7</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 8">Al Rahmanya 8</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rahmanya 9">Al Rahmanya 9</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ramaqiya">Al Ramaqiya</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ramla">Al Ramla</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ramla East">Al Ramla East</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ramla West">Al Ramla West</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Ramtha">Al Ramtha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Rifaah">Al Rifaah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Riffa">Al Riffa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Riqa Suburb">Al Riqa Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Sabkha">Al Sabkha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Sajaa">Al Sajaa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Seef">Al Seef</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Shahab">Al Shahab</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Sharq">Al Sharq</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Soor">Al Soor</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Subaikha">Al Subaikha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suweihan">Al Suweihan</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 1">Al Suyoh 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 10">Al Suyoh 10</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 11">Al Suyoh 11</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 12">Al Suyoh 12</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 2">Al Suyoh 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 3">Al Suyoh 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 4">Al Suyoh 4</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 5">Al Suyoh 5</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 6">Al Suyoh 6</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 7">Al Suyoh 7</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 8">Al Suyoh 8</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Suyoh 9">Al Suyoh 9</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Sweihat">Al Sweihat</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Taawun">Al Taawun</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Talaa">Al Talaa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Turffa">Al Turffa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Yarmook">Al Yarmook</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Yash">Al Yash</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khaledia">Al Khaledia</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al-Faha">Al-Faha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Bank Street">Bank Street</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Barashi">Barashi</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Basateen Al Fallah">Basateen Al Fallah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Beach Road">Beach Road</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Bu Danig">Bu Danig</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Bu Tina">Bu Tina</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Buhairah Corniche">Buhairah Corniche</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Dasman">Dasman</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Dubai Bypass Road">Dubai Bypass Road</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Falah Camp">Falah Camp</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Ghubaiba">Ghubaiba</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Halwan Suburb">Halwan Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area">Industrial Area</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 1">Industrial Area 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 10">Industrial Area 10</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 11">Industrial Area 11</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 12">Industrial Area 12</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 13">Industrial Area 13</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 15">Industrial Area 15</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 17">Industrial Area 17</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 2">Industrial Area 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 3">Industrial Area 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 4">Industrial Area 4</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 5">Industrial Area 5</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 6">Industrial Area 6</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 7">Industrial Area 7</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 8">Industrial Area 8</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 9">Industrial Area 9</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Jamal Abdul Naser Street">Jamal Abdul Naser Street</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Jawazia">Jawazia</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Jubail">Jubail</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Margab">Margab</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Maysaloon">Maysaloon</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Mughaidir Suburb">Mughaidir Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Muwafjah">Muwafjah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Muwaileh">Muwaileh</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Muwaileh Commercial">Muwaileh Commercial</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Nahilak">Nahilak</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Port Khalid">Port Khalid</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Qarayen 1">Qarayen 1</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Qarayen 2">Qarayen 2</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Qarayen 3">Qarayen 3</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Qarayen 4">Qarayen 4</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Qarayen 5">Qarayen 5</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Queen Tower">Queen Tower</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Samnan">Samnan</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sehijan Suburb">Sehijan Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah Airport Freezone">Sharjah Airport Freezone</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah Cricket Stadium">Sharjah Cricket Stadium</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah Industrial Areas 1-14">Sharjah Industrial Areas 1-14</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah International Airport">Sharjah International Airport</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah Investment Center">Sharjah Investment Center</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah University">Sharjah University</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharqan">Sharqan</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Souq Al Haraj">Souq Al Haraj</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Tasjeel Village">Tasjeel Village</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Um Fannain">Um Fannain</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Um Tarrsfa">Um Tarrsfa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Wasit Suburb">Wasit Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Industrial Area 18">Industrial Area 18</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Rahmania">Rahmania</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sajja 8Th Interchange Shabia Area">Sajja 8Th Interchange Shabia Area</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Umm Faneen">Umm Faneen</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Layyeh Suburb">Al Layyeh Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khalediya">Al Khalediya</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Rolla">Rolla</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Bu Daniq">Al Bu Daniq</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Falah">Al Falah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Gouz">Al Gouz</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Tarfa">Al Tarfa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Nakheilat">Nakheilat</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Wadha">Al Wadha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Mujarrah">Al Mujarrah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Hoshi">Hoshi</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Zahia">Al Zahia</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Bu Dani'Q">Al Bu Dani'Q</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Tala'A">Al Tala'A</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Qulaya'Ah">Al Qulaya'Ah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Falaj">Al Falaj</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Dafeen">Al Dafeen</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Elm">Al Elm</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Bedea">Al Bedea</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Emirates Industrial City">Emirates Industrial City</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Hydra Village">Hydra Village</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Qtah">Qtah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Zubair">Zubair</li>
+          <li data-region="Sharjah" data-city-item data-city-name="7Th Interchange (Scout Camp)">7Th Interchange (Scout Camp)</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Badeea">Badeea</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Juwaiza'A Suburb">Juwaiza'A Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Bdai'A Suburb">Al Bdai'A Suburb</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Saif Zone">Saif Zone</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Sharjah Golf And Shooting Club">Sharjah Golf And Shooting Club</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Tai">Al Tai</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al-Budai">Al-Budai</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Madam">Al Madam</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Maleha">Maleha</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Muzairah">Muzairah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Wadi Al Helo">Wadi Al Helo</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Falaj Mullah">Al Falaj Mullah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Mohathab">Mohathab</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khoros">Al Khoros</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Kadra">Kadra</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Thoban">Thoban</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Siji Dam Area">Siji Dam Area</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Siji Area">Al Siji Area</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Khari">Al Khari</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Jazirat Al Hibab">Jazirat Al Hibab</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Nujoom Island">Nujoom Island</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Nazwa">Nazwa</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Bataeh">Al Bataeh</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Tayebah">Al Tayebah</li>
+          <li data-region="Sharjah" data-city-item data-city-name="Al Hayrah">Al Hayrah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Aahad Area">Al Aahad Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Abraq 1">Al Abraq 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Abraq 2">Al Abraq 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Abraq Area">Al Abraq Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Aqran">Al Aqran</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Athaib">Al Athaib</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Barqaa">Al Barqaa</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Boghah">Al Boghah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Butain">Al Butain</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Dar Al Baida">Al Dar Al Baida</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Door 1">Al Door 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Door 2">Al Door 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Ghafat">Al Ghafat</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Haditha">Al Haditha</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Hamra">Al Hamra</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Hawiyah Area">Al Hawiyah Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Hazzan Area">Al Hazzan Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Hezam Al Akhdar">Al Hezam Al Akhdar</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Hoboob 1">Al Hoboob 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Hoboob 2">Al Hoboob 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Khor Area">Al Khor Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Khour 1">Al Khour 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Khour 2">Al Khour 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Limghadar">Al Limghadar</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Madar Area">Al Madar Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Madr 1">Al Madr 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Madr 2">Al Madr 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Madr 3">Al Madr 3</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Maqtaa 1">Al Maqtaa 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Maqtaa 2">Al Maqtaa 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Maqtaa 3">Al Maqtaa 3</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Medfeq">Al Medfeq</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Meidan">Al Meidan</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Nabgghah">Al Nabgghah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Neefah">Al Neefah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Nekhailah">Al Nekhailah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Qarayen 1">Al Qarayen 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Qarayen 2">Al Qarayen 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Raafah">Al Raafah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Raas 1">Al Raas 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Raas 2">Al Raas 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Ramlah 1">Al Ramlah 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Ramlah 2">Al Ramlah 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Ramlah 3">Al Ramlah 3</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Ramlah Area">Al Ramlah Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Rashdiya">Al Rashdiya</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Rawdah">Al Rawdah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Riqah">Al Riqah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Salamah 1">Al Salamah 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Salamah 2">Al Salamah 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Salamah 3">Al Salamah 3</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Salamah Area">Al Salamah Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Shebeakah">Al Shebeakah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Shereiah">Al Shereiah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Shes">Al Shes</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Suaihat 1">Al Suaihat 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Suaihat 2">Al Suaihat 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Surrah">Al Surrah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Zowair">Al Zowair</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Bin Majid Flamingo Beach Resort">Bin Majid Flamingo Beach Resort</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Dream Land">Dream Land</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Falaj Al Moalla">Falaj Al Moalla</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Falaj Al Sheik">Falaj Al Sheik</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Industrial Area">Industrial Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Khalifa City 1">Khalifa City 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Khalifa City 2">Khalifa City 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Khor Al Baida">Khor Al Baida</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Khor Al Yeefrah">Khor Al Yeefrah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Laatein 1">Laatein 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Laatein 2">Laatein 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Lubsah">Lubsah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Madinat Al Shuhada">Madinat Al Shuhada</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Mallah">Mallah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Meshara">Meshara</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Mohadhub">Mohadhub</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Mohammed Bin Rashid 1">Mohammed Bin Rashid 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Mohammed Bin Rashid 2">Mohammed Bin Rashid 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Old Town Area">Old Town Area</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Oud Al Owaid">Oud Al Owaid</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Oud Al Tayer 1">Oud Al Tayer 1</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Oud Al Tayer 2">Oud Al Tayer 2</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Shabiyat Essa">Shabiyat Essa</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Shanteer">Shanteer</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Tawi Rbaya">Tawi Rbaya</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Umm Al Thuaoob">Umm Al Thuaoob</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Umm Dera">Umm Dera</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Hamriya Shabia">Hamriya Shabia</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Lipsa">Lipsa</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Rafa">Rafa</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Rashidiya">Rashidiya</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Kaber">Kaber</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Ad Duss">Ad Duss</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Ali">Al Ali</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Al Dini">Al Dini</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Awanat">Awanat</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Khatm Kabir">Khatm Kabir</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Lazimah">Lazimah</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="White Bay">White Bay</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Rifa">Rifa</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Umq Aft Dreamland Park">Umq Aft Dreamland Park</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Falaj Al Mualla">Falaj Al Mualla</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Biyatha">Biyatha</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Adh Dhaid">Adh Dhaid</li>
+           <li data-region="Umm al-Quwain" data-city-item data-city-name="Hezaiwah">Hezaiwah</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Badiya">Al Badiya</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Baladiya">Al Baladiya</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Faseel Area">Al Faseel Area</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Hail Shabiya">Al Hail Shabiya</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Hayl Industrial Area">Al Hayl Industrial Area</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Jaber Tower">Al Jaber Tower</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al Wurayah Valley">Al Wurayah Valley</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Al-Ittihad">Al-Ittihad</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dibba">Dibba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dibba Al Husn">Dibba Al Husn</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah City Center Fcc">Fujairah City Center Fcc</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Etisalat">Fujairah Etisalat</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Football Club">Fujairah Football Club</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Freezone 1 & 2">Fujairah Freezone 1 & 2</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Heritage">Fujairah Heritage</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Municipality">Fujairah Municipality</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Port">Fujairah Port</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Tower">Fujairah Tower</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Town">Fujairah Town</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Fujairah Trade Centre">Fujairah Trade Centre</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Geearth">Geearth</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Goob">Goob</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Gurayya">Gurayya</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Gurfah Area">Gurfah Area</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Kalba">Kalba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Kalba Alwahda Str">Kalba Alwahda Str</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Kalba Corniche">Kalba Corniche</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Khor Kalba">Khor Kalba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Khorfakkan">Khorfakkan</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Khorfakkan Corniche">Khorfakkan Corniche</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Khorfakkan Port">Khorfakkan Port</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Khorfakkan Qadisiya">Khorfakkan Qadisiya</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Khorfakkan Yarmook">Khorfakkan Yarmook</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Lulayya">Lulayya</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Madhab">Madhab</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Mamdouh">Mamdouh</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Merashid">Merashid</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Mina Al Fajer">Mina Al Fajer</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Mudaifi">Mudaifi</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Musalla Eid Road">Musalla Eid Road</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Rul Dadna">Rul Dadna</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Rul Dibba">Rul Dibba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Skamkam">Skamkam</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Suhaila">Suhaila</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Tarif Str">Tarif Str</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Taweelah">Taweelah</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Zubaida">Zubaida</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Zubara">Zubara</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Murbah">Murbah</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Qidfa">Qidfa</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Asma">Asma</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Affara">Affara</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dibba Cement">Dibba Cement</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dibba Wadi Abadila">Dibba Wadi Abadila</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Farfar">Farfar</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Gob Dibba">Gob Dibba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Goona Dibba">Goona Dibba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Hala Dibba">Hala Dibba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Jeroof">Jeroof</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Nehwa">Nehwa</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Ohla">Ohla</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Safad">Safad</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Wadi Helo">Wadi Helo</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Wadi Mai">Wadi Mai</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Wadisadar">Wadisadar</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Wam Dibba">Wam Dibba</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Bidiyah">Bidiyah</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dadna">Dadna</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dibba Al Fujairah">Dibba Al Fujairah</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Murrah">Murrah</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Rughaylat">Rughaylat</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Taween">Taween</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Dhaid">Dhaid</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Kadra">Kadra</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Manama">Manama</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Munae">Munae</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Showka">Showka</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Siji">Siji</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Tawban">Tawban</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Taween">Taween</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Wadi Saham">Wadi Saham</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Esfai ( Wadi Esfai )">Esfai ( Wadi Esfai )</li>
+          <li data-region="Fujairah" data-city-item data-city-name="Friday Market">Friday Market</li>
+          <li data-region="Dubai" data-city-item data-city-name="Abu Hail - Deira">Abu Hail - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Awir">Al Awir</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Awir 2">Al Awir 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Bada">Al Bada</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Baraha - Deira">Al Baraha - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Bararri">Al Bararri</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Barsha 1">Al Barsha 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Barsha 2">Al Barsha 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Barsha 3">Al Barsha 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Barsha South 1">Al Barsha South 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Barsha South 2">Al Barsha South 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Barsha South 3">Al Barsha South 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Buteen">Al Buteen</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Dhagaya">Al Dhagaya</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Furjan">Al Furjan</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Garhoud">Al Garhoud</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Ghubaiba">Al Ghubaiba</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Habtoor City">Al Habtoor City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Hamriya - Deira">Al Hamriya - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Hamriya Port - Deira">Al Hamriya Port - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Hudaiba">Al Hudaiba</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Jaddaf">Al Jaddaf</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Jaffiliya">Al Jaffiliya</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Karama">Al Karama</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Khabaisi - Deira">Al Khabaisi - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Khwaneej 1">Al Khwaneej 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Khwaneej 2">Al Khwaneej 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Kifaf">Al Kifaf</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Mamzar - Deira">Al Mamzar - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Manara">Al Manara</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Mankhool">Al Mankhool</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Merkad">Al Merkad</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Mina">Al Mina</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Mizhar 1">Al Mizhar 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Mizhar 2">Al Mizhar 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Muraqqabat - Deira">Al Muraqqabat - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Murar - Deira">Al Murar - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Muteena - Deira">Al Muteena - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Nahda 1">Al Nahda 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Nahda 2">Al Nahda 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Nasr">Al Nasr</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qudra">Al Qudra</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz 1">Al Quoz 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz 2">Al Quoz 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz 3">Al Quoz 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz 4">Al Quoz 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz Industrial 1">Al Quoz Industrial 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz Industrial 2">Al Quoz Industrial 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz Industrial 3">Al Quoz Industrial 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Quoz Industrial 4">Al Quoz Industrial 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais 1">Al Qusais 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais 2">Al Qusais 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais 3">Al Qusais 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais 4">Al Qusais 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais 5">Al Qusais 5</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais Industrial 1">Al Qusais Industrial 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais Industrial 2">Al Qusais Industrial 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais Industrial 3">Al Qusais Industrial 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais Industrial 4">Al Qusais Industrial 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Qusais Industrial 5">Al Qusais Industrial 5</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Raffa">Al Raffa</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Ras - Deira">Al Ras - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Rashidiya">Al Rashidiya</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Reem 1">Al Reem 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Reem 2">Al Reem 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Reem 3">Al Reem 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Rigga - Deira">Al Rigga - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Ruwayya">Al Ruwayya</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Sabkha - Deira">Al Sabkha - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Safa 1">Al Safa 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Safa 2">Al Safa 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Safouh 1">Al Safouh 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Safouh 2">Al Safouh 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Satwa">Al Satwa</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Shindagha">Al Shindagha</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Souq Al Kabeer">Al Souq Al Kabeer</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Tammam">Al Tammam</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Twar 1">Al Twar 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Twar 2">Al Twar 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Twar 3">Al Twar 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Waha">Al Waha</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Waheda - Deira">Al Waheda - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Warqaa 1">Al Warqaa 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Warqaa 2">Al Warqaa 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Warqaa 3">Al Warqaa 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Warqaa 4">Al Warqaa 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Warqaa 5">Al Warqaa 5</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Wasl">Al Wasl</li>
+          <li data-region="Dubai" data-city-item data-city-name="Arabian Ranches 1">Arabian Ranches 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Arabian Ranches 2">Arabian Ranches 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Arjan">Arjan</li>
+          <li data-region="Dubai" data-city-item data-city-name="Ayal Nasir">Ayal Nasir</li>
+          <li data-region="Dubai" data-city-item data-city-name="Baniyas - Deira">Baniyas - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Barsha Heights - Tecom">Barsha Heights - Tecom</li>
+          <li data-region="Dubai" data-city-item data-city-name="Bu Kadra">Bu Kadra</li>
+          <li data-region="Dubai" data-city-item data-city-name="Bur Dubai">Bur Dubai</li>
+          <li data-region="Dubai" data-city-item data-city-name="Burjuman">Burjuman</li>
+          <li data-region="Dubai" data-city-item data-city-name="Business Bay">Business Bay</li>
+          <li data-region="Dubai" data-city-item data-city-name="City Of Arabia">City Of Arabia</li>
+          <li data-region="Dubai" data-city-item data-city-name="Damac Hills">Damac Hills</li>
+          <li data-region="Dubai" data-city-item data-city-name="Deira Corniche">Deira Corniche</li>
+          <li data-region="Dubai" data-city-item data-city-name="Difc - Dubai International Financial Center">Difc - Dubai International Financial Center</li>
+          <li data-region="Dubai" data-city-item data-city-name="Discovery Gardens">Discovery Gardens</li>
+          <li data-region="Dubai" data-city-item data-city-name="Downtown Burj Dubai">Downtown Burj Dubai</li>
+          <li data-region="Dubai" data-city-item data-city-name="Downtown Jebel Ali">Downtown Jebel Ali</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Academic City">Dubai Academic City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Design District - D3">Dubai Design District - D3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Festival City">Dubai Festival City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Healthcare City">Dubai Healthcare City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Heritage Vision">Dubai Heritage Vision</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Hills">Dubai Hills</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Industrial City">Dubai Industrial City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai International Airport">Dubai International Airport</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai International Endurance City">Dubai International Endurance City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Internet City">Dubai Internet City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Investment Park 1 - Dip">Dubai Investment Park 1 - Dip</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Investment Park 2 - Dip">Dubai Investment Park 2 - Dip</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Knowledge Village">Dubai Knowledge Village</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Land">Dubai Land</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Lifestyle City">Dubai Lifestyle City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Logistic City - Dlc">Dubai Logistic City - Dlc</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Mall">Dubai Mall</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Marina - Marsa Dubai">Dubai Marina - Marsa Dubai</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Maritime City">Dubai Maritime City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Media City">Dubai Media City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Motor City">Dubai Motor City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Outlet Mall">Dubai Outlet Mall</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Outsource Zone">Dubai Outsource Zone</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Park">Dubai Park</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Production City">Dubai Production City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Silicon Oasis">Dubai Silicon Oasis</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai South">Dubai South</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Sports City - Dsc">Dubai Sports City - Dsc</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Studio City">Dubai Studio City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai Waterfront">Dubai Waterfront</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dwc - International Airport">Dwc - International Airport</li>
+          <li data-region="Dubai" data-city-item data-city-name="Emirates Hill 1">Emirates Hill 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Emirates Hill 2">Emirates Hill 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Emirates Hill 3">Emirates Hill 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Emirates Hill 4">Emirates Hill 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Falcon City Of Wonders">Falcon City Of Wonders</li>
+          <li data-region="Dubai" data-city-item data-city-name="Gold Souk - Deira">Gold Souk - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Golf City">Golf City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Green Community East">Green Community East</li>
+          <li data-region="Dubai" data-city-item data-city-name="Green Community Village">Green Community Village</li>
+          <li data-region="Dubai" data-city-item data-city-name="Hor Al Anz - Deira">Hor Al Anz - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Hor Al Anz East - Deira">Hor Al Anz East - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Impz - International Media Production Zone">Impz - International Media Production Zone</li>
+          <li data-region="Dubai" data-city-item data-city-name="International City">International City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jebel Ali Conservation Area">Jebel Ali Conservation Area</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jebel Ali Gardens">Jebel Ali Gardens</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jebel Ali Industrial">Jebel Ali Industrial</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jebel Ali Race Course">Jebel Ali Race Course</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jebel Ali Village">Jebel Ali Village</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah 1">Jumeirah 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah 2">Jumeirah 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah 3">Jumeirah 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Beach Residency - Jbr">Jumeirah Beach Residency - Jbr</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Golf Estates">Jumeirah Golf Estates</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Heights">Jumeirah Heights</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Islands">Jumeirah Islands</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Lakes Towers - Jlt">Jumeirah Lakes Towers - Jlt</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Park">Jumeirah Park</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Village Circle - Jvc">Jumeirah Village Circle - Jvc</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jumeirah Village Triangle - Jvt">Jumeirah Village Triangle - Jvt</li>
+          <li data-region="Dubai" data-city-item data-city-name="Lahbab">Lahbab</li>
+          <li data-region="Dubai" data-city-item data-city-name="Layan">Layan</li>
+          <li data-region="Dubai" data-city-item data-city-name="Liwan">Liwan</li>
+          <li data-region="Dubai" data-city-item data-city-name="Majan">Majan</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mena Jebel Ali">Mena Jebel Ali</li>
+          <li data-region="Dubai" data-city-item data-city-name="Meydan">Meydan</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mira Oasis">Mira Oasis</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mirdif">Mirdif</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mohammed Bin Rashid Gardens">Mohammed Bin Rashid Gardens</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mudon">Mudon</li>
+          <li data-region="Dubai" data-city-item data-city-name="Muhaisanah 1">Muhaisanah 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Muhaisanah 2">Muhaisanah 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Muhaisanah 3">Muhaisanah 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Muhaisanah 4">Muhaisanah 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mushrif">Mushrif</li>
+          <li data-region="Dubai" data-city-item data-city-name="Nad Al Hammar">Nad Al Hammar</li>
+          <li data-region="Dubai" data-city-item data-city-name="Nad Al Sheba 1">Nad Al Sheba 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Nad Al Sheba 2">Nad Al Sheba 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Nad Al Sheba 3">Nad Al Sheba 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Nad Al Sheba 4">Nad Al Sheba 4</li>
+          <li data-region="Dubai" data-city-item data-city-name="Nad Shamma">Nad Shamma</li>
+          <li data-region="Dubai" data-city-item data-city-name="Naif - Deira">Naif - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="National Industries Park - Nip">National Industries Park - Nip</li>
+          <li data-region="Dubai" data-city-item data-city-name="Oud Al Muteena 1">Oud Al Muteena 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Oud Al Muteena 2">Oud Al Muteena 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Oud Metha">Oud Metha</li>
+          <li data-region="Dubai" data-city-item data-city-name="Palm Deira">Palm Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Palm Jebel Ali">Palm Jebel Ali</li>
+          <li data-region="Dubai" data-city-item data-city-name="Palm Jumeira">Palm Jumeira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Port Rashid">Port Rashid</li>
+          <li data-region="Dubai" data-city-item data-city-name="Port Saeed - Deira">Port Saeed - Deira</li>
+          <li data-region="Dubai" data-city-item data-city-name="Ras Al Khor">Ras Al Khor</li>
+          <li data-region="Dubai" data-city-item data-city-name="Ras Al Khor Industrial 1">Ras Al Khor Industrial 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Ras Al Khor Industrial 2">Ras Al Khor Industrial 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Ras Al Khor Industrial 3">Ras Al Khor Industrial 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Remraam">Remraam</li>
+          <li data-region="Dubai" data-city-item data-city-name="Rigga Al Buteen">Rigga Al Buteen</li>
+          <li data-region="Dubai" data-city-item data-city-name="Sonapur">Sonapur</li>
+          <li data-region="Dubai" data-city-item data-city-name="Technology Park">Technology Park</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Centro">The Centro</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Galleries">The Galleries</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Gardens">The Gardens</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Greens">The Greens</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Lagoons">The Lagoons</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Meadows">The Meadows</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Springs">The Springs</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Sustainable City">The Sustainable City</li>
+          <li data-region="Dubai" data-city-item data-city-name="Tiger Woods Dubai">Tiger Woods Dubai</li>
+          <li data-region="Dubai" data-city-item data-city-name="Trade Centre 1">Trade Centre 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Trade Centre 2">Trade Centre 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Al Sheif">Umm Al Sheif</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Hurair 1">Umm Hurair 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Hurair 2">Umm Hurair 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Ramool">Umm Ramool</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Suqeim 1">Umm Suqeim 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Suqeim 2">Umm Suqeim 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Umm Suqeim 3">Umm Suqeim 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="University Village - Al Ruwaiya">University Village - Al Ruwaiya</li>
+          <li data-region="Dubai" data-city-item data-city-name="Uptown Mirdif">Uptown Mirdif</li>
+          <li data-region="Dubai" data-city-item data-city-name="Wadi Alamardi">Wadi Alamardi</li>
+          <li data-region="Dubai" data-city-item data-city-name="Warsan 1">Warsan 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Warsan 2">Warsan 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="Zaabeel 1">Zaabeel 1</li>
+          <li data-region="Dubai" data-city-item data-city-name="Zaabeel 2">Zaabeel 2</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Lakes">The Lakes</li>
+          <li data-region="Dubai" data-city-item data-city-name="Town Square Dubai">Town Square Dubai</li>
+          <li data-region="Dubai" data-city-item data-city-name="Al Lisali">Al Lisali</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dubai World Central - Dwc">Dubai World Central - Dwc</li>
+          <li data-region="Dubai" data-city-item data-city-name="Dafza - Dubai Airport Freezone">Dafza - Dubai Airport Freezone</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jafza - Jebel Ali Free Zone North">Jafza - Jebel Ali Free Zone North</li>
+          <li data-region="Dubai" data-city-item data-city-name="Jafza - Jebel Ali Free Zone South">Jafza - Jebel Ali Free Zone South</li>
+          <li data-region="Dubai" data-city-item data-city-name="The Pearl">The Pearl</li>
+          <li data-region="Dubai" data-city-item data-city-name="Tilal Al Ghaf">Tilal Al Ghaf</li>
+          <li data-region="Dubai" data-city-item data-city-name="Serena">Serena</li>
+          <li data-region="Dubai" data-city-item data-city-name="Arabian Ranches 3">Arabian Ranches 3</li>
+          <li data-region="Dubai" data-city-item data-city-name="Villanova">Villanova</li>
+          <li data-region="Dubai" data-city-item data-city-name="Mohammed Bin Rashid City">Mohammed Bin Rashid City</li>
+
+
+        </ul>
+      </div>`;
+
+      $(cityField).prop('readonly', true);
+      cityFiledWrap.append(citydropdown);
+      $('.cityDropdownCustom ul li').hide()
+      $('#checkout_shipping_address_city').val("")
+
+      // Show/hide the cities on the basis of regions/provinces
+
+      if($('#checkout_shipping_address_province').val() == 'AZ'){
+        $('[data-region="Abu Dhabi"]').show()
+      }
+      else if($('#checkout_shipping_address_province').val() == 'AJ'){
+        $('[data-region="Ajman"]').show()
+      }
+      else if($('#checkout_shipping_address_province').val() == 'DU'){
+        $('[data-region="Dubai"]').show()
+      }
+      else if($('#checkout_shipping_address_province').val() == 'FU'){
+        $('[data-region="Fujairah"]').show()
+      }
+      else if($('#checkout_shipping_address_province').val() == 'RK'){
+        $('[data-region="Ras al-Khaimah"]').show()
+      }
+      else if($('#checkout_shipping_address_province').val() == 'SH'){
+        $('[data-region="Sharjah"]').show()
+      }
+      else if($('#checkout_shipping_address_province').val() == 'UQ'){
+        $('[data-region="Umm al-Quwain"]').show()
+      }
+
+      $('#checkout_shipping_address_province').on('change', function(){
+        $('.cityDropdownCustom ul li').hide()
+        $('#checkout_shipping_address_city').val("")
+        if($(this).val() == 'AZ'){
+          $('[data-region="Abu Dhabi"]').show()
+        }
+        else if($(this).val() == 'AJ'){
+          $('[data-region="Ajman"]').show()
+        }
+        else if($(this).val() == 'DU'){
+          $('[data-region="Dubai"]').show()
+        }
+        else if($(this).val() == 'FU'){
+          $('[data-region="Fujairah"]').show()
+        }
+        else if($(this).val() == 'RK'){
+          $('[data-region="Ras al-Khaimah"]').show()
+        }
+        else if($(this).val() == 'SH'){
+          $('[data-region="Sharjah"]').show()
+        }
+        else if($(this).val() == 'UQ'){
+          $('[data-region="Umm al-Quwain"]').show()
+        }
+      })
+
+      $(cityField).click(function() {
+        $('.cityDropdownCustom').show();
+      });
+      
+      $(document).on('click','[data-city-item]',  function() {
+        $('.cityDropdownCustom').hide(); 
+        cityField.val($(this).attr('data-city-name'));
+      })
+      
+      // Close city dropdown click outside the dropdown
+      $(document).mouseup(e => {
+      if (!cityFiledWrap.is(e.target) // if the target of the click isn't the container...
+      && cityFiledWrap.has(e.target).length === 0) // ... nor a descendant of the container
+      {
+          $('.cityDropdownCustom').hide();
+      }
+      });
+
+      // Search Functionality in City Dropdown
+      $('.cityDropdownCustom .cityDropdownFieldWrap').on('keyup','#cityDropdownField', function() {
+      var value = $(this).val().toUpperCase();
+      var listItems = $('.cityDropdownCustom ul li');
+      $(listItems).each(function() {
+          if ($(this).text().toUpperCase().search(value) > -1) {
+              $(this).show();
+          }
+          else {
+              $(this).hide();
+          }
+      });
+      }); 
+    
+        
+    var arraCities = [];
+
+    $('.cityDropdownCustom ul li').each(function() {
+      arraCities.push($(this).attr('data-city-name'));
+    });
+
+    {% comment %} Only english language accepted for all text fields {% endcomment %}
+    function validateInput(input) {
+      var input = input.trim();
+      var pattern = /^[A-Za-z0-9\s,.']+$/;
+
+      if (!pattern.test(input)) {
+        return false;
+      }
+      
+      return true;
+    }
+    
+    $('[data-step="contact_information"] > form').submit( function() {
+
+      if($('.error-span').length){
+        $('.error-span').remove()
+      }
+      var error = "<span class='error-span' style='color:red'>Only english language accepted. Do not use special tags</span>";
+      {% comment %} validating first name {% endcomment %}
+      var firstName = $('input#checkout_shipping_address_first_name').val()
+      if(firstName != ""){
+        if(!validateInput(firstName)){
+          $("input#checkout_shipping_address_first_name").after(error)
+          setTimeout(function() {
+            $('.error-span').remove()
+          }, 2500)
+        return false
+      }
+      }
+
+      {% comment %} validating last name {% endcomment %}
+      var lastName = $('input#checkout_shipping_address_last_name').val()
+      if(lastName != ""){
+        if(!validateInput(lastName)){
+          $("input#checkout_shipping_address_last_name").after(error)
+          setTimeout(function() {
+            $('.error-span').remove()
+          }, 2500)
+        return false
+      }
+      }
+
+      {% comment %} validating Address 1 {% endcomment %}
+      var address1 = $('input#checkout_shipping_address_address1').val()
+      if(address1 != ""){
+        if(!validateInput(address1)){
+          $("input#checkout_shipping_address_address1").after(error)
+          setTimeout(function() {
+            $('.error-span').remove()
+          }, 2500)
+        return false
+      }
+      }
+
+      {% comment %} validating Address 2 {% endcomment %}
+      var address2 = $('input#checkout_shipping_address_address2').val()
+      if(address2 != ""){
+        if(!validateInput(address2)){
+          $("input#checkout_shipping_address_address2").after(error)
+          setTimeout(function() {
+            $('.error-span').remove()
+          }, 2500)
+        return false
+      }
+      }
+
+        var cityInput = $('input#checkout_shipping_address_city').val();
+        if ($.inArray(cityInput, arraCities) > -1)
+        {
+          console.log('find');
+          return true;
+        }
+        else
+        {
+          var a = "<span class='error-span' style='color:red'> Enter a valid city from city dropdown </span>";
+          $("#checkout_shipping_address_city").after(a);
+          setTimeout(function() {
+            $('.error-span').remove()
+          }, 2500)
+          return false;
+        }
+    });
+  });
+</script>
+

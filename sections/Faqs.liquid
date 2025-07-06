@@ -1,0 +1,265 @@
+{{ 'pageTemplate.css' | asset_url | stylesheet_tag }}
+
+<style>
+  /*faqs*/
+  .faq-title-wrapper p {
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 410;
+    font-size: 16px;
+    line-height: 25px;
+    color: black;
+
+  }
+
+  .faq-box .faq-desc {
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 310;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.5);
+    display: none;
+    border-bottom: none;
+    padding-bottom: 20px;
+  }
+  .faq-box.active .faq-desc {
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .faq-box.active .toggle-btn svg {
+    rotate: 180deg;
+  }
+  .faq-box.active .faq-title-wrapper {
+    border-bottom: none;
+  }
+  .faq-box .faq-title-wrapper {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  @media(max-width:767px) {
+
+    /*faqs*/
+    .faq-title-wrapper p {
+      width: 90%;
+    }
+
+  }
+</style>
+
+<div class="mainPageWrapper">
+  <div class="mainFlexWrapper">
+    <div class="navigationPageTemp contentHeight">
+      <div class="menuWrapper">
+        <div class="titleWrapper">
+          <h3 class="menuHeading">Customer Care</h3>
+          <div onclick="mobileCaret()" class="mobile-only iconHeader">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="8"
+              viewBox="0 0 12 8"
+              fill="none">
+              <path
+                d="M0.400391 0.959993L5.92923 7.19922L11.6004 0.799221"
+                stroke="black"
+                stroke-width="0.784409" />
+            </svg>
+          </div>
+        </div>
+        <div class="meniItemWrapper">
+          <a style="all:unset;cursor:pointer" href="/pages/faqs">
+            <p class="menuITEM active">Faqs</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/contact-us">
+            <p class="menuITEM">Contact Us</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/track-your-order">
+            <p class="menuITEM">TRACK YOUR ORDER</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/shopify-store-locator">
+            <p class="menuITEM">Store Locator</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/return-and-exchange">
+            <p class="menuITEM">Returns</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/shipping">
+            <p class="menuITEM">Shipping</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/terms-of-use">
+            <p class="menuITEM">Terms & Conditions</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/privacy-policy">
+            <p class="menuITEM">Privacy Policy</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contentPageTemp contentHeight">
+
+      <div class="page-tite-cstm">
+        <h3>Faqs</h3>
+      </div>
+
+      <div class="content-for-page-layout">
+
+        <div class="faqs-Detail-Wrapper">
+          <h3>{{ section.settings.sectionheading1 }}</h3>
+
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+              {%- when 'Faqs' -%}
+              <div class="faq-box">
+                <div class="faq-title-wrapper">
+                  <p>{{ block.settings.question }}</p>
+                  <div class="toggle-btn">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none">
+                      <circle
+                        cx="12.6758"
+                        cy="12.5"
+                        r="12"
+                        fill="#44AC34" />
+                      <path d="M17.6758 15.3493L12.7393 9.5L7.67578 15.5" stroke="white" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="faq-desc">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            {% endcase %}
+          {% endfor %}
+
+        </div>
+        <div class="faqs-Detail-Wrapper">
+          <h3>{{ section.settings.sectionheading2 }}</h3>
+
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+              {%- when 'Second' -%}
+              <div class="faq-box">
+                <div class="faq-title-wrapper">
+                  <p>{{ block.settings.question2 }}</p>
+                  <div class="toggle-btn">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none">
+                      <circle
+                        cx="12.6758"
+                        cy="12.5"
+                        r="12"
+                        fill="#44AC34" />
+                      <path d="M17.6758 15.3493L12.7393 9.5L7.67578 15.5" stroke="white" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="faq-desc">
+                  {{ block.settings.answer2 }}
+                </div>
+              </div>
+            {% endcase %}
+          {% endfor %}
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<script src="{{ 'pageTemplate.js' | asset_url }}" defer="defer"></script>
+<script>
+  // faqs
+  let questionWrapper = document.querySelectorAll('.faq-title-wrapper');
+  for (let i = 0; i < questionWrapper.length; i++) {
+    let initialActive = questionWrapper[0].closest('.faq-box');
+    initialActive.classList.add('active')
+    questionWrapper[i].onclick = function() {
+      let closestBox = questionWrapper[i].closest('.faq-box');
+
+// Remove 'active' class from all other '.faq-box' elements
+      let allBoxes = document.querySelectorAll('.faq-box');
+      for (let j = 0; j < allBoxes.length; j++) {
+        if (allBoxes[j] !== closestBox) {
+          allBoxes[j].classList.remove('active');
+        }
+      }
+      closestBox.classList.toggle('active');
+
+
+    }
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "sectionheading1",
+        "label": "Section 1 Heading"
+      }, {
+        "type": "text",
+        "id": "sectionheading2",
+        "label": "Section 1 Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Faqs",
+        "name": "Faqs",
+        "limit": 8,
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "Enter Question",
+            "default": "What do we mean by ‘Lorem ipsum’?"
+          }, {
+            "type": "textarea",
+            "id": "answer",
+            "label": "Enter Answer",
+            "default": " Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
+          }
+        ]
+      }, {
+        "type": "Second",
+        "name": "Faqs Second",
+        "limit": 8,
+        "settings": [
+          {
+            "type": "text",
+            "id": "question2",
+            "label": "Enter Question",
+            "default": "What do we mean by ‘Lorem ipsum’?"
+          }, {
+            "type": "textarea",
+            "id": "answer2",
+            "label": "Enter Answer",
+            "default": " Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Faqs Page",
+        "category": "Page"
+      }
+    ]
+
+  }
+{% endschema %}

@@ -1,0 +1,186 @@
+
+<script>
+    var url = 'https://wati-integration-service.clare.ai/ShopifyWidget/shopifyWidget.js?57146';
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = url;
+    var options = {
+  "enabled":true,
+  "chatButtonSetting":{
+      "backgroundColor":"#4dc247",
+      "ctaText":"Chat",
+      "borderRadius":"25",
+      "marginLeft":"0",
+      "marginBottom":"10",
+      "marginRight":"30",
+      "position":"right"
+  },
+  "brandSetting":{
+      "brandName":"EDIT BY AHMED SEDDII",
+      "brandSubTitle":"Typically replies within a few minutes",
+      "brandImg":"https://www.byedit.com/cdn/shop/files/Frame_1000004998.svg?v=1684951380&width=240",
+      "messageText":"",
+      "backgroundColor":"#0a5f54",
+      "ctaText":"Start Chat",
+      "borderRadius":"25",
+      "autoShow":false,
+      "phoneNumber":"97145119955"
+  }
+};
+    s.onload = function() {
+        CreateWhatsappChatWidget(options);
+    };
+    var x = document.getElementsByTagName('script')[0];
+    x.parentNode.insertBefore(s, x);
+</script>
+  <style>
+    
+    .wa-chat-box-poweredby {
+    	display: none;
+    }
+    #wa-widget-send-button {
+  -webkit-animation: shockwaveJump 1s ease-out infinite;
+          animation: shockwaveJump 1s ease-out infinite;
+}
+#wa-widget-send-button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  -webkit-animation: shockwave 1s .65s ease-out infinite;
+          animation: shockwave 1s .65s ease-out infinite;
+}
+#wa-widget-send-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  -webkit-animation: shockwave 1s .5s ease-out infinite;
+          animation: shockwave 1s .5s ease-out infinite;
+}
+
+@-webkit-keyframes shockwaveJump {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+  50% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+  }
+  55% {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+  }
+  60% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes shockwaveJump {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+  }
+  50% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+  }
+  55% {
+    -webkit-transform: scale(1.02);
+            transform: scale(1.02);
+  }
+  60% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@-webkit-keyframes shockwave {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), inset 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  95% {
+    box-shadow: 0 0 50px transparent, inset 0 0 30px transparent;
+  }
+  100% {
+    -webkit-transform: scale(2.25);
+            transform: scale(2.25);
+  }
+}
+@keyframes shockwave {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), inset 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  95% {
+    box-shadow: 0 0 50px transparent, inset 0 0 30px transparent;
+  }
+  100% {
+    -webkit-transform: scale(2.25);
+            transform: scale(2.25);
+  }
+}
+.btn--jump.is-active {
+  -webkit-animation: .4s jump ease infinite alternate;
+          animation: .4s jump ease infinite alternate;
+}
+
+@-webkit-keyframes jump {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  100% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes jump {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+  100% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+    
+    
+    #getbutton-whatsapp {
+    	display: none;
+    }
+
+  </style>

@@ -1,0 +1,325 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}
+    px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}
+    px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}
+      px;
+      padding-bottom: {{ section.settings.padding_bottom }}
+      px;
+    }
+  }
+{%- endstyle -%}
+<div class="loginWrapper">
+  <div class="customer cstmCustomerLogin login section-{{ section.id }}-padding">
+    <h1
+      class="forgotPassword"
+      id="recover"
+      tabindex="-1">
+      Forgot your password?
+      {% comment %} {{ 'customer.recover_password.title' | t }}{% endcomment %}
+    </h1>
+    <div>
+      <p class="forgotPara">
+        Forgot your password? Don't worry! An email is on its way to remind you. 
+
+      </p>
+
+      {%- form 'recover_customer_password' -%}
+        {% assign recover_success = form.posted_successfully? %}
+
+        <div style=" display:flex;flex-direction:column; align-items:flex-start" class="emailWrapper flexErapperMain">
+          <label style="position:relative;" for="RecoverEmail">
+            {{ 'customer.login_page.email' | t }} *
+          </label>
+          <div class="field">
+            <input
+              type="email"
+              value=""
+              name="email"
+              id="RecoverEmail"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              {% if form.errors %}
+              aria-invalid="true"
+              aria-describedby="RecoverEmail-email-error"
+              autofocus
+              {% endif %}
+              placeholder="Enter email here">
+
+          </div>
+        </div>
+        {%- if form.errors -%}
+          <small id="RecoverEmail-email-error" class="form__message">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 13 13">
+              <circle
+                cx="6.5"
+                cy="6.50049"
+                r="5.5"
+                stroke="white"
+                stroke-width="2" />
+              <circle
+                cx="6.5"
+                cy="6.5"
+                r="5.5"
+                fill="#EB001B"
+                stroke="#EB001B"
+                stroke-width="0.7" />
+              <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white" />
+              <path
+                d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z"
+                fill="white"
+                stroke="#EB001B"
+                stroke-width="0.7">
+            </svg>
+            {% comment %} {{ form.errors.messages.form }} {% endcomment %}
+            Invalid Credentials
+          </small>
+        {%- endif -%}
+
+        <button>
+          {{ 'customer.login_page.submit' | t }}
+        </button>
+
+        <a class="customer-cancel-button" href="#login">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
+            <path d="M7.0772 0.744022C7.17117 0.836422 7.22396 0.961674 7.22396 1.09227C7.22396 1.22286 7.17117 1.34811 7.0772 1.44051L1.91253 6.51303L16.4974 6.51303C16.6305 6.51303 16.7581 6.56495 16.8522 6.65737C16.9463 6.74979 16.9992 6.87513 16.9992 7.00583C16.9992 7.13653 16.9463 7.26187 16.8522 7.35429C16.7581 7.44671 16.6305 7.49863 16.4974 7.49863L1.91253 7.49863L7.0772 12.5712C7.16584 12.6646 7.2141 12.7881 7.2118 12.9158C7.20951 13.0435 7.15684 13.1653 7.0649 13.2556C6.97296 13.3459 6.84891 13.3976 6.7189 13.3998C6.5889 13.4021 6.46307 13.3547 6.36794 13.2676L0.34598 7.35408C0.252004 7.26168 0.199218 7.13642 0.199218 7.00583C0.199218 6.87524 0.252004 6.74999 0.34598 6.65759L6.36794 0.744022C6.46204 0.651737 6.58958 0.599903 6.72257 0.599903C6.85555 0.599903 6.9831 0.651737 7.0772 0.744022Z" fill="black"/>
+          </svg>
+        </a>
+      {%- endform -%}
+    </div>
+
+    <h3
+      class="headingAccount"
+      id="login"
+      tabindex="-1">
+      {% comment %}{{ 'customer.login_page.title' | t }}{% endcomment %}
+      ACCOUNT
+    </h3>
+    <p id="login" class="loginpara">Sign in with your email and password</p>
+    <div class="loginHeader">
+      <div class="loginHeaderFlex">
+        <div class="loginMainHeader active">
+          <a style="all:unset;cursor:pointer" href="/account/login">
+            <p class="h-TxtMain">SIGN IN</p>
+          </a>
+        </div>
+        <div class="registerMainHeader">
+          <a style="all:unset;cursor:pointer" href="/account/register">
+            <p class="r-TxtMain">REGISTER</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="login">
+      {%- if recover_success == true -%}
+        <h3
+          class="form__message"
+          tabindex="-1"
+          autofocus>
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 13 13">
+            <path
+              d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z"
+              fill="#428445"
+              stroke="white"
+              stroke-width="0.7" />
+            <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white" />
+            <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+          </svg>
+          {{ 'customer.recover_password.success' | t }}
+        </h3>
+      {%- endif -%}
+      {%- form 'customer_login', novalidate: 'novalidate', return_to: '/' -%}
+        {%- if form.errors -%}
+          <h2
+            class="form__message"
+            tabindex="-1"
+            autofocus>
+            <span class="visually-hidden">{{ 'accessibility.error' | t }}
+            </span>
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 13 13">
+              <circle
+                cx="6.5"
+                cy="6.50049"
+                r="5.5"
+                stroke="white"
+                stroke-width="2" />
+              <circle
+                cx="6.5"
+                cy="6.5"
+                r="5.5"
+                fill="#EB001B"
+                stroke="#EB001B"
+                stroke-width="0.7" />
+              <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white" />
+              <path
+                d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z"
+                fill="white"
+                stroke="#EB001B"
+                stroke-width="0.7">
+            </svg>
+            {{ 'templates.contact.form.error_heading' | t }}
+          </h2>
+          {{ form.errors | default_errors }}
+        {%- endif -%}
+
+        <div style="display:flex;flex-direction:column; align-items:flex-start" class="emailWrapper flexErapperMain">
+          <label style="position:relative" for="CustomerEmail">
+            {{ 'customer.login_page.email' | t }} *
+          </label>
+          <div class="field">
+            <input
+              type="email"
+              name="customer[email]"
+              id="CustomerEmail"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              {% if form.errors contains 'form' %}
+              aria-invalid="true"
+              {% endif %}
+              placeholder="Enter email here">
+          </div>
+        </div>
+
+        {%- if form.password_needed -%}
+          <div style="display:flex;flex-direction:column; align-items:flex-start" class="passwordWrapper flexErapperMain">
+            <label style="position:relative" for="CustomerPassword">
+              {{ 'customer.login_page.password' | t }} *
+            </label>
+            <div class="field">
+              <input
+                type="password"
+                value=""
+                name="customer[password]"
+                id="CustomerPassword"
+                autocomplete="current-password"
+                {% if form.errors contains 'form' %}
+                aria-invalid="true"
+                {% endif %}
+                placeholder="Enter Password">
+                <svg class="show-password" xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                  <g clip-path="url(#clip0_1328_42789)">
+                  <path d="M12.0575 9.61463C12.1273 9.6108 12.1973 9.6108 12.2671 9.61463L12.4018 8.48963C12.2876 8.47581 12.1726 8.46955 12.0575 8.47088C11.5961 8.47137 11.1393 8.56311 10.7134 8.74085C10.2874 8.91859 9.90064 9.17883 9.57524 9.50666C9.24984 9.83448 8.99221 10.2234 8.81711 10.6512C8.64201 11.079 8.55289 11.5373 8.55486 11.9996C8.55353 12.1162 8.55978 12.2327 8.57357 12.3484L9.69623 12.2059C9.6924 12.1372 9.6924 12.0683 9.69623 11.9996C9.69621 11.3703 9.94439 10.7665 10.3867 10.3198C10.829 9.87303 11.4296 9.61958 12.0575 9.61463Z" fill="black" fill-opacity="0.3"/>
+                  <path d="M5.85616 15.4452C4.5349 14.4439 3.33878 13.2868 2.29361 11.9989C3.33393 10.7164 7.368 6.16016 12.0569 6.16016C13.0645 6.17087 14.062 6.36266 15.002 6.72641L15.395 5.67266C14.3295 5.26111 13.1988 5.04517 12.0569 5.03516C6.06946 5.03516 1.32439 11.4102 1.12605 11.6652L0.882812 11.9989L1.12605 12.3327C2.29381 13.8453 3.65806 15.1947 5.18257 16.3452L5.85616 15.4452Z" fill="black" fill-opacity="0.3"/>
+                  <path d="M22.9877 11.6653C21.8199 10.1527 20.4557 8.80325 18.9312 7.65281C18.5944 7.40156 18.2463 7.16906 17.8946 6.94406L19.9378 4.89656L19.1445 4.10156L4.17578 19.1016L4.96912 19.8966L7.21442 17.6466C7.6988 17.906 8.19871 18.1352 8.71129 18.3328C9.78005 18.741 10.9131 18.9544 12.0568 18.9628C18.0443 18.9628 22.7893 12.5878 22.9877 12.3328L23.2309 11.9991L22.9877 11.6653ZM14.4256 11.7928C14.4294 11.8615 14.4294 11.9304 14.4256 11.9991C14.4256 12.6297 14.1764 13.2346 13.7325 13.6815C13.2886 14.1285 12.6861 14.3811 12.0568 14.3841H11.8323C11.4743 14.347 11.1292 14.2304 10.8219 14.0428L14.0851 10.7766C14.273 11.0855 14.3894 11.4328 14.4256 11.7928ZM12.0568 17.8378C11.0508 17.8269 10.0548 17.6364 9.11545 17.2753C8.76368 17.1403 8.40818 16.9828 8.05267 16.8066L10.0098 14.8453C10.5096 15.209 11.0976 15.4317 11.7125 15.4903C11.8272 15.4979 11.9422 15.4979 12.0568 15.4903C12.9822 15.4893 13.8698 15.1218 14.5259 14.4678C15.182 13.8138 15.5535 12.9264 15.5595 11.9991C15.5677 11.8905 15.5677 11.7814 15.5595 11.6728C15.503 11.0504 15.2807 10.4546 14.9158 9.94781L17.0975 7.76156C17.4979 8.00906 17.8946 8.26781 18.2763 8.55281C19.591 9.55526 20.7808 10.7123 21.8201 11.9991C20.7798 13.2816 16.7457 17.8378 12.0568 17.8378Z" fill="black" fill-opacity="0.3"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1328_42789">
+                  <rect width="23.9499" height="24" fill="white" transform="translate(0.0820312)"/>
+                  </clipPath>
+                  </defs>
+                </svg>
+            </div>
+          </div>
+
+        {%- endif -%}
+
+        <div
+          id="login"
+          style="width:100%; display:flex;align-items:center;justify-content:space-between"
+          class="bottom login">
+          <div style="display:flex" class="checboxrememberme">
+            <label>
+              <input type="checkbox" name="myCheckbox"> Remember Me
+            </label>
+          </div>
+
+          <a href="#recover">
+            {% comment %} {{ 'customer.login_page.forgot_password' | t }} {% endcomment %}
+            FORGOT PASSWORD?
+          </a>
+        </div>
+        <button>
+          {{ 'customer.login_page.sign_in' | t }}
+        </button>
+        {% comment %}
+        <a href="{{ routes.account_register_url }}">
+        {{ 'customer.login_page.create_account' | t }}
+        </a>
+        {% endcomment %}
+      {%- endform -%}
+    </div>
+
+    {%- if shop.checkout.guest_login -%}
+      <div>
+        <hr>
+        <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+
+        {%- form 'guest_login' -%}
+          <button>
+            {{ 'customer.login_page.guest_continue' | t }}
+          </button>
+
+
+
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+
+  </div>
+</div>
+
+<script>
+  let loginForm = document.querySelector('#customer_login');
+
+
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+    let emailField = loginForm.querySelector('input[type=email]').value;
+    window.dataLayer.push({
+      'event': 'login',
+      'method': emailField
+    });
+    this.submit();
+    console.log(emailField)
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "t:sections.main-login.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 36
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 36
+      }
+    ]
+  }
+{% endschema %}

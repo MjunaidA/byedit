@@ -1,0 +1,45 @@
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "{{ shop.url }}"
+  }
+  {%- if request.page_type == 'product' -%}, {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "{{ product.title | strip_html | strip_newlines | strip | escape }}",
+    "item": "{{ shop.url }}{{ product.url }}"
+  }
+  {%- endif -%}
+  {%- if request.page_type == 'collection' -%}, {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "{{ collection.title | strip_html | strip_newlines | strip | escape }}",
+    "item": "{{ shop.url }}{{ collection.url }}"
+  }
+  {%- endif -%}
+  {%- if request.page_type == 'blog' -%}, {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "{{ blog.title | strip_html | strip_newlines | strip | escape }}",
+    "item": "{{ shop.url }}{{ blog.url }}"
+  }
+  {%- endif -%}
+  {%- if request.page_type == 'article' -%}, {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "{{ blog.title | strip_html | strip_newlines | strip | escape }}",
+    "item": "{{ shop.url }}{{ blog.url }}"
+  }, {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "{{ article.title | strip_html | strip_newlines | strip | escape }}",
+    "item": "{{ shop.url }}{{ article.url }}"
+  }
+  {%- endif -%}
+  ]
+}
+</script>

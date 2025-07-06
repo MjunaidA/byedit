@@ -1,0 +1,247 @@
+<style>
+.cstmSearchmodel {
+    margin-top: 6rem;
+        padding: 1.5rem 0 0;
+}
+
+.cstmSearchmodel .search-modal__content {
+    padding: 0;
+}
+
+.cstmSearchmodel .search-modal__content .search-modal__form {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+.cstmSearchmodel .search-modal__content predictive-search.search-modal__form {
+    width: 82%;
+    margin: auto;
+    min-width: 82%;
+}
+.cstmSearchmodel .search-modal__content {
+    padding: 0;
+    position: relative;
+}
+.cstmSearchmodel .search-modal__content .search-modal__form .field {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.cstmSearchmodel .modal__close-button.link {
+    position: absolute;
+    top: 0%;
+    right: calc(100% - 92%);
+}
+.cstmSearchmodel .search__input.field__input {
+    font-size: 13px;
+        padding-left: 3rem;
+}
+.cstmSearchmodel .field__label{
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    color: rgba(0, 0, 0, 0.5);
+    left: calc(var(--inputs-border-width) + 3rem);
+    top: calc(1.1rem + var(--inputs-border-width));
+}
+.cstmSearchmodel .field__input:focus~.field__label, .cstmSearchmodel .field__input:not(:placeholder-shown)~.field__label, .cstmSearchmodel .field__input:-webkit-autofill~.field__label{
+    left: calc(var(--inputs-border-width) + 3rem);
+}
+.cstmSearchmodel .field:after {
+    display: none;
+}
+.cstmSearchmodel .field__button>svg, .cstmSearchmodel .search__button {
+    height: auto;
+    width: auto;
+}
+.cstmSearchmodel .search__button {
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.cstmSearchmodel .field__input:focus, .cstmSearchmodel .field__input:focus-visible, .cstmSearchmodel .field:hover.field:after{
+    box-shadow: none;
+}
+.search-suggestions-wrapper {
+    flex: 0 0 100%;
+    background: white;
+    padding: 0 0 5rem 0;
+    margin-top: -1rem;
+}
+.search-suggestions-wrapper > div {
+    width: 82%;
+    margin: auto;
+}
+.search-suggestions-wrapper .trending-search {
+    margin: 4rem auto 3rem; 
+        display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.trending-search h3 {
+    font-size: 14px;
+    font-family: 'Sequel Sans Medium Disp' !important;
+        margin: 0;
+
+        margin-right: 2rem;
+}
+.search-suggestions-wrapper ul {
+    all: unset;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+.search-suggestions-wrapper ul * {
+    color: rgba(0,0,0,0.5);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0;
+}
+ul.trending-search-wrap.trending-list li {
+    margin: 0 2rem;
+}
+ul.trending-search-wrap.trending-list li a {
+    display: flex;
+    align-items: center;
+}
+ul.trending-search-wrap.trending-list li a svg {
+    margin-right: 1rem;
+}
+.popular-search h3 {
+    font-size: 14px;
+    margin-bottom: 2rem;
+}
+ul.popular-search-wrap.popular-list li {
+    position: relative;
+    margin-right: 2rem;
+}
+ul.popular-search-wrap.popular-list li h4 {
+        font-family: 'Sequel Sans Medium Disp' !important;
+    color: black;
+    position: absolute;
+    bottom: 2rem;
+    width: calc(100% - 7rem);
+    margin: 0;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    transform: translateX(-50%);
+    left: 50%;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+@media(max-width:990px){
+    .trending-search h3 {
+    margin-bottom: 2rem;
+    }
+}
+
+@media(max-width:767px){
+    .cstmSearchmodel {
+    margin-top: 0rem;
+    padding: 0;
+    }
+    .cstmSearchmodel .search-modal__content predictive-search.search-modal__form {
+    width: 90%;
+    min-width: 90%;
+}
+.cstmSearchmodel .field__label {
+    font-size: 1.3rem;
+    top: calc(1.5rem + var(--inputs-border-width));
+}
+.cstmSearchmodel .field__button>svg, .cstmSearchmodel .search__button {
+    height: 1.6rem;
+    width: 1.6rem;
+}
+.cstmSearchmodel .search__button {
+    top: 53%;
+}
+.cstmSearchmodel  .modal__close-button .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+.cstmSearchmodel .modal__close-button.link {
+    right: calc(100% - 98%);
+    top: 52%;
+    transform: translateY(-50%);
+}
+.search-suggestions-wrapper > div {
+    width: 90%;
+}
+.search-suggestions-wrapper .trending-search {
+    margin: 2.5rem auto 2.5rem;
+    display: block;
+}
+.search-suggestions-wrapper {
+    margin-top: 0;
+}
+.search-suggestions-wrapper ul.trending-search-wrap.trending-list {
+    display: block;
+}
+ul.trending-search-wrap.trending-list li {
+    margin: 0 0 1rem 0;
+}
+.popular-search h3 {
+    font-size: 13px;
+        margin-bottom: 1.5rem;
+}
+ul.popular-search-wrap.popular-list li {
+    margin-right: 1.2rem;
+    flex: 0 0 46%;
+    margin-bottom: 0.5rem;
+}
+ul.popular-search-wrap.popular-list li h4 {
+    width: calc(100% - 6rem);
+    font-size: 11px;
+}
+.search-suggestions-wrapper {
+    height: 80vh;
+    overflow-y: auto;
+}
+}
+</style>
+
+<div class="search-suggestions-wrapper">
+    <div class="trending-search">
+    {% if section.settings.trending-title != blank %}
+        <h3>{{ section.settings.trending-title }}</h3>
+    {% endif %}
+    {% if section.settings.trending-list != blank %}
+        <ul class="trending-search-wrap trending-list" role="list">
+        {% assign trendingLinks = section.settings.trending-list | split: ',' %}
+        {% for link in trendingLinks %}
+            <li><a href="/search?q={{ link | strip | handle }}&options%5Bprefix%5D=last">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+            <path d="M11.9079 12.9247L14.2745 15.283M13.9495 7.99967C13.9495 11.6816 10.9648 14.6663 7.28288 14.6663C3.60098 14.6663 0.616211 11.6816 0.616211 7.99967C0.616211 4.31778 3.60098 1.33301 7.28288 1.33301C10.9648 1.33301 13.9495 4.31778 13.9495 7.99967Z" stroke="black" stroke-opacity="0.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {{ link | strip }}
+            </a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+    <div class="popular-search">
+    {% if section.settings.popular-title != blank %}
+        <h3>{{ section.settings.popular-title }}</h3>
+    {% endif %}
+    {% if section.blocks.size > 0 %}
+        <ul class="popular-search-wrap popular-list" role="list">
+        {% for block in section.blocks %}
+            {% if block.type == 'trending-search' %}
+                <li>
+                    <a href="{{ block.settings.link }}">
+                        {% if block.settings.image != blank %}
+                        <img loading="lazy" alt="popular category image {{ forloop.index }}" src="{{ block.settings.image.src | img_url: 'master' }}">
+                        {% endif %}
+                        {% if block.settings.title != blank %}
+                        <h4>{{ block.settings.title }}</h4>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+</div>

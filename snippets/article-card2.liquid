@@ -1,0 +1,150 @@
+<style>
+  .articleCardCstm {
+    width: 100%;
+    position: relative;
+  }
+  .imageWrapperArticle {
+    width: 100%;
+    margin-bottom: 4rem;
+  }
+  .article-img-img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+  }
+  .linkArticle {
+    all: unset;
+    cursor: pointer;
+    width: 100%;
+  }
+  .dateArticle {
+    margin: 2px 0;
+    padding: 0;
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 310;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .dateWrapper {
+    display: flex;
+    align-items: center;
+  }
+  .zeroP {
+    margin: 0;
+    padding: 0;
+  }
+  .headingLinkCstmArticle {
+    all: unset;
+    margin: 10px 0 2rem;
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 30px;
+    text-transform: capitalize;
+    color: #000000;
+    cursor: pointer;
+  }
+ .article-1 .headingLinkCstmArticle {
+    font-weight: 700;
+  }
+  .descArticleTxt {
+    display: none;
+  }
+  .article-1 .articleCardCstm .imageWrapperArticle .linkArticle .article-img-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+  }
+  .article-1 .imageWrapperArticle {
+    position: relative;
+  }
+  .article-1 .blogInfoWrapper {
+    background: white;
+    position: absolute;
+    bottom: -4%;
+    left: 50%;
+    transform: translate(-50%, 4%);
+    width: 70%;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    height: 136px;
+    padding: 20px;
+  }
+  .article-1 {
+    margin-bottom: 4rem;
+  }
+  .article-1 .dateWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .article-1 .descArticleTxt {
+    display: block;
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+margin-top:0;
+  }
+  @media(max-width:767px) {
+    .article-1 .articleCardCstm .imageWrapperArticle .linkArticle .article-img-img {
+      width: 100%;
+      height: 248px;
+      object-fit: cover;
+    }
+    .article-1 .blogInfoWrapper {
+      background: white;
+      position: absolute;
+      bottom: -19%;
+      left: 50%;
+      transform: translate(-50%, 19%);
+      width: 88%;
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      height: 150px;
+      padding: 10px;
+    }
+    .article-1 {
+      margin-bottom: 8rem;
+    }
+    .article-1 .descArticleTxt {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+</style>
+
+<div class="articleCardCstm">
+  <div class="imageWrapperArticle">
+    <a class="linkArticle" href="{{article.url}}">
+      <img
+        src="{{ article.image.src | image_url: width: 1920 }}"
+        alt="{{ article.image.src.alt | escape }}"
+        class="article-img-img"
+        loading="lazy">
+    </a>
+    <div class="blogInfoWrapper">
+      <div class="dateWrapper">
+        <p class="zeroP" style="font-weight:500;margin-right:5px">Date:</p>
+        <p class="dateArticle zeroP">{{ article.published_at | time_tag: format: 'date' }}</p>
+      </div>
+      <div class="Title Wrapper">
+        <h3 class="cstmHeadingArticle zeroP">
+          <a href="{{ article.url }}" class="headingLinkCstmArticle">
+            {{ article.title | truncate: 50 | escape }}
+          </a>
+        </h3>
+      </div>
+      <div class="descArticle">
+        <p class="descArticleTxt">{{ article.content | strip_html | truncatewords: 8 }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>

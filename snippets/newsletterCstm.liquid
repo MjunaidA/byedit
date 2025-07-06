@@ -1,0 +1,418 @@
+<style>
+  div#newsletter-popup {
+    display: none !important;
+}
+    #newsletter-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    #newsletter-popup .newsletter-form{
+      max-width: 100%;
+    }
+
+    #newsletter-popup .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85rem;
+      height: 70rem;
+      background: #fff;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #newsletter-popup .close-button {
+          position: absolute;
+      top: 1.2rem;
+      right: 2.5rem;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .left-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+
+    #newsletter-popup .left-section {
+      width: 50%;
+      height: inherit;
+    }
+
+    .right-section {
+      width: 50%;
+      height: inherit;
+      padding: 4rem 3rem 4rem 3rem;
+    }
+
+    #newsletter-popup p {
+      margin-top: 10px;
+    }
+
+    #newsletter-popup form input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      height: 4.3rem;
+    }
+    #newsletter-popup .newsletter-form__field-wrapper {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    #newsletter-popup form button {
+          display: block;
+      width: 100%;
+      padding: 1rem;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      height: 4.5rem;
+      font-size: 14px;
+    }
+
+    #newsletter-popup form button:hover {
+      background: #333;
+    }
+     #newsletter-popup .right-section h2 {
+      font-family: 'Sequel Sans Heavy Disp' !important;
+      font-style: normal;
+      font-weight: 430;
+      font-size: 25px;
+      line-height: 38px;
+      text-transform: uppercase;
+      color: #000000;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    .right-section p {
+      font-family: 'Sequel Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      color: rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.3px;
+    }
+    #newsletter-popup form input::placeholder {
+      color: rgba(0,0,0,0.3);
+  }
+    .cstmInput {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+    }
+    .cstmInput label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 12px;
+      font-family: 'Sequel Sans Roman Disp';
+      font-style: normal;
+      font-weight: 310;
+      font-size: 14px;
+      line-height: 22px;
+      color: rgb(0 0 0);
+      position: relative;
+    }
+    .cstmInput label::after {
+      bottom: 0;
+      color: red;
+      content: '*';
+      position: absolute;
+      transform: translate(-100%, 0);
+    }
+    #newsletter-popup .checboxrememberme .checkboxtxt {
+      font-family: 'Sequel Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.7);
+      margin: 0;
+    }
+     #newsletter-popup .checboxrememberme {
+          margin: 5px 0 3rem;
+  }
+    #newsletter-popup .checboxrememberme input {
+          margin: 0 1rem 0 0;
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+    .submitBtnCstm {
+      background: #000000;
+      border-radius: 2px;
+      color: white;
+      height: 50px;
+    }
+    #newsletter-popup .txtForm {
+      font-size: 14px;
+      color: green !important;
+      font-weight: 100;
+    }
+
+  @media(max-width:1024px){
+    #newsletter-popup .popup-content {
+      width: 90%;
+    }
+  }
+
+    @media(max-width:767px) {
+      #newsletter-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+      #newsletter-popup .popup-content {
+        top: 48%;
+        height: auto;
+        overflow-y: scroll;
+      }
+      #newsletter-popup .left-section {
+        width: 100%;
+        height: auto;
+        display: none;
+      }
+      #newsletter-popup .left-section img {
+        height: 340px;
+      }
+      .right-section {
+        width: 100%;
+        padding: 2rem 1.5rem;
+        height: auto;
+      }
+      #newsletter-popup .right-section h2 {
+        font-size: 19px;
+        line-height: 28px;
+        padding-right: 3rem;
+    }
+    #newsletter-popup .close-button {
+      top: 0.2rem;
+      right: 1.5rem;
+  }
+    #newsletter-popup .checboxrememberme input {
+      width: 1.8rem;
+      height: 1.8rem;
+          position: relative;
+      top: 5px;
+  }
+  #newsletter-popup .checboxrememberme {
+    margin: 5px 0 1.5rem;
+      align-items: flex-start !important;
+  }
+      #newsletter-popup .checboxrememberme .checkboxtxt {
+        font-size: 11px;
+      }
+
+    }
+</style>
+
+<div id="newsletter-popup">
+  <div class="popup-content">
+    <span class="close-button">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M15.6235 15.6205C15.5356 15.7084 15.4164 15.7578 15.292 15.7578C15.1677 15.7578 15.0485 15.7084 14.9606 15.6205L8 8.6599L1.03942 15.6205C0.95151 15.7084 0.832281 15.7578 0.707961 15.7578C0.583641 15.7578 0.464413 15.7084 0.376505 15.6205C0.288598 15.5326 0.23921 15.4133 0.23921 15.289C0.239211 15.1647 0.288597 15.0455 0.376505 14.9576L7.33709 7.99699L0.376505 1.03641C0.288597 0.9485 0.239212 0.829271 0.239211 0.704952C0.239211 0.580631 0.288598 0.461402 0.376505 0.373495C0.464413 0.285587 0.583642 0.236201 0.707962 0.236201C0.832282 0.236201 0.95151 0.285587 1.03942 0.373495L8 7.33408L14.9606 0.373495C15.0485 0.285587 15.1677 0.236201 15.292 0.236201C15.4164 0.236201 15.5356 0.285587 15.6235 0.373495C15.7114 0.461402 15.7608 0.580631 15.7608 0.704952C15.7608 0.829271 15.7114 0.9485 15.6235 1.03641L8.66291 7.99699L15.6235 14.9576C15.7114 15.0455 15.7608 15.1647 15.7608 15.289C15.7608 15.4133 15.7114 15.5326 15.6235 15.6205Z" fill="#050608" />
+      </svg>
+    </span>
+    <div class="left-section">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0758/0785/0770/files/SignUp_subscription.jpg?v=1719820204"
+        loading="lazy"
+        alt="Newsletter Image"
+        width=""
+        height=""
+      >
+    </div>
+    <div class="right-section">
+      <h2>{{ settings['popup-heading-text'] }}</h2>
+      <p>{{ settings['popup-sub-heading-text'] }}</p>
+
+      {%- form 'customer', id: 'ContactNewsLetter', class: 'newsletter-form' -%}
+        <!--
+          <form method="post" action="https://eepurl.com/itQ1Xs{% comment %}https://seddiqi.us8.list-manage.com/subscribe/post{% endcomment %}" id="ContactNewsLetter" accept-charset="UTF-8" class="newsletter-form">
+        -->
+
+        <input
+          type="hidden"
+          name="contact[tags]"
+          value="newsletter"
+        >
+        <div class="newsletter-form__field-wrapper {% if form.posted_successfully? %}success{% endif %} {% if form.errors %}error{% endif %}">
+          <div class="cstmInput">
+            <label for="name2">Name *</label
+            ><input
+              type="text"
+              name="contact[name]"
+              placeholder="Enter name here"
+              pattern="^[A-Za-z0-9\s,.']+$"
+              title="Only english language accepted. Do not use special tags"
+              oninvalid="this.setCustomValidity('Only english language accepted. Do not use special tags')"
+              oninput="this.setCustomValidity('')"
+              required
+            >
+          </div>
+
+          <div class="cstmInput">
+            <label for="email">Email *</label
+            ><input
+              type="email"
+              id="NewsletterForm"
+              name="contact[email]"
+              pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+              title="Please enter a valid email address"
+              placeholder="Enter email here"
+              required
+            >
+          </div>
+
+          <div class="cstmInput">
+            <label for="phone2">Phone *</label
+            ><input
+              type="tel"
+              name="contact[phone]"
+              placeholder="+971502111111"
+              pattern="^\+971\d{9}$"
+              title="Please enter a valid UAE mobile number e-g +971502111111"
+              oninvalid="this.setCustomValidity('Please enter a valid UAE mobile number e.g. +971502111111')"
+              oninput="this.setCustomValidity('')"
+              required
+            >
+          </div>
+          <div style="display:flex;align-items: center;" class="checboxrememberme">
+            <input
+              type="checkbox"
+              name="consent"
+              required
+            >
+             <p class="checkboxtxt">I would like to receive updates from EDIT via email. Please refer to our <a href="https://www.byedit.com/pages/privacy-policy" >Privacy Policy</a> for more information.</p>
+          </div>
+
+          <button
+            type="submit"
+            class=""
+            name="commit"
+            id="Subscribe"
+            aria-label="{{ 'newsletter.button_label' | t }}"
+          >
+            Submit
+          </button>
+          {%- if form.errors -%}
+            <small class="txtForm" id="error">
+              {% comment %} {%- render 'icon-error' -%} {% endcomment %}
+              Error:
+              {{- form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email -}}
+            </small>
+          {%- endif -%}
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p
+            class="txtForm"
+            id="success"
+            tabindex="-1"
+            autofocus
+          >
+            {% comment %} {% render 'icon-success' -%} {% endcomment %}
+
+            Email Sign Up Successful
+            {% comment %} {{- 'newsletter.success' | t }} {% endcomment %}
+          </p>
+        {%- endif -%}
+        <p
+          class="hidden txtForm"
+          id="subscribed"
+          tabindex="-1"
+          autofocus
+        >
+          {% comment %} {% render 'icon-success' -%} {% endcomment %}
+          You are already subscribed
+          {% comment %} {{- 'newsletter.success' | t }} {% endcomment %}
+        </p>
+        {% comment %} </form> {% endcomment %}
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<script>
+    window.onload = function() {
+      var popup = document.getElementById('newsletter-popup');
+      var closeButton = document.querySelector('.close-button');
+      var submitButton = document.querySelector('#newsletter-form button');
+
+  // Check if the popup should be displayed
+      var cookies = document.cookie.split(';');
+      var popupShown = cookies.some(function(cookie) {
+        return cookie.trim().indexOf('popupShown=1') === 0;
+      });
+
+      if (! popupShown) {
+        setTimeout(function() {
+          popup.style.display = 'block';
+        }, 3000);
+      }
+
+  // Close the popup
+      var closePopup = function() {
+        popup.style.display = 'none';
+        document.cookie = 'popupShown=1';
+      };
+
+      closeButton.onclick = closePopup;
+
+  // Close the popup when clicked outside of it
+      window.onclick = function(event) {
+        if (event.target === popup) {
+          closePopup();
+        }
+      };
+
+  // Submit the form
+      submitButton.onclick = function(event) {
+        event.preventDefault();
+
+  // Check if form fields are empty
+        var nameField = document.getElementById('name');
+        var emailField = document.getElementById('email');
+        var phoneField = document.getElementById('phone');
+
+        if (nameField.value.trim() === '' || emailField.value.trim() === '' || phoneField.value.trim() === '') {
+          var errorMessage = document.querySelector('.form-status.text-body');
+          if (errorMessage) {
+            errorMessage.textContent = 'Please fill in all the required fields.';
+          }
+          return;
+        }
+
+  // Process the form data here
+        document.cookie = 'popupShown=1';
+
+  // popup.style.display = 'none';
+      };
+    };
+</script>

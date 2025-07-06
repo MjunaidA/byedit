@@ -1,0 +1,1 @@
+theme get --password=shptka_ba6f475982c26e18c845e0075c772983 --store="edit-watches.myshopify.com" --themeid=150228664594

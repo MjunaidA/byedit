@@ -1,0 +1,380 @@
+{% comment %} 
+                   <style>
+        [wishlist-trigger] 
+        {
+                background-color: transparent;
+    border: none;
+    color: #3a3a3a;
+    padding: 0;
+    display: flex;
+    cursor: pointer;
+        }
+    
+        [wishlist-trigger].active svg path, a.branded-wishlist-link.active svg path {
+    fill: #44AC34;
+    stroke: #44AC34;
+}
+a.branded-wishlist-link.header__icon.focus-inset.small-hide {
+    position: relative;
+}
+p.wishlist-counter {
+    margin: 0;
+    font-size: 11px;
+    position: absolute;
+    right: 1px;
+}
+    
+        [wishlist-trigger] .whistlist-text-remove,
+        [wishlist-trigger].active .whistlist-text-add
+        {
+            display: none;
+        }
+    
+        [wishlist-trigger].active .whistlist-text-remove
+        {
+            display: block;
+        }
+        
+        [wishlist-trigger].wl-loading .wl-loader
+        {
+            display: block !important;
+        }
+    
+        [wishlist-trigger].wl-loading span
+        {
+            display: none !important;
+        }
+        
+        [wishlist-trigger].wl-loading
+        {
+          pointer-events: none;
+        }
+    
+    
+    </style>
+    
+    <script type='text/javascript'>
+    
+        {% if template.name == 'product' %}
+            var url = new URL(window.location.href)
+            var urlSearch = new URLSearchParams(url.search)
+            let variantID = '';
+            if (urlSearch.has('variant'))
+            {
+                variantID = urlSearch.get('variant')
+            }
+            else
+            {
+                variantID = String({{ product.selected_or_first_available_variant.id }})
+            }
+        {% else %}
+            variantID = '';
+        {% endif %}
+    
+        var customer_id = false;
+        {% if customer.id %}
+            customer_id = {{ customer.id }};    
+        {% endif %}
+    
+        
+        function wislist_add() {
+
+                var wishlist_counter_el = document.querySelectorAll('[branded-wishlist-counter]');
+                console.log(wishlist_counter_el)
+                let isLoading = false;
+                var add_to_wishlist_btn = document.querySelectorAll('[wishlist-trigger]');
+
+
+                add_to_wishlist_btn.forEach(function (value, index) {
+
+                    
+
+                    if(!value.classList.contains('bind'))
+                    {
+                    value.addEventListener('click', function (e) {
+                        
+                        let product_id = this.getAttribute('data-product-id')
+                        let product_handle = this.getAttribute('data-product-handle');
+                        let productURL = window.location.href;
+                        let productTitle = '{{ product.title }}';
+                        let productImageURL = this.getAttribute('data-product-image')
+                        let productSKU = '{{ product.selected_variant.sku }}'
+
+                        if (this.getAttribute('data-template') === 'grid-item') {
+                            variantID = this.getAttribute('data-variant-id');
+                            productURL = this.getAttribute('data-product-url');
+                            productTitle = this.getAttribute('data-product-title')
+                            productSKU = this.getAttribute('data-variant-sku')
+                        }
+
+                        if (customer_id) {
+                            // Customer logged in
+
+                            isLoading = true;
+                            if (isLoading) {
+                                this.classList.add('wl-loading')
+                            }
+                            fetch('https://wishlist-wizard-be.alche.cloud/products?shop=edit-watches.myshopify.com&customer_id=' + String(customer_id))
+                                .then((response) => {
+                                    return response.json()
+                                })
+                                .then((data) => {
+                                    var array = data.products;
+                                    if (containsObject(String(variantID), array)) {
+
+                                        fetch('https://wishlist-wizard-be.alche.cloud/delete_product_of_customer?shop=edit-watches.myshopify.com&shopify_variant_id=' + String(variantID) + '&shopify_customer_id=' + String(customer_id))
+                                            .then((res) => {
+                                                return res.json();
+                                            })
+                                            .then((data) => {
+                                                console.log('Delete Success : -------------------- ', data)
+                                                this.classList.remove('wl-loading')
+                                                this.classList.remove('active')
+                                                wishlist_counter_el.forEach((value, index) => {
+                                                    value.textContent = data.products.length
+                                                })
+
+
+                                            })
+                                            .catch((err) => {
+                                                this.classList.remove('wl-loading')
+                                                console.error('Delete Wishlist from DB Error: ', err)
+                                            })
+
+                                    }
+                                    else {
+                                        var data = [
+                                            {
+                                              shopify_customer_id: String(customer_id),
+                                              shopify_product_id: String(product_id),
+                                              shopify_variant_id: String(variantID),
+                                              product_link: String(productURL),
+                                              shop: 'edit-watches.myshopify.com'
+                                            }
+                                        ];
+                                        // Add to Wishlist
+
+                                        var addURL = 'https://wishlist-wizard-be.alche.cloud/products';
+
+                                        let perms = {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify(data)
+                                        }
+
+                                        fetch(addURL, perms)
+                                            .then((response) => {
+                                                return response.json();
+                                            })
+                                            .then((data) => {
+                                                console.log('Add to Wislist: ', data);
+                                                this.classList.remove('wl-loading')
+                                                this.classList.add('active')
+
+                                                wishlist_counter_el.forEach((value, index) => {
+//                                                     value.textContent = array.length + 1
+                                                    value.textContent = data.count
+
+
+                                                })
+                                                
+                                                console.log(array.length + 1)
+
+                                            })
+                                            .catch((error) => {
+                                                console.log('Add to Wishlist Error: ', error);
+                                                this.classList.remove('wl-loading')
+                                            })
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log('Fetch Existing Data Error: ', error);
+                                })
+                        }
+                        else {
+                            // Customer Not logged in
+                            var wishlist = localStorage.getItem('wishlist_wizard');
+
+
+                            if (wishlist) {
+                                var array = JSON.parse(wishlist);
+                                if (containsObject(String(variantID), array)) {
+                                    var newArray = array.filter(function (prod) { return prod.shopify_variant_id != String(variantID); });
+                                    localStorage.setItem('wishlist_wizard', JSON.stringify(newArray));
+                                    let ll = localStorage.getItem('wishlist_wizard');
+                                    this.classList.remove('active');
+
+                                    wishlist_counter_el.forEach((value, index) => {
+                                        value.textContent = JSON.parse(ll).length
+                                        if (JSON.parse(ll).length >= 1) {
+                                            value.classList.add('active')
+                                            value.parentNode.classList.add('active')
+
+
+                                        }
+                                        else {
+                                            value.classList.remove('active')
+                                            //                                       value.closest('.wishlist-link').classList.remove('active')
+                                            console.log(value.parentNode)
+                                            value.parentNode.classList.remove('active')
+                                        }
+                                    })
+
+                                }
+                                else {
+                                    var data = {
+                                        shopify_product_id: String(product_id),
+                                        shopify_variant_id: String(variantID),
+                                        product_image: String(productImageURL),
+                                        product_title: String(productTitle),
+                                        product_sku: String(productSKU),
+                                        product_link: String(productURL),
+                                        shop: 'ai-image-search.myshopify.com'
+                                    };
+                                    array.push(data)
+                                    localStorage.setItem('wishlist_wizard', JSON.stringify(array));
+                                    this.classList.add('active');
+
+                                    wishlist_counter_el.forEach((value, index) => {
+                                        value.textContent = array.length
+                                        if (array.length >= 1) {
+                                            value.classList.add('active')
+                                            //                                     value.closest('.wishlist-link').classList.add('active')
+                                            console.log(value.parentNode)
+                                            value.parentNode.classList.add('active')
+                                        }
+                                        else {
+                                            value.classList.remove('active')
+                                            //                                     value.closest('.wishlist-link').classList.remove('active')
+                                            console.log(value.parentNode)
+                                            value.parentNode.classList.remove('active')
+                                        }
+
+                                    })
+                                }
+                            }
+                            else {
+                                var array = [];
+                                var data = {
+                                    shopify_product_id: String(product_id),
+                                    shopify_variant_id: String(variantID),
+                                    product_image: String(productImageURL),
+                                    product_title: String(productTitle),
+                                    product_sku: String(productSKU),
+                                    product_link: String(productURL),
+                                    shop: 'edit-watches.myshopify.com'
+                                };
+                                array.push(data)
+                                localStorage.setItem('wishlist_wizard', JSON.stringify(array));
+                                this.classList.add('active');
+                                wishlist_counter_el.forEach((value, index) => {
+                                    value.textContent = array.length
+                                    if (array.length >= 1) {
+                                        value.classList.add('active')
+                                        value.parentNode.classList.add('active')
+                                    }
+                                    else {
+                                        value.classList.remove('active')
+                                        value.parentNode.classList.remove('active')
+                                    }
+                                })
+
+                            }
+                        }
+                    })
+
+                    value.classList.add('bind');
+                    }
+                })
+                if (customer_id) {
+                    var variant = variantID;
+                    fetch('https://wishlist-wizard-be.alche.cloud/products?shop=edit-watches.myshopify.com&customer_id=' + String(customer_id))
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            let array = data.products;
+                            console.log('Loading Time Responise: if Customer', array)
+                            add_to_wishlist_btn.forEach(function (value, index) {
+                                if (value.getAttribute('data-template') === 'grid-item') {
+                                    variant = value.getAttribute('data-variant-id');
+                                }
+                                if (containsObject(String(variant), array)) {
+                                    value.classList.add('active')
+                                    wishlist_counter_el.forEach((value, index) => {
+                                        value.textContent = array.length
+                                        if (array.length >= 1) {
+                                            value.classList.add('active')
+                                            value.parentNode.classList.add('active')
+                                        }
+                                        else {
+                                            value.classList.remove('active')
+                                            value.parentNode.classList.remove('active')
+                                        }
+
+                                    })
+
+                                }
+                            })
+                            wishlist_counter_el.forEach((value, index) => {
+                                value.textContent = array.length
+                                if (array.length >= 1) {
+                                    value.classList.add('active')
+                                    value.parentNode.classList.add('active')
+                                }
+                                else {
+                                    value.classList.remove('active')
+                                    value.parentNode.classList.remove('active')
+                                }
+
+                            })
+                        })
+                        .catch((error) => {
+                            console.log('Fetch Existing Data Error (LoadTime): ', error);
+                        })
+                }
+                else {
+                    var wishlist = localStorage.getItem('wishlist_wizard');
+                    var variant = variantID;
+                    if (wishlist) {
+                        var array = JSON.parse(wishlist)
+                        wishlist_counter_el.forEach((value, index) => {
+                            value.textContent = array.length;
+                            if (array.length >= 1) {
+                                value.classList.add('active')
+                                value.parentNode.classList.add('active')
+                            }
+                            else {
+                                value.classList.remove('active')
+                                value.parentNode.classList.remove('active')
+                            }
+
+                        })
+                        add_to_wishlist_btn.forEach(function (value, index) {
+
+                            if (value.getAttribute('data-template') === 'grid-item') {
+                                variant = value.getAttribute('data-variant-id');
+                            }
+                            if (containsObject(String(variant), array)) {
+                                value.classList.add('active')
+                            }
+                        })
+                    }
+                }
+                function containsObject(string, list) {
+                    var i;
+                    for (i = 0; i < list.length; i++) {
+                        if (list[i].shopify_variant_id === string) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+
+            wislist_add()
+    
+</script>    
+     {% endcomment %}

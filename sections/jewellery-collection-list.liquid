@@ -1,0 +1,391 @@
+<style>
+    .collection__container{
+        width:100%;
+        height:auto;
+        position: relative;
+    }
+   .collection__container .list-swiper {
+        width: 100%!important;
+        height: auto!important;
+        padding-left:7rem;
+      }
+  
+     .collection__container .list-swiper-slide {
+        display: flex;
+        align-items: center;
+        width:100%;
+      }
+  
+     .collection__container .list-swiper-slide img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .collection__container .swiper-button-prev, .collection__container .swiper-button-next{
+        display:block!important;
+        --swiper-navigation-color:#00000080;
+      }
+      .collection__container .swiper-button-next:after, .collection__container .swiper-button-prev:after {
+          width: 30px;
+          height: 30px;
+          font-size: 14px;
+          border: 1px solid #000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          color: #000;
+      }
+       .collection__container .swiper-button-next{
+          right: 5%;
+          top: 19%;
+      }
+      .collection__container .swiper-button-prev{
+         left: auto;
+         right: 9%;
+         top: 19%;
+     }
+      .list-swiper .swiper-button-next:after, .list-swiper .swiper-button-prev:after{
+        font-size: 15px!important;
+        color: black;
+      }
+      .list-swiper .swiper-button-prev{
+        left:3rem;
+      }
+      .col-List-{{ section.id }} .collection-list-heading{
+        color:{{ section.settings.listHeadingColor }};
+      }
+      .collection-name{
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 22px;
+        letter-spacing: 0.28px;
+        margin: 0.7rem 0 0 0;
+        text-transform:uppercase;
+      }
+      .col-List-{{ section.id }} .list-swiper-slide a{
+        text-decoration:none;
+        color:{{ section.settings.listTitleColor}};
+      }
+      .collection-list-heading{
+        font-size: 30px;
+        font-weight: 700;
+        margin: 1rem 7rem 1rem 7rem;
+        text-transform:uppercase;
+      }
+     .collection-list-description p{
+        margin: 0rem 7rem 3rem 7rem;
+        font-size: 14px;
+        font-weight: 310;
+        line-height: 22px;
+     }
+     .col-List-{{ section.id }} .list-swiper-text{
+       height: 118px;
+       background:{{section.settings.slidebg}};
+       border:{{section.settings.slideborder}};
+       border: 1px solid #0000001A;
+     }
+     .slide-info{
+       padding-left:2rem;
+     }
+     .col-List-{{ section.id }} .slide-info h3{
+       color:{{ section.settings.listHeadingColor }};
+       text-transform:uppercase;
+       margin:0;
+     }
+     .slide-info button{
+       font-weight: 600;
+       line-height: 25px;
+       height: 3rem;
+       text-transform: uppercase;
+       font-family: 'Sequel Sans Light Disp' !important;
+       letter-spacing: 2px;
+       cursor: pointer;
+       padding: 0rem 1rem;
+     }
+     .collection-text, collection-button{
+        margin-bottom: 1rem!important;
+     }
+      .col-List-{{ section.id }} .slide-info button{
+        background:{{section.settings.buttonbg}};
+        border:1px solid {{section.settings.buttonborder}};
+     }
+      @media screen and (min-width:750px){
+          .col-List-{{ section.id }}{
+              padding-top:{{ section.settings.colPaddingTop }}%;
+              padding-bottom:{{ section.settings.colPaddingBottom }}%;
+              max-width:100%;
+          }
+           .slide-info h3{
+             font-size:20px;
+          }
+           .slide-info button{
+              font-size: 14px;
+           }
+      }
+      @media screen and (max-width:749px){
+         .col-List-{{ section.id }}{
+              padding-top:{{ section.settings.colPaddingTopmb }}%;
+              padding-bottom:{{ section.settings.colPaddingBottommb }}%;
+              max-width:100%;
+              background:{{section.settings.mbbg}}
+          }
+         .collection__container .swiper-horizontal>.swiper-pagination-progressbar, .swiper-pagination-progressbar.swiper-pagination-horizontal{
+            display:block;
+          }
+          .collection-list-heading{
+            margin: 0 0rem 1.5rem 1.6rem;
+            font-size: 24px;
+            line-height: 21px;
+            letter-spacing: 0.2px;
+           }
+          .collection__container .swiper-nav{
+            opacity:0 !important;
+          }
+           .collection-list-description p{
+             margin:0 0rem 1.5rem 1.6rem
+           }
+          .collection__container .list-swiper{
+            padding-left:2rem;
+          }
+          .collection-name{
+             letter-spacing: 3px;
+          }
+          .slide-info h3{
+            font-size:14px;
+          }
+          .slide-info button{
+            font-size: 12px;
+            letter-spacing: 1px;
+          }
+      }
+</style>
+
+<div class="collection__container  col-List-{{ section.id }}">
+    {% if section.settings.colHeading != blank %}
+    <h2 class="collection-list-heading section-heading">{{ section.settings.colHeading }}</h2>
+    {% endif %}
+     {% if section.settings.description != blank %}
+    <div class="collection-list-description">{{ section.settings.description }}</div>
+    {% endif %}
+    <div class="swiper list-swiper collection-{{ section.id }}-slider">
+        <div class="swiper-wrapper list-swiper-wrapper">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                 {% when "collectionimage" %}
+                          <div class="swiper-slide list-swiper-slide">
+                              {% if block.settings.collectionImage != blank %}
+                                  <a href="{{block.settings.collectionUrl }}">
+                                      <img src="{{ block.settings.collectionImage  | img_url: 'master' }}" loading="lazy" alt="Product based on  color" aria-label="Product based on  color" width="100%" height="100%">
+                                      {% if block.settings.collectionName != blank %}
+                                          <h3 class="collection-name">{{ block.settings.collectionName }}</h3>
+                                      {% endif %}
+                                  </a>
+                                  {% else %}
+                                  <div class="empty-img">
+                                    <svg style="background:#D2D2D2" xmlns="http://www.w3.org/2000/svg" width="295" height="205" viewBox="0 0 250 290" fill="none">
+                                      <rect  fill="#D2D2D2"/>
+                                      <path d="M26.728 160V157.824L33.32 150.688C34.6213 149.301 35.656 148.16 36.424 147.264C37.2133 146.368 37.7893 145.568 38.152 144.864C38.5147 144.16 38.696 143.413 38.696 142.624C38.696 141.323 38.312 140.32 37.544 139.616C36.776 138.912 35.7627 138.56 34.504 138.56C33.224 138.56 32.136 138.933 31.24 139.68C30.344 140.405 29.7253 141.44 29.384 142.784L26.536 142.048C26.8133 140.768 27.3253 139.659 28.072 138.72C28.8187 137.781 29.7467 137.056 30.856 136.544C31.9653 136.032 33.1813 135.776 34.504 135.776C35.9547 135.776 37.224 136.064 38.312 136.64C39.4213 137.195 40.2853 137.973 40.904 138.976C41.544 139.979 41.864 141.141 41.864 142.464C41.864 143.339 41.6827 144.192 41.32 145.024C40.9573 145.856 40.424 146.741 39.72 147.68C39.016 148.597 38.0987 149.664 36.968 150.88L31.08 157.28H42.376V160H26.728ZM53.7563 160.384C52.5189 160.384 51.3563 160.171 50.2683 159.744C49.1803 159.296 48.2309 158.667 47.4203 157.856C46.6309 157.024 46.0549 156.053 45.6923 154.944L48.2523 153.856C48.7003 155.029 49.4256 155.947 50.4283 156.608C51.4523 157.248 52.5616 157.568 53.7563 157.568C54.7376 157.568 55.6016 157.355 56.3483 156.928C57.1163 156.48 57.7136 155.872 58.1403 155.104C58.5669 154.315 58.7803 153.44 58.7803 152.48C58.7803 151.477 58.5563 150.592 58.1083 149.824C57.6816 149.056 57.0949 148.459 56.3483 148.032C55.6016 147.584 54.7483 147.36 53.7883 147.36C52.8069 147.36 51.9109 147.584 51.1003 148.032C50.2896 148.48 49.7029 149.045 49.3403 149.728L46.8123 149.184L48.6363 136.16H60.9883V138.88H49.8203L51.0363 137.664L49.6283 147.776L48.5403 147.136C49.2443 146.24 50.0656 145.6 51.0043 145.216C51.9643 144.811 52.9989 144.608 54.1083 144.608C55.6656 144.608 57.0309 144.96 58.2043 145.664C59.3776 146.368 60.2949 147.307 60.9563 148.48C61.6176 149.653 61.9483 150.987 61.9483 152.48C61.9483 153.973 61.5856 155.317 60.8603 156.512C60.1563 157.707 59.1856 158.656 57.9483 159.36C56.7323 160.043 55.3349 160.384 53.7563 160.384ZM75.491 160.384C73.5923 160.384 71.9283 159.872 70.499 158.848C69.091 157.803 67.9923 156.363 67.203 154.528C66.4137 152.672 66.019 150.517 66.019 148.064C66.019 145.611 66.4137 143.467 67.203 141.632C67.9923 139.776 69.091 138.336 70.499 137.312C71.907 136.288 73.5603 135.776 75.459 135.776C77.3577 135.776 79.011 136.288 80.419 137.312C81.827 138.336 82.9257 139.776 83.715 141.632C84.5257 143.467 84.931 145.611 84.931 148.064C84.931 150.517 84.5363 152.672 83.747 154.528C82.9577 156.384 81.8483 157.824 80.419 158.848C79.011 159.872 77.3683 160.384 75.491 160.384ZM75.491 157.472C76.771 157.472 77.8803 157.088 78.819 156.32C79.7577 155.531 80.483 154.432 80.995 153.024C81.5283 151.616 81.795 149.963 81.795 148.064C81.795 146.165 81.5283 144.512 80.995 143.104C80.483 141.696 79.747 140.608 78.787 139.84C77.8483 139.072 76.739 138.688 75.459 138.688C74.179 138.688 73.0697 139.072 72.131 139.84C71.1923 140.608 70.4563 141.696 69.923 143.104C69.411 144.512 69.155 146.165 69.155 148.064C69.155 149.941 69.411 151.584 69.923 152.992C70.4563 154.4 71.1923 155.499 72.131 156.288C73.091 157.077 74.211 157.472 75.491 157.472ZM92.9145 160L100.691 147.904L93.1065 136.16H96.6905L103.123 146.176H101.779L108.211 136.16H111.795L104.211 147.904L111.987 160H108.403L101.779 149.632H103.123L96.4665 160H92.9145ZM119.603 160V157.824L126.195 150.688C127.496 149.301 128.531 148.16 129.299 147.264C130.088 146.368 130.664 145.568 131.027 144.864C131.39 144.16 131.571 143.413 131.571 142.624C131.571 141.323 131.187 140.32 130.419 139.616C129.651 138.912 128.638 138.56 127.379 138.56C126.099 138.56 125.011 138.933 124.115 139.68C123.219 140.405 122.6 141.44 122.259 142.784L119.411 142.048C119.688 140.768 120.2 139.659 120.947 138.72C121.694 137.781 122.622 137.056 123.731 136.544C124.84 136.032 126.056 135.776 127.379 135.776C128.83 135.776 130.099 136.064 131.187 136.64C132.296 137.195 133.16 137.973 133.779 138.976C134.419 139.979 134.739 141.141 134.739 142.464C134.739 143.339 134.558 144.192 134.195 145.024C133.832 145.856 133.299 146.741 132.595 147.68C131.891 148.597 130.974 149.664 129.843 150.88L123.955 157.28H135.251V160H119.603ZM141.127 160L149.351 149.28L149.927 149.344C149.607 149.771 149.255 150.112 148.871 150.368C148.487 150.603 148.061 150.773 147.591 150.88C147.143 150.987 146.653 151.04 146.119 151.04C144.711 151.04 143.442 150.72 142.311 150.08C141.202 149.419 140.317 148.523 139.655 147.392C139.015 146.24 138.695 144.928 138.695 143.456C138.695 141.984 139.037 140.672 139.719 139.52C140.402 138.368 141.341 137.461 142.535 136.8C143.73 136.117 145.074 135.776 146.567 135.776C148.103 135.776 149.458 136.117 150.631 136.8C151.826 137.461 152.765 138.389 153.447 139.584C154.13 140.757 154.471 142.112 154.471 143.648C154.471 144.48 154.375 145.301 154.183 146.112C153.991 146.923 153.682 147.744 153.255 148.576C152.85 149.408 152.306 150.272 151.623 151.168L144.903 160H141.127ZM146.567 148.288C147.485 148.288 148.295 148.085 148.999 147.68C149.725 147.253 150.29 146.677 150.695 145.952C151.101 145.205 151.303 144.373 151.303 143.456C151.303 142.496 151.09 141.653 150.663 140.928C150.258 140.203 149.703 139.627 148.999 139.2C148.295 138.773 147.485 138.56 146.567 138.56C145.671 138.56 144.871 138.773 144.167 139.2C143.463 139.627 142.898 140.203 142.471 140.928C142.066 141.653 141.863 142.496 141.863 143.456C141.863 144.373 142.066 145.205 142.471 145.952C142.877 146.677 143.431 147.253 144.135 147.68C144.861 148.085 145.671 148.288 146.567 148.288ZM167.804 160.384C165.905 160.384 164.241 159.872 162.812 158.848C161.404 157.803 160.305 156.363 159.516 154.528C158.726 152.672 158.332 150.517 158.332 148.064C158.332 145.611 158.726 143.467 159.516 141.632C160.305 139.776 161.404 138.336 162.812 137.312C164.22 136.288 165.873 135.776 167.772 135.776C169.67 135.776 171.324 136.288 172.732 137.312C174.14 138.336 175.238 139.776 176.028 141.632C176.838 143.467 177.244 145.611 177.244 148.064C177.244 150.517 176.849 152.672 176.06 154.528C175.27 156.384 174.161 157.824 172.732 158.848C171.324 159.872 169.681 160.384 167.804 160.384ZM167.804 157.472C169.084 157.472 170.193 157.088 171.132 156.32C172.07 155.531 172.796 154.432 173.308 153.024C173.841 151.616 174.108 149.963 174.108 148.064C174.108 146.165 173.841 144.512 173.308 143.104C172.796 141.696 172.06 140.608 171.1 139.84C170.161 139.072 169.052 138.688 167.772 138.688C166.492 138.688 165.382 139.072 164.444 139.84C163.505 140.608 162.769 141.696 162.236 143.104C161.724 144.512 161.468 146.165 161.468 148.064C161.468 149.941 161.724 151.584 162.236 152.992C162.769 154.4 163.505 155.499 164.444 156.288C165.404 157.077 166.524 157.472 167.804 157.472ZM181.648 166.4V142.752H184.56V146.464L184.176 145.728C184.816 144.704 185.69 143.893 186.8 143.296C187.909 142.677 189.178 142.368 190.608 142.368C192.229 142.368 193.68 142.763 194.96 143.552C196.261 144.341 197.285 145.419 198.032 146.784C198.778 148.128 199.152 149.664 199.152 151.392C199.152 153.077 198.778 154.603 198.032 155.968C197.285 157.333 196.261 158.411 194.96 159.2C193.68 159.989 192.218 160.384 190.576 160.384C189.189 160.384 187.92 160.075 186.768 159.456C185.637 158.837 184.762 157.963 184.144 156.832L184.624 156.32V166.4H181.648ZM190.352 157.504C191.44 157.504 192.41 157.237 193.264 156.704C194.117 156.171 194.778 155.445 195.248 154.528C195.738 153.589 195.984 152.544 195.984 151.392C195.984 150.197 195.738 149.152 195.248 148.256C194.778 147.339 194.117 146.613 193.264 146.08C192.41 145.525 191.44 145.248 190.352 145.248C189.264 145.248 188.282 145.515 187.408 146.048C186.554 146.581 185.872 147.317 185.36 148.256C184.869 149.173 184.624 150.219 184.624 151.392C184.624 152.544 184.869 153.589 185.36 154.528C185.872 155.445 186.554 156.171 187.408 156.704C188.282 157.237 189.264 157.504 190.352 157.504ZM200.477 160L206.525 151.36L200.509 142.752H204.093L209.245 150.24H207.421L212.509 142.752H216.125L210.109 151.36L216.093 160H212.509L207.421 152.512H209.213L204.125 160H200.477Z" fill="black"/>
+                                    </svg>
+                                  </div>
+                              {% endif %}
+                          </div>
+                  {% when "collectiontext" %}
+                          <div class="swiper-slide list-swiper-slide list-swiper-text">
+                              <div class="slide-info">
+                                {% if block.settings.collectionName != blank %}
+                                   <h3 class="collection-text">{{ block.settings.collectionName }}</h3>
+                                {% endif %}
+                                {% if block.settings.btntext != blank %}
+                                  <a href="{{block.settings.collectionUrl }}">
+                                     <button class="collection-button">{{ block.settings.btntext }}</button>
+                                  </a>
+                                {% endif %}
+                              </div>
+                          </div>
+               {% endcase %}               
+            {% endfor %}
+        </div>
+    </div>
+         {% if section.settings.show_navigation == true %}
+        <div class="swiper-button-next list--next list--next-{{ section.id }} swiper-nav "></div>
+        <div class="swiper-button-prev list--prev list--prev-{{ section.id }} swiper-nav"></div>
+        {% endif %}
+</div>
+
+
+<script>
+    var collectionSlider = new Swiper(".collection-{{ section.id }}-slider", {
+      slidesPerView: 5.2,
+      spaceBetween: 28,
+      {% if section.settings.show_navigation == true %}
+      navigation: {
+        nextEl: ".list--next-{{ section.id }}",
+        prevEl: ".list--prev-{{ section.id }}",
+      },
+      {% endif %}
+      breakpoints: {
+        200: {
+          slidesPerView: 2.3,
+          spaceBetween: 15,
+        },
+        768: {
+          slidesPerView: 3.8,
+          spaceBetween: 15,
+        },
+         992: {
+          slidesPerView: 4.2,
+          spaceBetween: 28,
+        },
+        1024: {
+            slidesPerView: 4.2,
+            spaceBetween: 28,
+        },
+        1200: {
+            slidesPerView: 5.2,
+            spaceBetween: 28,
+        }
+      },
+    });
+
+</script>
+
+
+{% schema %}
+  {
+    "name": "jewellery collection list",
+    "settings": [
+        {
+            "type":"text",
+            "id":"colHeading",
+            "label":"Enter Section Heading"
+        },
+        {
+            "type":"richtext",
+            "id":"description",
+            "label":"Enter Section description"
+        },
+        {
+          "type":"color",
+          "id":"listHeadingColor",
+          "label":"Heading color"
+        },
+        {
+          "type":"color",
+          "id":"listTitleColor",
+          "label":"Collection title color"
+        },
+        {
+          "type":"color",
+          "id":"mbbg",
+          "label":"background color",
+          "info":"it works only on mobile"
+        },
+        {
+          "type":"header",
+          "content":"styling for collection text"
+        },
+        {
+          "type":"color",
+          "id":"buttonbg",
+          "label":"select button background color"
+        },
+        {
+          "type":"color",
+          "id":"buttonborder",
+          "label":"select button border color"
+        },
+        {
+          "type":"color",
+          "id":"slidebg",
+          "label":"slide text background color"
+        },
+        {
+          "type":"color",
+          "id":"slideborder",
+          "label":"slide text border color"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_navigation",
+            "label": "Show Navigation",
+            "default":true
+        },
+        {
+            "type":"text",
+            "id":"colPaddingTop",
+            "label":"Padding Top DK",
+            "info":"Unit %"
+        },
+        {
+            "type":"text",
+            "id":"colPaddingBottom",
+            "label":"Padding Bottom DK",
+            "info":"Unit %"
+        },
+         {
+            "type":"text",
+            "id":"colPaddingTopmb",
+            "label":"Padding Top Mobile",
+            "info":"Unit %"
+        },
+        {
+            "type":"text",
+            "id":"colPaddingBottommb",
+            "label":"Padding Bottom Mobile",
+            "info":"Unit %"
+        }
+    ],
+    "blocks": [
+        {
+            "type":"collectionimage",
+            "name":"Collection image",
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id":"collectionImage",
+                    "label":"Select Image",
+                    "info":"dimensions : 506 * 592"
+                },
+                {
+                    "type": "text",
+                    "id":"collectionName",
+                    "label":"Enter your text"
+                },
+                {
+                    "type": "url",
+                    "id":"collectionUrl",
+                    "label":"Enter your link"
+                }
+           ]
+        },
+         {
+            "type":"collectiontext",
+            "name":"Collection text",
+            "settings":[
+                {
+                    "type": "text",
+                    "id":"collectionName",
+                    "label":"Enter your text"
+                },
+                {
+                    "type": "text",
+                    "id":"btntext",
+                    "label":"Enter your text"
+                },
+                {
+                    "type": "url",
+                    "id":"collectionUrl",
+                    "label":"Enter your link"
+                }
+           ]
+        }
+    ],
+    "presets": [
+        {
+            "name":"jewellery collection list"
+        }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,613 @@
+{{ 'pageTemplate.css' | asset_url | stylesheet_tag }}
+<style>
+  .inquiryHeading {
+    font-family: 'Sequel Sans Heavy Disp' !important;
+    font-style: normal;
+    font-weight: 435;
+    font-size: 14px;
+    line-height: 30px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 0;
+  }
+  .inquiryPara {
+    font-family: 'Sequel Sans';
+    font-style: normal;
+    font-weight: 310;
+    font-size: 12px;
+    line-height: 20px;
+    color: rgb(0 0 0 / 55%);
+    font-size: 14px;
+    font-family: Sequel Sans;
+    line-height: 22px;
+    margin: 0;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-family: Sequel Sans Medium Disp;
+    font-style: normal;
+    font-weight: 310;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(0 0 0);
+    position: relative;
+    margin-top: 3rem;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    /* padding: 10px; */
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 44px;
+    padding-left: 15px;
+  }
+  label::after {
+    bottom: 0;
+    color: red;
+    content: '*';
+    position: absolute;
+    transform: translate(-100%, 0);
+  }
+  .cstmoll {
+    height: 44px;
+    margin: 0;
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+  .form-group.cstmformbn.cstmol input {
+    font-size: 14px;
+    font-family: Sequel Sans;
+    font-weight: 315;
+    line-height: 24px;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    border-radius: 5px;
+  }
+  .trackingError {
+    display: none;
+    color: red;
+    margin: 0;
+    font-size: 12px;
+    font-family: 'Sequel Sans Medium Disp';
+  }
+  .trackingSucessPage {
+    display: none;
+  }
+  @media(min-width:767px) {
+    .mainNameDiv2 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-groupCstm {
+      width: 77%;
+    }
+    .cstmformbn {
+      width: 20%;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .inquiryPara {
+      width: 70%;
+    }
+  }
+
+.order-tracking-shipping .tableShipping .mapCstm {
+  display: none;
+}
+</style>
+
+
+<div class="mainPageWrapper">
+  <div class="mainFlexWrapper">
+    <div class="navigationPageTemp contentHeight">
+      <div class="menuWrapper">
+        <div class="titleWrapper">
+          <h3 class="menuHeading">Customer Care</h3>
+          <div onclick="mobileCaret()" class="mobile-only iconHeader">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="8"
+              viewBox="0 0 12 8"
+              fill="none">
+              <path
+                d="M0.400391 0.959993L5.92923 7.19922L11.6004 0.799221"
+                stroke="black"
+                stroke-width="0.784409" />
+            </svg>
+          </div>
+        </div>
+        <div class="meniItemWrapper">
+          <a style="all:unset;cursor:pointer" href="/pages/faqs">
+            <p class="menuITEM">Faqs</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/contact-us">
+            <p class="menuITEM">Contact Us</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/track-your-order">
+            <p class="menuITEM active">TRACK YOUR ORDER</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/shopify-store-locator">
+            <p class="menuITEM">Store Locator</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/return-and-exchange">
+            <p class="menuITEM">Returns</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/shipping">
+            <p class="menuITEM">Shipping</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/terms-of-use">
+            <p class="menuITEM">Terms & Conditions</p>
+          </a>
+          <a style="all:unset;cursor:pointer" href="/pages/privacy-policy">
+            <p class="menuITEM">Privacy Policy</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contentPageTemp contentHeight">
+
+
+      <div class="page-tite-cstm">
+        <h3 class="desktop-only">TRACK YOUR ORDER</h3>
+      </div>
+      <div class="content-for-page-layout">
+
+        <div class="trackOrderInput">
+          <!-- <h3 class="inquiryHeading">MY ORDER</h3> -->
+          <p class="inquiryPara">Enter your order number in the fields below to see your order history and track its status. </p>
+          <p class="inquiryPara">
+            If you have just completed an order, please wait a few minutes for it to appear in the system. </p>
+          <div class="trackingForm" id="trackingInput">
+            <label for="order_number">Order Number *</label>
+            <div class="mainNameDiv2">
+              <div class="cstmol form-group form-groupCstm">
+                <input
+                  class=""
+                  type="text"
+                  id="order_number"
+                  name="tracking[order_number]"
+                  placeholder="Enter Order Number"
+                  required>
+              </div>
+              <div class="form-group cstmformbn cstmol">
+                <input
+                  class="cstmBtnBlack"
+                  type="submit"
+                  value="Search"
+                  onclick="fetchData()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="trackingError">
+          Order not found.
+        </p>
+        <div class="trackingSucessPage">
+          {% comment %}Convert this into snippit{% endcomment %}
+          {% render 'apiTracker' %}
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+ function fetchData() {
+  const url = 'https://unified-tracking-backend.alchemative.net/track_by_order_number';
+  const orderNumber = document.getElementById('order_number').value;
+  const requestBody = {
+    domain: "edit-watches.myshopify.com",
+    order_name: orderNumber
+  };
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer c797776558047e72ca0ca363fc11d60705718aef',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestBody)
+  })
+    .then(response => {
+      if (response.status === 500) {
+        console.log("Internal Server Error");
+        var trackingError = document.querySelector(".trackingError");
+        trackingError.style.display = "block";
+        trackingError.innerHTML = "Your order is not fulfilled yet.";
+      }
+      return response.json();
+    })
+    .then(data => {
+      var trackingSuccessPage = document.querySelector(".trackingSucessPage");
+      var trackingError = document.querySelector(".trackingError");
+      var trackOrderInput = document.querySelector(".trackOrderInput");
+      if (data.details.order_name === orderNumber) {
+        console.log("success");
+
+        trackingSuccessPage.style.display = "block";
+        trackingError.style.display = "none";
+        trackOrderInput.style.display = "none"; // Hide trackOrderInput
+        if(data.details.status != ""){
+          trackingStatus(data.details.status);
+        }
+        ProdutsTracking();
+        trackingDetail();
+        trackingShipping();
+        trackingLocation();
+      } else {
+        console.log("unsuccess");
+
+        trackingSuccessPage.style.display = "none";
+        trackingError.style.display = "block";
+        trackOrderInput.style.display = "block"; // Show trackOrderInput
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
+
+
+  function trackingStatus(order_status) {
+    var is_ready_to_shipped_status = '', is_shipped_status = '', is_delivered_status = '', is_cancel_status = ''
+    if(order_status.is_ready_to_shipped == true){
+      is_ready_to_shipped_status = 'completed'
+    }
+    if(order_status.is_shipped == true){
+      is_shipped_status = 'completed'
+    }
+    if(order_status.is_delivered == true){
+      is_delivered_status = 'completed'
+    }
+    if(order_status.is_cancel == true){
+      is_cancel_status = 'completed'
+    }
+    const status = {
+      readytoship: {
+        status: is_ready_to_shipped_status
+      },
+      shipped: {
+        status: is_shipped_status
+      },
+      delivered: {
+        status: is_delivered_status
+      },
+      cancel: {
+        status: is_cancel_status
+      },
+    };
+
+    if(status.cancel.status == 'completed'){
+      document.querySelectorAll('.statusTrack').forEach(item => {
+        item.style.display = 'none'
+      })
+      document.querySelector('.statusTrack.cancelCstm').style.display = 'flex'
+    }
+
+    {% comment %} if (status.delivered.status === 'completed') {
+      status.shipped.status = "completed";
+      status.readytoship.status = "completed";
+    }
+    if (status.delivered.status === 'inprogress') {
+      status.shipped.status = "completed";
+      status.readytoship.status = "completed";
+    }
+
+
+    if (status.delivered.status !== 'completed' && status.delivered.status !== 'inprogress') {
+      if (status.shipped.status === 'completed' || status.shipped.status === 'inprogress') {
+        status.readytoship.status = "completed";
+      } else {
+        status.delivered.status = 'notassigned';
+      }
+    }
+
+    if (status.shipped.status === 'notassigned') {
+      if (status.readytoship.status === 'notassigned') {
+        status.shipped.status = 'notassigned';
+        status.delivered.status = 'notassigned';
+      }
+    }
+    if (status.shipped.status === 'notassigned') {
+      if (status.readytoship.status === 'inprogress') {
+        status.shipped.status = 'notassigned';
+        status.delivered.status = 'notassigned';
+      }
+    } {% endcomment %}
+
+    const readyToShipParent = document.querySelector('.readytoshipCstm');
+    const readyToShipIconStatus = readyToShipParent.querySelector('.iconstatus');
+
+    const shippedParent = document.querySelector('.shippedCstm');
+    const shippedIconStatus = shippedParent.querySelector('.iconstatus');
+
+    const deliveredParent = document.querySelector('.deliveredCstm');
+    const deliveredIconStatus = deliveredParent.querySelector('.iconstatus');
+
+
+// For readytoshipCstm
+    if (status.readytoship.status === 'inprogress') {
+      readyToShipIconStatus.querySelector('.trackInProgress').style.display = 'block';
+      readyToShipIconStatus.querySelector('.trackEmpty').style.display = 'none';
+      readyToShipIconStatus.querySelector('.trackcompleted').style.display = 'none';
+    } else if (status.readytoship.status === 'completed') {
+      readyToShipIconStatus.querySelector('.trackInProgress').style.display = 'none';
+      readyToShipIconStatus.querySelector('.trackEmpty').style.display = 'none';
+      readyToShipIconStatus.querySelector('.trackcompleted').style.display = 'block';
+    } else {
+      readyToShipIconStatus.querySelector('.trackInProgress').style.display = 'none';
+      readyToShipIconStatus.querySelector('.trackEmpty').style.display = 'block';
+      readyToShipIconStatus.querySelector('.trackcompleted').style.display = 'none';
+    }
+
+// For shippedCstm
+    if (status.shipped.status === 'inprogress') {
+      shippedIconStatus.querySelector('.trackInProgress').style.display = 'block';
+      shippedIconStatus.querySelector('.trackEmpty').style.display = 'none';
+      shippedIconStatus.querySelector('.trackcompleted').style.display = 'none';
+    } else if (status.shipped.status === 'completed') {
+      shippedIconStatus.querySelector('.trackInProgress').style.display = 'none';
+      shippedIconStatus.querySelector('.trackEmpty').style.display = 'none';
+      shippedIconStatus.querySelector('.trackcompleted').style.display = 'block';
+    } else {
+      shippedIconStatus.querySelector('.trackInProgress').style.display = 'none';
+      shippedIconStatus.querySelector('.trackEmpty').style.display = 'block';
+      shippedIconStatus.querySelector('.trackcompleted').style.display = 'none';
+    }
+
+// For deliveredCstm
+    if (status.delivered.status === 'inprogress') {
+      deliveredIconStatus.querySelector('.trackInProgress').style.display = 'block';
+      deliveredIconStatus.querySelector('.trackEmpty').style.display = 'none';
+      deliveredIconStatus.querySelector('.trackcompleted').style.display = 'none';
+    } else if (status.delivered.status === 'completed') {
+      deliveredIconStatus.querySelector('.trackInProgress').style.display = 'none';
+      deliveredIconStatus.querySelector('.trackEmpty').style.display = 'none';
+      deliveredIconStatus.querySelector('.trackcompleted').style.display = 'block';
+    } else {
+      deliveredIconStatus.querySelector('.trackInProgress').style.display = 'none';
+      deliveredIconStatus.querySelector('.trackEmpty').style.display = 'block';
+      deliveredIconStatus.querySelector('.trackcompleted').style.display = 'none';
+    }
+  }
+  function ProdutsTracking() {
+
+// Array of product objects
+    const url = 'https://unified-tracking-backend.alchemative.net/track_by_order_number';
+    const orderNumber2 = document.getElementById('order_number').value;
+    const requestBody = {
+      domain: "edit-watches.myshopify.com",
+      order_name: orderNumber2
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer c797776558047e72ca0ca363fc11d60705718aef',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    }).then(response => response.json()).then(data => {
+      const lineItems = data.line_items || []; // Retrieve line_items array from response, default to an empty array if not present
+
+      const products = lineItems.map((item) => ({
+        imgSrc: item.product_image, // Replace 'image' with the actual property name for the image source
+        vendor: item.vendor,
+        title: item.name,
+        variant: item.variant_title,
+        price: item.price
+      }));
+
+// Function to generate product info HTML
+      function generateProductInfoHTML(product) {
+        return `
+        <div class="productTrack">
+          <div class="productImage">
+            <img src="${
+          product.imgSrc
+        }" alt="Product Image" />
+          </div>
+          <div class="productDetails">
+            <p class="vendorTrack">${
+          product.vendor
+        }</p>
+            <p class="titleTrack">${
+          product.title
+        }</p>
+            <p class="variant">${
+          product.variant
+        }</p>
+            <p class="price">${
+          product.price
+        }</p>
+          </div>
+        </div>
+      `;
+      }
+
+// Get the productInfo container element
+      const productInfoContainer = document.querySelector(".productInfo");
+
+// Generate product info HTML for each product and append to the container
+      products.forEach((product) => {
+        const productInfoHTML = generateProductInfoHTML(product);
+        productInfoContainer.insertAdjacentHTML("beforeend", productInfoHTML);
+      });
+
+      console.log(products);
+
+// Process the products array here
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+  }
+  function trackingDetail() {
+    const url4 = 'https://unified-tracking-backend.alchemative.net/track_by_order_number';
+    const orderNumber3 = document.getElementById('order_number').value;
+    const requestBody4 = {
+      domain: "edit-watches.myshopify.com",
+      order_name: orderNumber3
+    };
+
+    fetch(url4, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer c797776558047e72ca0ca363fc11d60705718aef',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody4)
+    }).then(response => response.json()).then(data => {
+      const trackingData = [data.details.order_name, data.details.tracking_number, data.details.tracking_company, data.details.billing_address.address1];
+
+      console.log(trackingData, "trackingData");
+
+// Get the contentTrackingInfo elements
+      const contentElements = document.querySelectorAll(".contentTrackingInfo");
+
+// Loop through the content elements and populate with data from the trackingData array
+      contentElements.forEach((element, index) => {
+        if (trackingData[index]) {
+          element.textContent = trackingData[index];
+        }
+      });
+
+// Process the trackingData here
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+
+
+
+  }
+  function trackingShipping() {
+    const url3 = 'https://unified-tracking-backend.alchemative.net/track_by_order_number';
+    const orderNumber4 = document.getElementById('order_number').value;
+    const requestBody3 = {
+      domain: "edit-watches.myshopify.com",
+      order_name: orderNumber4
+    };
+
+    fetch(url3, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer c797776558047e72ca0ca363fc11d60705718aef',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody3)
+    }).then(response => response.json()).then(data => {
+      console.log(data);
+      const trackingHistory = data.tracking_history;
+      const shippingData = trackingHistory.map(item => ({statusDate: item.date, detailInfo: item.status}));
+      console.log(shippingData);
+
+// Process the shippingData array here
+// Get the tableCstm container element
+      const tableContainer = document.querySelector(".tableCstm");
+
+// Generate the HTML for each shipping information object and append to the container
+      shippingData.forEach((data) => {
+        const rowShippingHTML = `
+      <div class="rowShipping">
+        <div class="statusDate">
+          {% render 'icon-trackcompleted' %}
+          <p class="dateEtc">${
+          data.statusDate
+        }</p>
+        </div>
+        <div class="detailsCsrm">
+          <p class="detailInfo">${
+          data.detailInfo
+        }</p>
+        </div>
+      </div>
+    `;
+        tableContainer.insertAdjacentHTML("beforeend", rowShippingHTML);
+      });
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+  }
+  function trackingLocation() {
+    const url5 = 'https://unified-tracking-backend.alchemative.net/track_by_order_number';
+    const orderNumber5 = document.getElementById('order_number').value;
+    const requestBody5 = {
+      domain: "edit-watches.myshopify.com",
+      order_name: orderNumber5
+    };
+
+    fetch(url5, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer c797776558047e72ca0ca363fc11d60705718aef',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody5)
+    }).then(response => response.json()).then(data => {
+      console.log(data);
+      let latitude = data.details.billing_address.latitude; // Replace 'latitude' with the actual key for latitude in the response
+      let longitude = data.details.billing_address.longitude;
+
+// Replace 'longitude' with the actual key for longitude in the response
+
+// Use default coordinates if latitude or longitude is null
+      if (latitude === null || longitude === null) {
+        latitude = '25.197196977710927';
+        longitude = '55.271801475783164';
+      }
+
+// Create the iframe dynamically
+      const iframe = document.createElement('iframe');
+      iframe.style.width = '100%';
+      iframe.style.height = '300px';
+      iframe.style.border = '0';
+
+// iframe.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d0!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDM0JzE1LjkiTiA1NcKwMTYnMjQuNSJF!5e0!3m2!1sen!2sus!4v1625406413939!5m2!1sen!2sus`;
+      iframe.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178654110292!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e0!3m2!1sen!2s!4v1688501339497!5m2!1sen!2s`
+
+      const mapContainer = document.querySelector('.mapCstm');
+      console.log(mapContainer, "mapContainer");
+      mapContainer.innerHTML = ''; // Remove any existing content
+      mapContainer.appendChild(iframe);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>
+
+<script src="{{ 'pageTemplate.js' | asset_url }}" defer="defer"></script>
+
+
+{% schema %}
+  {
+    "name": "Track Order Temp",
+    "settings": [],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "Track Order Page",
+        "category": "Page"
+      }
+    ]
+
+  }
+{% endschema %}

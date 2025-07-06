@@ -1,0 +1,100 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<style>
+.upsell-products .swiper-slide {
+    flex: 0 0 32%;
+    width: 32%;
+    padding-right: 1rem;
+}
+h3.upsell-title {
+    font-size: 16px;
+    color: black;
+    font-family: 'Sequel Sans Roman Disp' !important;
+    margin: 3rem 0 2rem;
+}
+.upsell-products .swiper {
+    z-index: 2;
+}
+@media(max-width:1199px){
+    .upsell-products .swiper-slide {
+        flex: 0 0 42%;
+        width: 42%; 
+    }
+}
+@media(max-width: 850px){
+    h3.upsell-title {
+    margin-bottom: 2rem;
+}
+}
+@media(max-width:749px){
+    h3.upsell-title {
+    text-align: left;
+    font-size: 14px;
+}
+    .upsell-products .swiper-slide {
+        flex: 0 0 46%;
+        width: 46%; 
+    }
+.upsell-products .card__heading {
+    width: 100%;
+}
+}
+</style>
+
+{% for tag in product.tags %}
+    {% if tag contains 'upsell:' %}
+        {% assign product_handle = tag | split: 'upsell:' | last %}
+        {% assign associated_product = all_products[product_handle] %}
+        {% if associated_product != empty %}
+            <div class="upsell-products">
+                {% if block.settings.title != blank %}
+                    <h3 class="upsell-title">
+                    {{ block.settings.title }}
+                    </h3>    
+                {% endif %}
+                <div class="swiper upsell-slider">
+                    <div class="swiper-wrapper">
+        {% endif %}
+    {% break %}
+    {% endif %}
+{% endfor %}
+        
+{%- for tag in product.tags -%}
+    {%- if tag contains 'upsell:' -%}
+        {%- assign product_handle = tag | split: 'upsell:' | last -%}
+        {%- assign associated_product = all_products[product_handle] -%}
+        {%- if associated_product != empty -%}
+                <div class="swiper-slide">
+                    <div class="upsell-product">
+                        {% render 'card-product',
+                            card_product: associated_product,
+                            media_aspect_ratio: block.settings.image_ratio,
+                            show_secondary_image: block.settings.show_secondary_image,
+                            show_vendor: block.settings.show_vendor,
+                            show_rating: block.settings.show_rating
+                        %}
+                    </div>
+                </div>
+        {%- endif -%}
+    {%- endif -%}
+{%- endfor -%}
+
+{%- for tag in product.tags -%}
+    {%- if tag contains 'upsell:' -%}
+        {%- assign product_handle = tag | split: 'upsell:' | last -%}
+        {%- assign associated_product = all_products[product_handle] -%}
+        {%- if associated_product != empty -%}
+                </div>
+            </div>
+        </div>
+        {%- endif -%}
+    {% break %}
+    {%- endif -%}
+{%- endfor -%}
+
+<script>
+    var swiper = new Swiper(".upsell-slider", {
+        slidesPerView: 'auto',
+    });
+</script>

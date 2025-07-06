@@ -1,0 +1,199 @@
+{% comment %} {% render 'gtm' event:"promotion", promotion_id: section.id, promotion_name: section.settings.heading1  %}
+{% render 'gtm' event:"promotion", promotion_id: section.id, promotion_name: section.settings.heading2  %} {% endcomment %}
+
+<div class="twoColumnWrapper" id="twoColumnWrapper">
+  <div class="twoColumnFlexBox">
+    <div class="columnTwoColumn columnLeft" promo-banner data-promo-id="" data-promo-name="" data-creative-name="" data-creative-id="">
+      <a href="{{section.settings.link1}}">
+      <img
+        class="imgDesk desktop_only"
+        src="{{section.settings.image1 |img_url: 'master'}}"
+        alt="editHome"
+        loading="lazy" 
+        width="{{ section.settings.image1.width }}" 
+        height="{{ section.settings.image1.height }}"
+        />
+      <img
+        class="imgMob mobile_only"
+        src="{{section.settings.image2 |img_url: 'master'}}"
+        alt="editHome"
+        loading="lazy" 
+        width="{{ section.settings.image2.width }}" 
+        height="{{ section.settings.image2.height }}" 
+        />
+        </a>
+      <div class="columnTwoTeatbox">
+        <h2 class="columnCstmHeading">{{ section.settings.heading1 }}</h2>
+        <p class="columnCstmSubheading">{{ section.settings.subheading1 }}</p>
+        <div class="cstm-colummn-btn banner__buttons">
+          <a href="{{section.settings.link1}}" class="cstmBtnBorder">{{ section.settings.btnTxt }}</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="columnTwoColumn columnRight" promo-banner data-promo-id="" data-promo-name="" data-creative-name="" data-creative-id="">
+      <a href="{{section.settings.link2}}">
+      <img class="imgDesk desktop_only" src="{{section.settings.image3 |img_url: 'master'}}"
+        alt="editHome"
+        loading="lazy" 
+        width="{{ section.settings.image3.width }}" 
+        height="{{ section.settings.image3.height }}" 
+      />
+      <img class="imgMob mobile_only" src="{{section.settings.image4 |img_url: 'master'}}" 
+        alt="editHome"
+        loading="lazy" 
+        width="{{ section.settings.image4.width }}" 
+        height="{{ section.settings.image4.height }}" 
+      />
+      </a>
+      <div class="columnTwoTeatbox">
+        <h2 class="columnCstmHeading">{{ section.settings.heading2 }}</h2>
+        <p class="columnCstmSubheading">{{ section.settings.subheading2 }}</p>
+        <div class="cstm-colummn-btn banner__buttons">
+          <a href="{{section.settings.link2}}" class="cstmBtnBorder">{{ section.settings.btnTxt2 }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+  (function(){
+    let ifInView = false;
+    let element =  document.querySelector('#twoColumnWrapper');
+    let element1 =  document.querySelector('#twoColumnWrapper .columnLeft');
+    let element2 =  document.querySelector('#twoColumnWrapper .columnRight');
+    
+    document.addEventListener('scroll', () => {
+      if (ifInView == false ){ //view event
+        ifInView = isInViewport(element)
+        if (ifInView){
+          dataLayer.push({ ecommerce: null });
+          window.dataLayer.push({
+           event: 'view_promotion',
+           ecommerce: {
+             items: [{
+               "promotion_id": "{{ section.id }}-1",
+               "promotion_name" : "{{ section.settings.heading1 }}"
+             },
+              {
+               "promotion_id": "{{ section.id }}-2",
+               "promotion_name" : "{{ section.settings.heading2 }}"
+             }]
+           }
+          });
+        }
+      }
+    });
+
+    //click events
+    element1.addEventListener('click', () => {
+      dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+       event: 'select_promotion',
+       ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}-1",
+         "promotion_name" : "{{ section.settings.heading1 }}"
+       }]
+       }
+      });
+      console.log('select_promotion')
+    })
+    element2.addEventListener('click', () => {
+      dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+       event: 'select_promotion',
+       ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}-2",
+         "promotion_name" : "{{ section.settings.heading2 }}"
+       }]
+       }
+      });
+      console.log('select_promotion')
+    })
+    
+  })()
+</script>
+
+{% schema %}
+  {
+    "name": "Edit Home 2 Image",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image1",
+        "label": "Image Left Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "image2",
+        "label": "Image Left Mobile"
+      },
+      {
+        "type": "text",
+        "id": "heading1",
+        "default": "Luxury watches",
+        "label": "Left Heading"
+      },
+      {
+        "type": "text",
+        "id": "subheading1",
+        "default": "Typically made of high-quality materials such as gold or platinum.",
+        "label": "Left Sub Heading"
+      }, {
+        "type": "text",
+        "id": "btnTxt",
+        "default": "SHOP NOW",
+        "label": "Left Button Text"
+      }, {
+        "type": "url",
+        "id": "link1",
+        "label": "Left Link"
+      }, {
+        "type": "image_picker",
+        "id": "image3",
+        "label": "Image Right Desktop"
+      }, {
+        "type": "image_picker",
+        "id": "image4",
+        "label": "Image Right Mobile"
+      }, {
+        "type": "text",
+        "id": "heading2",
+        "default": "Luxury watches",
+        "label": "Right Heading"
+      }, {
+        "type": "text",
+        "id": "subheading2",
+        "default": "Typically made of high-quality materials such as gold or platinum.",
+        "label": "Right Sub Heading"
+      }, {
+        "type": "text",
+        "id": "btnTxt2",
+        "default": "SHOP NOW",
+        "label": "Right Button Text"
+      }, {
+        "type": "url",
+        "id": "link2",
+        "label": "Right Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Edit-Home-2-Image",
+        "category": "Theme"
+      }
+    ]
+  }
+{% endschema %}

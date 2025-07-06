@@ -1,0 +1,119 @@
+<style>
+  .infogridbox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+}
+  .infowrapper {
+    text-align: center;
+}
+</style>
+<div class="infomainwrapper{{ section.id }}">
+  <div class="infogridbox">
+    {% for block in section.blocks %}
+    <div class="infowrapper">
+        {% if block.settings.infoimage_desktop %}
+          <img class="infologo" src="{{ block.settings.infoimage_desktop | img_url: 'master' }}" alt="editHome" loading="lazy" width="{{ block.settings.image_desktop.width }}" height="{{ block.settings.image_desktop.height }}" />
+        {% endif %}
+      {% if block.settings.infodescription %}
+        <div class="infotextwrapper">
+          <p class="infoCstmHeading">{{ block.settings.infodescription }}</p>
+        </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Shipping Information",
+   "settings": [
+     {
+          "type": "header",
+          "content": "Desktop Padding"
+        },
+      {
+      "type": "range",
+      "id": "padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 50
+         
+    },
+       {
+      "type": "range",
+      "id": "padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 50
+    },
+     {
+          "type": "header",
+          "content": "Mobile Padding"
+        },
+      {
+      "type": "range",
+      "id": "mobile_padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 25
+         
+    },
+       {
+      "type": "range",
+      "id": "mobile_padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 25
+    },
+   ],
+  "blocks": [
+    
+    {
+      "type": "column",
+      "name": "Shipping Information",
+      "limit": 4,
+      "settings": [
+        
+        {
+          "type": "header",
+          "content": "Color"
+        },
+        
+        {
+          "type": "image_picker",
+          "id": "infoimage_desktop",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "text",
+          "id": "infodescription",
+          "label": "Heading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shipping Information",
+      "category": "Theme"
+    }
+  ]
+}
+{% endschema %}

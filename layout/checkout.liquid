@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+
+    {{ 'gtm.js' | asset_url | script_tag }}
+    {{ 'gtm2.js' | asset_url | script_tag }}
+    
+    <script>
+      {% assign pageCategory = '' %}
+      {% if collection %}
+        {% assign pageCategory = collection.title %}
+      {% endif %}
+      {% if product %}
+        {% assign pageCategory = product.collections[0].title %}
+      {% endif %}
+
+      {% assign userType = 'Anonymous' %}    
+      {% assign loggedInStatus = 'No' %}    
+      {% if customer %}
+        {% assign userType = 'Registered user' %}   
+      {% assign loggedInStatus = 'Yes' %}    
+      {% endif %}
+      
+      let payload = {
+        'pageType': 'checkout', 
+        'pageCategory': '{{ pageCategory }}', 
+        'storeLanguage': '{{ shop.locale }}', 
+        'storeCurrency': '{{ shop.currency }}', 
+        'storeCountry': 'UAE',
+        'userId': '{{ customer.id }}', 
+        'userType': '{{ userType }}', 
+        'loggedInStatus': '{{ loggedInStatus }}', 
+        'hashedEmail': '{{ customer.email }}', 
+        'userEmail': '{{ customer.email }}'
+      }
+      window.gtmPageLoad(payload);
+    </script>
+
+    <!-- Google Tag Manager (example)-->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f
+    );
+    })(window,document,'script','dataLayer','GTM-564WPKCD');</script>
+    <!-- End Google Tag Manager -->
+
+    <title>{{ page_title }}</title>
+
+    {{ content_for_header }}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+  </head>
+  <body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-564WPKCD"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <style>
+      span.product__description__property.order-summary__small-text {
+        display: none;
+    }
+    </style>
+
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+ <script> Shopify = window.Shopify || {}; Shopify.shop = Shopify.shop || 'edit-watches.myshopify.com'; (function (doc) { if (window.location.href.indexOf('checkouts') == -1) { return; } var sc, node; sc = doc.createElement("script"); sc.type = "text/javascript"; sc.async = !0; sc.src = '/apps/sap/fe/loader_2.js?shop=edit-watches.myshopify.com'; node = doc.getElementsByTagName("script")[0]; node.parentNode.insertBefore(sc, node); })(document); </script> 
+
+    {{ tracking_code }}
+
+
+ {% render 'gtm', 
+  event: "checkout", 
+  section_name: "Checkout Page", 
+  section_id: "checkout_page", 
+  product_list: checkout.line_items,
+  products_per_page: 99999999   
+%}
+
+{% comment %}
+    {% render 'cityDropdown' %}
+    {% render 'whatsapp-button' %}
+{% endcomment %}
+
+  <script>
+    $(document).ready(function(){
+      {% comment %} swap positions of city and province {% endcomment %}
+      // $('[data-address-field="province"]').after($('[data-address-field="city"]'))
+
+      {% comment %} Add taxes line below total price {% endcomment %}
+      var tax = `<span class="payment-due-label__taxes order-summary__small-text ">Including Taxes</span>`
+      $('.payment-due-label__total').after(tax)
+
+      {% comment %} Change labels of some provinces {% endcomment %}
+      $('#checkout_shipping_address_province option[value="RK"]').text('Ras Al Khaimah')
+      $('#checkout_shipping_address_province option[value="UQ"]').text('Um Al Quwain') 
+
+      {% comment %} Limit the phone number field {% endcomment %}
+      $('[name="checkout[shipping_address][phone]"]').attr('maxlength','16');
+      $("input#checkout_shipping_address_phone").attr('autocomplete','false');   
+    })
+  </script>
+  </body>
+</html>

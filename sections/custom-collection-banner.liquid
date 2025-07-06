@@ -1,0 +1,337 @@
+<style>
+  .cstm-banner-container{
+    position:relative;
+  }
+  .cstm-banner-img-video img , .cstm-banner-img-video video{
+    width:100%;
+    height:100%;
+  }
+  .cstm-banner-img-video a{
+    line-height:0;
+  }
+  .cst-info-wrapper h2{
+    margin-top: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 24px;
+  }
+  .cst-info-wrapper p{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25px;
+    margin-top: 0;
+  }
+  .cst-info-wrapper button{
+    width: 14.7rem;
+    height: 5.3rem;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase; 
+    cursor:pointer;
+  }
+  .bread-crumb-con .breadcrumb span.arrow svg{
+    height:auto!important
+  }
+    @media screen and (min-width:750px) and (max-width:991.9px){
+       .cstm-banner-info{
+          width:35rem;
+          height:23.3rem;
+       }
+      .cst-info-wrapper h2{
+          font-size: 18px;
+      }
+      .cst-info-wrapper p{
+           font-size: 14px;
+      }
+      .cst-info-wrapper button{
+           font-size: 14px;
+      }
+      .horizontal-align-left {
+           left: 27%;
+      }
+      .horizontal-align-right {
+        left: 73%;
+      }
+}
+   @media screen and (min-width:992px) and (max-width:1200px){
+       .cstm-banner-info{
+          width:39rem;
+          height:24rem;
+       }
+      .cst-info-wrapper h2{
+          font-size: 20px;
+      }
+      .cst-info-wrapper p{
+           font-size: 15px;
+      }
+      .cst-info-wrapper button{
+           font-size: 14px;
+      }
+      .horizontal-align-left {
+           left: 25%;
+      }
+      .horizontal-align-right {
+        left: 75%;
+      }
+}
+@media screen and (min-width:1201px){
+     .horizontal-align-left{
+         left: 20%;
+    }
+    .horizontal-align-right{
+         left: 80%;
+    }
+    .cstm-banner-info{
+        width:44.7rem;
+        height:26.3rem;
+    }
+}
+@media screen and (min-width:750px){
+     .cst-info-wrapper h2{
+        color:{{ section.settings.heading-color }};
+     }
+    .cst-info-wrapper p{
+         color:{{ section.settings.description-color }};
+    }
+     .cst-info-wrapper button{
+         background:{{ section.settings.btnbg }};
+     }
+    .cstm-banner{{ section.id }}{
+        padding-bottom:{{ section.settings.padding-bottom-dk }}rem;
+    }
+    .cstm-banner-info{
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: {{ section.settings.background }};
+        display: flex;
+        align-items: center;
+        padding: 3rem;
+    }
+    .horizontal-align-center{
+        left: 50%;
+    }
+    .bread-crumb-con{
+        position: absolute;
+        top:0;
+        left:6%;
+        padding-top: 2rem;
+    }
+   .bread-crumb-con .home-bread-crumb{
+        color:#FFFFFF80;
+   }
+   .bread-crumb-con a{
+        text-transform: capitalize;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 20px;
+   }
+   .bread-crumb-con .bd-title a{
+        color:#FFF!important;
+   } 
+   .cstm-media-mb{
+        display:none;
+    }
+    
+}
+   @media screen and (max-width:749px){
+      .cst-info-wrapper button, .cstm-media-dk {
+        display:none;
+      }
+      .cstm-banner{{ section.id }}{
+        padding-bottom:{{ section.settings.padding-bottom-mb }}rem;
+      }
+     .cstm-banner-info, .bread-crumb-con{
+       padding-left:2rem;
+       padding-right:2rem;
+     }
+     .bread-crumb-con .breadcrumb{
+       margin-top: 1rem;
+     }
+     .cst-info-wrapper h2{
+       margin-bottom: 1rem;
+     }
+     .cst-info-wrapper p{
+       font-size:14px;
+     }    
+}
+</style>
+
+
+<div class="cstm-banner-container cstm-banner{{ section.id }}">
+    <div class="cstm-banner-wrapper">
+         <div class="cstm-banner-img-video">
+             {% if section.settings.url != blank %}
+             <a href="{{ section.settings.url }}">
+             {% endif %}
+                 {% if section.settings.image != blank %}
+                   <div class="cstm-banner-img">  
+                          <img class="desktopImage cstm-media-dk" src="{{ section.settings.image | img_url:"master" }}" width="100%" height="100%" alt="{{ collection.handle }}">
+                        {% if section.settings.image-mb != blank %}
+                          <img class="mobileImage cstm-media-mb" src="{{ section.settings.image-mb | img_url:"master" }}" width="100%" height="100%" alt="{{ collection.handle }}">
+                        {% endif %}
+                   </div>
+                 {% elsif section.settings.video-dk != blank %}
+                    <div class="cstm-banner-video">
+                           <video class="cstm-media-dk" preload="none" class="banner-v" autoplay muted loop playsinline data-src="{{ section.settings.video-dk.sources.last.url  }}" >
+                               <source src="{{ section.settings.video-dk.sources.last.url  }}" type="video/mp4" >
+                           </video>
+                           {% if section.settings.video-mb.sources.last.url  %}
+                              <video class="cstm-media-mb" class="banner-mb" preload="none" autoplay muted loop playsinline  playsinline data-src="{{ section.settings.video-mb.sources.last.url  }}">
+                                   <source src="{{ section.settings.video-mb.sources.last.url  }}" type="video/mp4" >
+                              </video>
+                           {% endif %}
+                    </div>
+                   {% else %}
+                      <div class="collection-banner">
+                          {% if collection.image != blank %}
+                              <img src="{{ collection.image | img_url: 'master' }}" alt="{{ collection.handle }}" width="{{ collection.image.width }}" height="{{ collection.image.height }}">
+                          {% endif %}
+                      </div>
+                {% endif %}
+            {% if section.settings.url != blank %}
+            </a>
+              {% endif %}
+           {% if section.settings.image-mb != blank or section.settings.video-dk != blank %}
+           <div class="bread-crumb-con">
+              {% render  'breadcrumb' %}
+           </div>
+           <div class="cstm-banner-info horizontal-align-{{ section.settings.horizontal_alignment }}">
+               <div class="cstm-info-cont">
+                   <div class="cst-info-wrapper">
+                         {% if section.settings.heading != blank %}
+                             <h2>{{ section.settings.heading  }}</h2>
+                         {% endif %}
+                         {% if section.settings.description != blank %}
+                             <p>{{ section.settings.description }}</p>
+                         {% endif %}
+                         {% if section.settings.shopbtn != blank %}
+                         <a href="{{ section.settings.shoplink }}">
+                           <button>{{ section.settings.shopbtn }}</button>
+                         </a>
+                         {% endif %}
+                   </div>
+               </div>
+           </div>
+           {% endif %}
+         </div>
+    </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "custom collection banner",
+  "class": "collection-banner",
+  "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Default Collection Image Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "image-mb",
+            "label": "Default Collection Image Mobile"
+          },
+          {
+            "type": "video",
+            "id": "video-dk",
+            "label": "Select desktop video"
+          },
+          {
+            "type": "video",
+            "id": "video-mb",
+            "label": "Select mobile video"
+          },
+          {
+             "type": "url",
+            "id": "url",
+            "label": "Select Url"
+          },
+          {
+            "type":"text",
+            "id":"heading",
+            "label":"Enter text heading"
+          },
+          {
+            "type":"richtext",
+            "id":"description",
+            "label":"Enter text description"
+          },
+          {
+            "type":"text",
+            "id":"shopbtn",
+            "label":"Enter button text"
+          },
+          {
+            "type":"url",
+            "id":"shoplink",
+            "label":"Select shop now button link"
+          },
+          {
+            "type": "select",
+            "id": "horizontal_alignment",
+            "label": "horizontal alignment",
+                "options": [
+                  {
+                    "value": "left",
+                    "label": "Left"
+                  },
+                  {
+                    "value": "center",
+                    "label": "Center"
+                  },
+                  {
+                    "value": "right",
+                    "label": "Right"
+                  }
+                ],
+         "default": "left"
+          },
+          {
+            "type": "text",
+            "id": "padding-bottom-dk",
+            "label": "padding-bottom desktop",
+            "info":"unit rem"
+          },
+          {
+            "type": "text",
+            "id": "padding-bottom-mb",
+            "label": "padding-bottom mobile",
+            "info":"unit rem"
+          },
+          {
+            "type": "color",
+            "id": "heading-color",
+            "label": "Heading color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "description-color",
+            "label": "Description color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "btnbg",
+            "label": "Button background",
+            "default": "#fff"
+          },
+          {
+            "type": "color_background",
+            "id": "background",
+            "label": "info Background",
+            "default": "linear-gradient(#ffffff, #000000)"
+          }
+
+  ],
+  "presets": [
+    {
+      "name":"custom collection banner"
+    }
+  ]
+}
+{% endschema %}

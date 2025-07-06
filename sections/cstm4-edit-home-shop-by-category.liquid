@@ -1,0 +1,261 @@
+<div class="shopbycategory" id="shopbycategory">
+  <div class="shopbycategoryContainer">
+    <div class="headingSecCategory">
+      <p class="categorySubtext subparaCstm">{{ section.settings.subtxt1 }}</p>
+      <h2 class="categoryheading">{{ section.settings.heading1 }}</h2>
+    </div>
+    <div class="shopbycategoryRow">
+      {% for block in section.blocks %}
+        {% if block.type == 'image' %}
+          <div class="categoryColumn">
+            <a href="{{block.settings.btnLink}}">  
+              <img class="categoryImg" src="{{block.settings.image1 | img_url: 'master'}}" loading="lazy" alt="edit" width="600" height="800"/>
+            </a>
+          <div class="BtnDiv">
+            <a href="{{block.settings.btnLink}}" class="btnmain">
+              <p class="btnTxtCstm">{{ block.settings.btnTxt }}</p>
+            </a>
+          </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="headingSecCategory">
+      <p class="categorySubtext subparaCstm">{{ section.settings.subtxt2 }}</p>
+      <h2 class="categoryheading">{{ section.settings.heading2 }}</h2>
+    </div>
+    <div class="flex-more-cat">
+      {% if section.settings.catText1 != blank %}
+        <a class="linkmain-tiles" href="{{section.settings.catLink1}}">
+          <div class="morecat-tiles">
+            <p class="catTilesTxt">{{ section.settings.catText1 }}</p>
+          </div>
+        </a>
+      {% endif %}
+      {% if section.settings.catText2 != blank %}
+        <a class="linkmain-tiles" href="{{section.settings.catLink2}}">
+          <div class="morecat-tiles">
+            <p class="catTilesTxt">{{ section.settings.catText2 }}</p>
+          </div>
+        </a>
+      {% endif %}
+      {% if section.settings.catText3 != blank %}
+        <a class="linkmain-tiles" href="{{section.settings.catLink3}}">
+          <div class="morecat-tiles">
+            <p class="catTilesTxt">{{ section.settings.catText3 }}</p>
+          </div>
+        </a>
+      {% endif %}
+      {% if section.settings.catText4 != blank %}
+        <a class="linkmain-tiles" href="{{section.settings.catLink4}}">
+          <div class="morecat-tiles">
+            <p class="catTilesTxt">{{ section.settings.catText4 }}</p>
+          </div>
+        </a>
+      {% endif %}
+      {% if section.settings.catText5 != blank %}
+        <a class="linkmain-tiles" href="{{section.settings.catLink5}}">
+          <div class="morecat-tiles">
+            <p class="catTilesTxt">{{ section.settings.catText5 }}</p>
+          </div>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+  (function(){
+    let ifInView = false;
+    let element =  document.querySelector('#shopbycategory .headingSecCategory');
+    let element1 =  document.querySelectorAll('#shopbycategory .categoryColumn')[0];
+    let element2 =  document.querySelectorAll('#shopbycategory .categoryColumn')[1];
+    let element3 =  document.querySelectorAll('#shopbycategory .categoryColumn')[2];
+    
+    document.addEventListener('scroll', () => {
+      if (ifInView == false ){ //view event
+        ifInView = isInViewport(element)
+        if (ifInView){
+          dataLayer.push({ ecommerce: null });
+          window.dataLayer.push({
+           event: 'view_promotion',
+           ecommerce: {
+             items: [{
+               "promotion_id": "{{ section.id }}-1",
+               "promotion_name" : "{{ section.blocks[0].settings.btnTxt }}"
+             },
+            {
+               "promotion_id": "{{ section.id }}-2",
+               "promotion_name" : "{{ section.blocks[1].settings.btnTxt }}"
+             },
+            {
+               "promotion_id": "{{ section.id }}-3",
+               "promotion_name" : "{{ section.blocks[2].settings.btnTxt }}"
+             }]
+           }
+          });
+        }
+      }
+    });
+
+    //click events
+    element1.addEventListener('click', () => {
+      dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+       event: 'select_promotion',
+       ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}-1",
+         "promotion_name" : "{{ section.blocks[0].settings.btnTxt }}"
+       }]
+       }
+      });
+      console.log('select_promotion')
+    })
+    element2.addEventListener('click', () => {
+      dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+       event: 'select_promotion',
+       ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}-2",
+         "promotion_name" : "{{ section.blocks[1].settings.btnTxt }}"
+       }]
+       }
+      });
+      console.log('select_promotion')
+    })
+    element3.addEventListener('click', () => {
+      dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+       event: 'select_promotion',
+       ecommerce: {
+       items: [{
+         "promotion_id": "{{ section.id }}-3",
+         "promotion_name" : "{{ section.blocks[2].settings.btnTxt }}"
+       }]
+       }
+      });
+      console.log('select_promotion')
+    })
+    
+  })()
+</script>
+
+{% schema %}
+  {
+    "name": "Shop By Category",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtxt1",
+        "default": "Discover Our Luxury Collections",
+        "label": "Image Category Subtext"
+      }, {
+        "type": "text",
+        "id": "heading1",
+        "default": "SHOP BY CATEGORY",
+        "label": "Image Category Heading"
+      }, {
+        "type": "text",
+        "id": "subtxt2",
+        "default": "Find find the right categories?",
+        "label": "More Category Subtext"
+      }, {
+        "type": "text",
+        "id": "heading2",
+        "default": "More categories",
+        "label": "More Category Heading"
+      },
+{
+            "type": "text",
+            "id": "catText1",
+            "default": "Analog watches",
+            "label": "More Category Tiles"
+          }, {
+            "type": "url",
+            "id": "catLink1",
+            "label": "More Category Tiles Link"
+          },
+{
+            "type": "text",
+            "id": "catText2",
+            "default": "Analog watches",
+            "label": "More Category Tiles"
+          }, {
+            "type": "url",
+            "id": "catLink2",
+            "label": "More Category Tiles Link"
+          },
+{
+            "type": "text",
+            "id": "catText3",
+            "default": "Analog watches",
+            "label": "More Category Tiles"
+          }, {
+            "type": "url",
+            "id": "catLink3",
+            "label": "More Category Tiles Link"
+          },
+{
+            "type": "text",
+            "id": "catText4",
+            "default": "Analog watches",
+            "label": "More Category Tiles"
+          }, {
+            "type": "url",
+            "id": "catLink4",
+            "label": "More Category Tiles Link"
+          },
+{
+            "type": "text",
+            "id": "catText5",
+            "default": "Analog watches",
+            "label": "More Category Tiles"
+          }, {
+            "type": "url",
+            "id": "catLink5",
+            "label": "More Category Tiles Link"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Add Image Section",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Category Image"
+          }, {
+            "type": "text",
+            "id": "btnTxt",
+            "default": "MEN'S WATCH",
+            "label": "Button Text"
+          }, {
+            "type": "url",
+            "id": "btnLink",
+            "label": "Category LInk"
+          }
+
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Edit-Shop-By-Ctegory",
+        "category": "Theme"
+      }
+    ]
+  }
+{% endschema %}

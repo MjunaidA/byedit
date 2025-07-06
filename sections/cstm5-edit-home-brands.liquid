@@ -1,0 +1,84 @@
+<div class="brandsWrapper">
+  <div class="brandContainer">
+    <div class="txtBoxBrand">
+      <p class="brandSubTxt subparaCstm">{{ section.settings.subTxtBrand }}</p>
+      <h2 class="brndHeading">{{ section.settings.headingTxtBrand }}</h2>
+    </div>
+    <div
+      class="brandsRowFlex">
+      {% for block in section.blocks %}
+        <a class="imgLinkBrand" href="{{block.settings.brandUrl}}">
+          <div class="brandsColumn">
+
+            <img
+              class="brandImg"
+              src="{{block.settings.image1 | img_url: 'master'}}"
+              alt="brand"
+              loading="lazy"
+              width="{{ block.settings.image1.width }}"
+              height="{{ block.settings.image1.height }}"
+            />
+
+          </div>
+        </a>
+
+      {% endfor %}
+    </div>
+    <div class="brandBtn">
+      <a href="{{section.settings.linkbtn}}" class="brandLink">{{ section.settings.btnTxtBrand }}</a>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Edit-Home-Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subTxtBrand",
+        "default": "From classic timepieces to modern designs",
+        "label": "Sub Text Section"
+      }, {
+        "type": "text",
+        "id": "headingTxtBrand",
+        "default": "Discover Our Iconic Brands",
+        "label": "Sub Text Section"
+      }, {
+        "type": "text",
+        "id": "btnTxtBrand",
+        "default": "View All BRANDS",
+        "label": "Button Text"
+      }, {
+        "type": "url",
+        "id": "linkbtn",
+        "label": "Banner Link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Add Slider Image",
+        "limit": 30,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Brands Image"
+          }, {
+            "type": "url",
+            "id": "brandUrl",
+            "label": "Brands Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Edit-Home-Brand",
+        "category": "Theme"
+      }
+    ]
+  }
+{% endschema %}

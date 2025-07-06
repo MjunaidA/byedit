@@ -1,0 +1,730 @@
+
+
+
+
+<style>
+
+
+  h1 {
+  text-align: center;
+  
+  margin: 80px 0;
+}
+
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+  
+/*   popup code end */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+  
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+ 
+  .container{
+  	display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    color: black;
+  }
+  .cn-btn{
+    background-color:#2b2d2f;
+    color:WHITE;
+    padding:10px 20px;
+    text-align: center;
+  }
+  .cn-btn:hover{
+    border:1px solid #2b2d2f;
+    background-color:transparent;
+    color:#2b2d2f;
+    cursor: pointer; 
+
+  }
+  
+  .mt{
+  	margin-top: 20px;
+  }
+  
+  .p-d-f{
+  	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  .p-d-f{
+  		font-size: 20px;
+  	}
+  .top-header{
+  	text-align: center;
+  }
+  input{
+  	width: 350px !important;
+  }
+  
+  .table-flex{
+  	display: flex;
+    flex-direction: column;
+    
+    justify-content: space-evenly;
+  } 
+ 
+ table {
+  border-collapse: collapse;
+  width: 87%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .400em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+  
+  .checkbox{
+  	display: inline !important;
+  }
+
+
+  
+  .table-exchange-button:hover{
+  	background: black;
+    color:white;
+  	cursor: pointer;
+  }
+  
+
+  .table-return-button:hover{
+  	background: black;
+    color:white;
+  	cursor: pointer;
+  }
+  .table-btn-flex{
+  	display: flex;
+    justify-content: space-evenly;
+  }
+  
+  tr:nth-child(even) {
+  	background-color: #f2f2f2;
+	}
+  
+  .table-first-col-spacing{
+  	width: 7%;
+  }
+  
+  
+  .table-caption {
+    
+  	float: left;
+  
+  }
+  
+  .description-flex{
+  		display: flex;
+    	flex-direction: column;
+    	justify-content: space-evenly;
+    
+    	margin-left: 10%;
+  	} 
+
+
+
+  @media screen and (max-width: 768px) {
+      .container {
+
+        flex-direction: column;
+      }
+    	.p-d-f{
+        	margin: 50px 50px;
+          
+        }
+    	
+	}
+  
+  .des_input{
+  	border: none;
+    color:white;
+    background-color:#2b2d2f;
+  }
+
+ 
+
+  #snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 99;
+    left: 50%;
+    top: 60px;
+    font-size: 17px;
+  }
+
+  #snackbar {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    display:none;
+  }
+
+  @-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;} 
+    to {top: 60px; opacity: 1;}
+  }
+
+  @keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 60px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+    from {top: 60px; opacity: 1;} 
+    to {top: 0; opacity: 0;}
+  }
+
+  @keyframes fadeout {
+    from {top: 60px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+  }
+               .overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 999999;
+}
+
+</style>
+
+
+
+<div id="popup1" class="overlay" style="display:none">
+	<div class="popup">
+	<center>	<h2 id="pop-main-heading">Failure</h2>
+		
+		<div class="content" id="pop-content">
+			You already have request for this order
+		</div><br /><br />
+      <button type="button" style="background-color:black;color:white;" onclick="closePopup1()">Ok</button>
+	
+      </center></div>
+</div>
+
+
+
+
+ <div id="snackbar">
+  </div>
+<h1 class="top-header">Order Return</h1>
+      <div id="order_info" style="display: block;">
+      <div class="container">
+ 
+        <div>
+            <form method="post" id="trackByCN">
+                <label>Enter CN.# Number:</label>
+                <input type="text" name="cn" required id="tracking_number" /><br />	
+              	<button type="submit" class="mt cn-btn" id="submitbtn">TRACK</button>
+
+            </form>
+        </div>
+          
+        
+
+</div>
+
+</div>
+   
+
+
+<div style="display: none;" id="order" class="mt description-flex">
+  <caption class="table-caption"><b> <span id="number_name"></span> # </b> <span id="track_number"></span> </caption>
+  
+<!--   <table class="mt" id="table-line-items">
+    
+  <thead>
+    <tr>
+      <th class="table-first-col-spacing" scope="col"></th>
+      <th scope="col">ID</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Action</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    
+
+    
+  </tbody>
+</table> -->
+
+ 
+  
+<!-- description page -->
+<form onsubmit="event.preventDefault(); ShowReason();">
+    <table class="mt" id="table-line-items">
+    
+  <thead>
+    <tr>
+      <th class="table-first-col-spacing" scope="col"></th>
+      <th scope="col">ID</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      
+<th scope="col">SKU</th>
+      <th scope="col">Action</th>
+      <th scope="col">Reason</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+
+    
+  </tbody>
+</table>
+	<div class="mt description-flex">
+      <div class="mt">
+      <h2>Description: </h2>
+        <textarea id="reason" required name="reason" rows="4" cols="50"></textarea>
+      </div>
+      <div class="mt">
+        <label>You can choose Minimum 1 upto 5 images</label>
+      <label>Upload Image:</label>
+      <input type="file" class="des_input" id="product_image" multiple required />
+        
+      </div>
+  
+	</div>  
+  	<button type="submit" class="mt cn-btn">Proceed</button>
+</form>
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<script> 
+  
+  
+  
+ function closePopup1()
+  {document.getElementById('popup1').style="display:none;"
+  
+  
+ }
+   function closePopup2()
+  {document.getElementById('popup2').style="display:none;"
+  
+  
+ }
+  function ThroughError(msg) {
+    
+    var x = document.getElementById("snackbar");
+    x.innerHTML = `<span>${msg}</span>`;
+    
+    
+    
+    x.style="background-color: red; display:block;";
+    
+    setTimeout(function(){ document.getElementById("snackbar").style="display:none" }, 3000);
+	}
+  
+  
+    function SuccessMsg(msg) {
+      
+    var x = document.getElementById("snackbar");
+    x.innerHTML = `<span>${msg}</span>`;
+    
+    
+    
+    x.style="background-color: #28a745; display:block;";
+    
+    setTimeout(function(){ document.getElementById("snackbar").style="display:none" }, 3000);
+	}
+
+  var trackFrom  = document.querySelector('#trackByCN');
+  
+  trackFrom.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    getOrder();
+ })
+
+
+  var customer_id = "{{ customer.id }}"
+  
+  let items=[]
+  let order_id = ""
+   var shop = 'edit-watches.myshopify.com'
+  const baseUrl = 'https://unified-order-return-be.alche.cloud';
+	var x = document.getElementById("order");
+    var y = document.getElementById("order_info");		
+  
+  
+  function getOrder() {
+   document.getElementById("submitbtn").disabled = true;
+    var tracking_number = document.getElementById("tracking_number").value;
+    axios.get(`${baseUrl}/reverse/get_orders?customer_id=${customer_id}&cn=${tracking_number}&shop=${shop}`)
+    
+
+    .then(res=>{
+      
+      
+      items = res.data;
+      items = items['line-items']
+      order_id = res.data['order-id']
+      SKU=res.data['SKU']
+      // console.log('order_id:::::', order_id)
+      for (let i in items) {
+        
+        // console.log(i)
+        
+        document.getElementById("table-line-items").innerHTML += `
+				 <tr>
+				<td><input type="checkbox" onclick="checkOption('action[${i}]');" style="display:block !important" id="checkbox[${i}]" /></td>
+				
+				  <td data-value=${items[i]['product_id']} id="product_id[${i}]">${items[i]['product_id']}</td>
+				  <td data-value=${items[i]['title']} id="name[${i}]">${items[i]['title']}</td>
+                  <td data-value=${items[i]['price']} id="price[${i}]">${items[i]['price']}</td>
+                  <td data-value=${items[i]['quantity']} id="quantity[${i}]">${items[i]['quantity']}</td>
+
+					<td data-value=${items[i]['quantity']} id="SKU">${SKU}</td>
+
+
+                  <td class="" data-label="action">
+
+					<select name="action[${i}]" id="action[${i}]">
+  						<option value="" selected>Select Action</option>
+						<option value="return">Return</option>
+						<option value="exchange">Exchange</option>
+  					</select>
+                  </td>
+<td class="" data-label="action">
+
+					<select name="reason[${i}]" id="reason[${i}]">
+  						<option value="Damaged Article" selected>Damaged Article</option>
+						<option value="Incorrect Article">Incorrect Article</option>
+						<option value="Wrong Size">Wrong Size</option>
+<option value="exchange">Quality Issue</option>
+  					</select>
+                  </td>
+				</tr>
+                `
+        
+         if (x.style.display === "none") {
+        x.style.display = "block";
+      }
+    document.getElementById("track_number").innerHTML = document.getElementById("tracking_number").value;
+    document.getElementById("number_name").innerHTML = "Tracking ";
+      
+      if (y.style.display === "block") {
+        y.style.display = "none";
+      }
+      }
+      
+               
+               			
+    
+    })
+    .catch(err=>{
+      let msg = err.response.data.message
+      ThroughError(msg);
+    })
+    
+   
+}
+  
+  function checkOption(id){
+   
+    
+    document.getElementById(id).setAttribute('required', "")
+    
+  }
+  function closePopup()
+  {document.getElementById("popup1").style="visibility:hidden"}
+ 
+  
+  	function ShowReason() { 
+      
+      var myDict = [];
+      let files = document.getElementById('product_image').files
+//       console.log("The images dataa is ",product_images)
+       
+       let formData = new FormData();
+      
+      total_images = 0
+      for (let i = 0; i < files.length; i++) {
+        formData.append("images_"+i, files[i])
+        total_images += 1
+      }
+      
+      
+      formData.append("total_images", total_images)
+      
+//       formData.append("file", product_images);
+      
+      
+      formData.append("order_id", order_id)
+      console.log(formData)
+      var count = 0;
+      for(let item in items){
+        let i = document.getElementById(`checkbox[${item}]`).checked;
+        if(i == true){
+          count = count + 1
+       			
+        }
+        else{
+        if (count == 0){
+        	ThroughError(msg="Please select at least 1 item"); 
+        }
+            
+        }}
+      
+      
+      if (count > 0) {
+      		
+              for(let item in items){
+                let i = document.getElementById(`checkbox[${item}]`).checked;
+                
+                    if(i == true){
+                     
+
+                      myDict.push({
+                                    "id" : document.getElementById(`product_id[${item}]`).innerHTML, 
+                                    "name" : document.getElementById(`name[${item}]`).innerHTML,
+                                    "price" : document.getElementById(`price[${item}]`).innerHTML,
+                                    "quantity" : document.getElementById(`quantity[${item}]`).innerHTML,
+                                    "action" : document.getElementById(`action[${item}]`).value,
+                                    "reason" : document.getElementById(`reason[${item}]`).value,                        
+  									"SKU" : document.getElementById("SKU").innerHTML
+
+                                    });
+
+                    }
+
+
+              }
+      
+                var tracking_number = document.getElementById("tracking_number").value;
+              var reason = document.getElementById("reason").value;
+        
+                formData.append("line-items",JSON.stringify(myDict))        
+                formData.append("customer_id","{{ customer.id }}")
+                formData.append("tracking_number", tracking_number)
+                formData.append("shop", shop)
+                formData.append("reason", reason)
+                
+                
+                
+console.log("The form data is",formData)
+              axios.post(`${baseUrl}/reverse/return_orders`,
+                                formData,
+                {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                }
+
+
+                )
+                    .then(res => {
+                
+                  msg = res.data.message
+                  console.log("The msg is",msg)
+                  
+                 ThroughError(msg);
+                
+                  
+                
+                   
+               
+                    }).catch(err => {
+                console.log("the error is",err.response.data.message)
+              
+               
+                msg = "Duplicate Entry"
+               ThroughError(msg);
+                    });
+      
+            
+      }
+      
+    }
+ 
+</script>
+
+            
+    
+
+            
+    
+            
+    
+
+            
+    
+
+            
+    

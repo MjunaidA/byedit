@@ -1,0 +1,167 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+  {% if template == 'collection.category' %}
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+  <style>
+    .popular-categories-main {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.02);
+      padding: 5rem 0;
+    }
+    .popular-categories-info-main {
+      width: 24%;
+    }
+    .popular-categories-collections-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 70%;
+    }
+
+    .popular-categories-title {
+      text-transform: uppercase;
+      font-size: 28px;
+    }
+    .popular-categories-descp {
+      font-size: 14px;
+      margin-top: 0;
+    }
+    .popular-categories-collection-url {
+      text-decoration: none;
+      color: #000;
+      text-transform: uppercase;
+      text-align: center;
+      display: block;
+    }
+    .popular-category-wrapper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      width: 95%;
+      margin: 0 0 0 auto;
+    }
+    @media(max-width:767px) {
+      .popular-category-wrapper {
+        flex-direction: column;
+      }
+      .popular-categories-info-main {
+        width: 100%;
+      }
+      .popular-categories-title {
+        margin-bottom: 0;
+      }
+      .popular-categories-collections-main {
+        width: 100%;
+      }
+      .popular-categories-collection-title {
+        font-size: 12px;
+      }
+      .slide-wrapper-comfort img {
+        width: 100%;
+        object-fit: cover;
+        filter: opacity(0.6);
+      }
+      .popular-categories-main {
+        padding: 1rem 0;
+      }
+    }
+  </style>
+
+  <div class="popular-categories-main">
+    <div class="popular-category-wrapper">
+      <div class="popular-categories-info-main">
+        <h2 class="popular-categories-title">{{ section.settings.popular_category_head }}</h2>
+        <p class="popular-categories-descp">{{ section.settings.popular_category_description }}</p>
+      </div>
+
+      <div class="popular-categories-collections-main">
+        <div class="swiper mySwiperCol">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              {% if block.settings.collection_thumbnail %}
+                <div class="popular-categories-collection swiper-slide">
+                  <a class="popular-categories-collection-url" href="{{ block.settings.collection_url }}">
+                    <img
+                      class="popular-categories-collection-img"
+                      src="{{ block.settings.collection_thumbnail | img_url: 'master' }}"
+                      height="{{ block.settings.collection_thumbnail.height }}"
+                      width="{{ block.settings.collection_thumbnail.width }}"
+                      alt="{{ block.settings.collection_thumbnail.alt | default: shop.name }}">
+                    <p class="popular-categories-collection-title">{{ block.settings.collection_title }}</p>
+                  </a>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    var swiper = new Swiper(".mySwiperCol", {
+      slidesPerView: 2.5,
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      breakpoints: {
+        768: {
+          spaceBetween: 30,
+          slidesPerView: 3
+        }
+      }
+    });
+  </script>
+
+{% endif %}
+{% schema %}
+  {
+    "name": "Popular Categories",
+    "class": "category-popular-categories",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "text",
+        "label": "Popular Category Head",
+        "id": "popular_category_head"
+      }, {
+        "type": "text",
+        "label": "Popular Category Description",
+        "id": "popular_category_description"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection-block",
+        "name": "Collection Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Collection Thumbnail",
+            "id": "collection_thumbnail"
+          }, {
+            "type": "text",
+            "label": "Collection Title",
+            "id": "collection_title"
+          }, {
+            "type": "collection",
+            "label": "Collection URL",
+            "id": "collection_url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Popular Categories"
+      }
+    ]
+  }
+{% endschema %}

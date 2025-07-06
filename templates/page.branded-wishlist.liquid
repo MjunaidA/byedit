@@ -1,0 +1,749 @@
+<div class="wishlist-page container page-width">
+  {{ page.content }}
+  </div>
+
+
+        <style>
+        .share-wishlist p {
+          font-size: 13px;
+        }
+        .container.page-width.wishlist-page {
+    padding: 5rem 0;
+}
+          
+          #branded_wishlist_view_items_table 
+          {
+            width: 100%;
+          }
+  #branded_wishlist_view_items_table img
+  {
+    /* width: 20%; */
+    max-width: 100px;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  #branded_wishlist_view_items_table td, #branded_wishlist_view_items_table th {
+    /*                 width: 35%; */
+    text-align: center;
+    align-items: center;
+    font-weight: 400;
+  }
+  #share_branded_wishlist_whatsapp :hover {
+    cursor: pointer;
+  }
+
+  .action-btn-wrap
+  {
+    display: flex;
+    align-items: center;
+  }
+
+  .action-btn-wrap > a.wishlist-shopnow-btn
+  {
+    font-size:12px;
+    padding: 5px 15px;
+    background-color: #3a3a3a;
+    color: #fff;
+    text-decoration:none;
+    border: none;
+    margin-right: 10px;
+  }
+  button[branded_wishlist_view_remove_item]
+  {
+    font-size: 12px;
+    padding: 8px 15px;
+    background-color: white;
+    color: black;
+    border: 1px solid;
+    cursor: pointer;
+  }
+
+  .bulk-action-wrap
+  {
+    display: flex;
+    justify-content: flex-end;
+    display: none;
+  }
+
+  .bulk-action-wrap [bulk-addToCart-btn]
+  {
+    padding: 10px 15px;
+    background-color: #3a3a3a;
+    color: #fff;
+    border: none;
+    margin-bottom: 20px;
+  }
+  
+   .bulk-action-wrap [bulk-addToCart-btn][disabled]
+  {
+    opacity: 0.5;
+  }
+          
+          #branded_wishlist_view_items_table thead tr th:first-child label
+          {
+            display: none;
+          }
+
+  @media (max-width: 767px)
+  {
+    #branded_wishlist_view_items_table
+    {
+      border: 1px solid #ddd;
+    }
+    
+/*     #branded_wishlist_view_items_table thead
+    {
+      display: none
+    } */
+    
+    #branded_wishlist_view_items_table thead tr th
+    {
+      display: none;
+    }
+    
+    #branded_wishlist_view_items_table thead tr th:first-child
+    {
+      display: block;
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      
+    }
+    
+    #branded_wishlist_view_items_table thead tr th:first-child label
+    {
+      display: inline-block;
+      
+    }
+
+    #branded_wishlist_view_items_table tbody tr
+    {
+      border-bottom: 1px solid #ddd;
+    }
+    
+    #branded_wishlist_view_items_table tbody tr td
+    {
+      display: block;
+      width: 100%;
+      border: none;
+
+    }
+    
+    #branded_wishlist_view_items_table tbody tr td img
+    {
+		max-width: 80%;
+      width: 100%;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #branded_wishlist_view_items_table tbody tr td .action-btn-wrap
+    {
+      justify-content: center;
+      padding-bottom: 10px;
+    }
+    
+    .bulk-action-wrap
+    {
+      justify-content: center;
+    }
+  }
+
+</style>
+		<div class="container page-width">
+          <div class="bulk-action-wrap">
+	          <button bulk-addToCart-btn onclick="bulkAddToCart()" disabled>Bulk Add To Cart</button>          
+          </div>
+          <div class="branded-wishlist-page">
+              <table id='branded_wishlist_view_items_table'>
+                  <thead>
+                      <tr>
+                        <th>
+                          <input type="checkbox" class="selectAllCheckbox" id="selectAllCheckbox" value="selectAll"> 
+                          <label for="selectAllCheckbox">Select All</label>
+                        </th>
+                          <th>Image</th>
+                          <th>Title</th>
+                        {% if customer.id %}
+                        <th>Price</th>
+                        {% endif %}
+                          <th>SKU</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+              </table>
+              <div class="share-wishlist" style='justify-content: center; display: flex; align-items:center;'>
+                  <p>Share complete wishlist on: </p>
+                  <span id='show_wishlist_whatsapp'></span>
+<!--                   <span id='show_wishlist_fb'></span> -->
+              </div>
+          </div>
+        </div>
+        <script>
+            var customer_id = false;
+            {% if customer.id %}
+                customer_id = {{ customer.id }};
+            {% endif %}
+            const productsBody = document.querySelector('#branded_wishlist_view_items_table > tbody');
+            const whatsapp_span = document.getElementById('show_wishlist_whatsapp')
+            var wishlist_counter_el = document.querySelectorAll('[branded-wishlist-counter]');
+            const whatsapp_bulk_link = document.createElement('a')
+            whatsapp_bulk_link.setAttribute('id', 'share_branded_wishlist_whatsapp');
+            whatsapp_bulk_link.style.marginLeft = '20px';
+            whatsapp_bulk_link.style.position = 'relative';
+            whatsapp_bulk_link.style.top = '5px';
+
+            const whatsapp_img_link = document.createElement('img')
+            whatsapp_img_link.src = 'https://wishlist-wizard-be.alche.cloud/static/whatsapp.png'
+            whatsapp_img_link.style.width = '30px';
+            whatsapp_bulk_link.append(whatsapp_img_link);
+            whatsapp_span.append(whatsapp_bulk_link);
+          
+//           For Bulk Add to cart Variables;
+            var checkedValues = [];
+            var selectAllCheckbox = document.querySelector('.selectAllCheckbox');
+            var multipleSelectCheckbox;
+          
+          var bulkAddToCartBtn = document.querySelector('[bulk-addToCart-btn]');
+          
+          	
+          
+            if(customer_id){
+                function loadProducts(){
+                    // Customer logged in
+                    var wishlist = localStorage.getItem('wishlist_wizard');
+                  AddProductsFromStorage();
+//                     if (wishlist) {
+//                         AddProductsFromStorage();
+//                         localStorage.removeItem('wishlist_wizard');
+//                     }
+                  
+                  
+                    
+                    
+                } 
+                function populateTable(products) {
+//                   	alert('Populate Table', products);
+                    products.forEach((row) => {
+                        const tr = document.createElement('tr');
+                      
+                      	const td0 = document.createElement('td');
+                      	const buldCheckbox = document.createElement('input');
+                        buldCheckbox.type = "checkbox";
+                        buldCheckbox.value = row.shopify_variant_id;
+                        buldCheckbox.classList.add('bulkAddCheckboxes')
+                      	td0.appendChild(buldCheckbox);
+                      
+                        const td1 = document.createElement('td');
+                        var img = document.createElement('img');
+                        img.src = row.product_image;
+                        td1.appendChild(img);
+                      
+                      	tr.appendChild(td0);
+                      
+                        tr.appendChild(td1);
+                      
+                      
+                        const td2 = document.createElement('td');
+                      	const td2a = document.createElement('a');
+                      	td2a.setAttribute('href', row.product_link)
+                      	td2a.textContent = row.product_title
+                        td2.appendChild(td2a);
+                        tr.appendChild(td2);
+        
+//                         const td2 = document.createElement('td');
+//                         td2.textContent = row.product_title;
+//                         tr.appendChild(td2);
+                      
+                      
+                      const tdPrice = document.createElement('td');
+                      tdPrice.textContent = 'Rs. ' + row.variant_price;
+                      tr.appendChild(tdPrice);
+                      
+                      	
+        
+                        const td3 = document.createElement('td');
+                        td3.textContent = row.product_sku;
+                        tr.appendChild(td3);
+        
+                        const td4 = document.createElement('td');
+                        const btn = document.createElement('button');   // Create a <button> element
+                        btn.innerHTML = 'Remove';
+                        btn.setAttribute('branded_wishlist_view_remove_item', '');
+                        const btnShop = document.createElement('a');
+                        btnShop.setAttribute('href', `/cart/add?id=${ row.shopify_variant_id }`);
+                        btnShop.innerHTML = 'Shop Now';
+                        btnShop.classList.add('wishlist-shopnow-btn');
+                        btn.onclick = function () {
+                            console.log('Removing item...')
+        
+                            fetch('https://wishlist-wizard-be.alche.cloud/delete_product_of_customer?shop=edit-watches.myshopify.com&shopify_variant_id='+ row.shopify_variant_id +'&shopify_customer_id='+ String(customer_id))
+                            .then( (response) => {
+                                return response.json()
+                            })
+                            .then( (data) => {
+                                console.log('Delete Wishlist Success Response: ', data)
+                                    // Refersh Table
+                                    while (productsBody.firstChild) {
+                                        productsBody.removeChild(productsBody.firstChild);
+                                    }
+//                                     loadProducts();
+                              populateTable(data.products);
+                              wishlist_counter_el.forEach( (value, index) => {
+                                value.textContent = data.products.length
+                                if (data.products.length >= 1)
+                                {
+                                  value.classList.add('active')
+                                  value.parentNode.classList.add('active')
+                                }
+                                else
+                                {
+                                  value.classList.remove('active')
+                                  value.parentNode.classList.remove('active')
+                                }
+                              });
+                              		
+                            })
+                            .catch( (error) => {
+                                console.error('Delete Wishlist Error Response: ', error)
+                            })
+                        };
+                        const div_element = document.createElement('div');
+                        div_element.style.display = 'flex';
+                        div_element.style.alignItems = 'center';
+                        div_element.classList.add('action-btn-wrap')
+                        const whatsapp_img = document.createElement('img');   // Create a <img> element
+                        whatsapp_img.src = 'https://wishlist-wizard-be.alche.cloud/static/whatsapp.png';
+                        whatsapp_img.style.width = '30px';
+                        const anchor = document.createElement('a');   // Create a <a> element
+                        const whatsapp_link = 'https://api.whatsapp.com/send?text=' + row.product_title + '%0a' + row.product_link
+                        anchor.href = whatsapp_link;
+                        anchor.target = '_blank';
+                        anchor.style.width = '30px';
+                        anchor.style.border = '0';
+                        anchor.style.marginLeft = '10px'
+                        anchor.appendChild(whatsapp_img);
+                        div_element.appendChild(btnShop);
+                        div_element.appendChild(btn);
+                        div_element.appendChild(anchor);
+                        td4.appendChild(div_element);
+                        tr.appendChild(td4);
+        
+                        productsBody.appendChild(tr);
+                    })
+                    
+                   multipleSelectCheckbox = document.querySelectorAll('.bulkAddCheckboxes');
+                    bulkSelect(multipleSelectCheckbox)
+        
+                }
+              function getAllWishlist() {
+//                 debugger;
+              	fetch('https://wishlist-wizard-be.alche.cloud/products?shop=edit-watches.myshopify.com&customer_id='+ String(customer_id))
+                    .then( (response) => {
+                        return response.json();
+                    })
+                    .then( (data) => {
+                        console.log('Response for Fetch exixting Wishlist: ', data);
+                        populateTable(data.products);
+                        wishlist_counter_el.forEach( (value, index) => {
+                          value.textContent = data.products.length
+                           if (data.products.length >= 1)
+                          {
+                            value.classList.add('active')
+                            value.parentNode.classList.add('active')
+                          }
+                          else
+                          {
+                            value.classList.remove('active')
+                            value.parentNode.classList.remove('active')
+                          }
+                        });
+                        localStorage.removeItem('wishlist_wizard');
+                    })
+                    .catch( (error) => {
+                        console.error('Error for Fetch Exixting Wishlist: ', error)
+                    })
+              }
+                function AddProductsFromStorage() {
+                    var wishlist = localStorage.getItem('wishlist_wizard');
+                    if (wishlist) {
+                        var array = JSON.parse(wishlist);
+                        var i;
+                        var addToWislistURL = 'https://wishlist-wizard-be.alche.cloud/products';
+                      	let bulkAddData = []
+                        for (i = 0; i < array.length; i++) {
+//                           alert(i);
+                          bulkAddData.push({
+                            shopify_customer_id: String(customer_id),
+                            shopify_product_id: array[i].shopify_product_id,
+                            shopify_variant_id: array[i].shopify_variant_id,
+                            product_link: array[i].product_link,
+                            shop: 'edit-watches.myshopify.com'
+                          })
+                            
+                        }
+                      
+                      console.log(bulkAddData);
+        
+                            let postPerms = {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(bulkAddData)
+                            }
+        
+                            fetch(addToWislistURL, postPerms)
+                            .then( (response) => {
+                                return response.json();
+                            })
+                            .then( (data) => {
+                                console.log('Add to Wishlist Success: ', + i, data);
+                                getAllWishlist();
+                                
+                            })
+                            .catch( (error) => {
+                                console.error('Add to Wishlist Error: ', error);
+                            });
+                          
+                    }
+                  	else
+                    {
+                      getAllWishlist()
+                    }
+                }
+                loadProducts();
+            } else {
+                // Customer Not logged in
+                var wishlist = localStorage.getItem('wishlist_wizard');
+                if (wishlist) {
+                    document.addEventListener('DOMContentLoaded', () => { LoadProductsFromStorage() });
+                }
+                function LoadProductsFromStorage(){
+                    populateTable(JSON.parse(localStorage.getItem('wishlist_wizard')))
+                }
+                function populateTable(products) {
+                  console.log(products);
+                    products.forEach((row) => {
+                        const tr = document.createElement('tr');
+                      
+                        const td0 = document.createElement('td');
+                      	const buldCheckbox = document.createElement('input');
+                        buldCheckbox.type = "checkbox";
+                        buldCheckbox.value = row.shopify_variant_id;
+                        buldCheckbox.classList.add('bulkAddCheckboxes');
+                      	td0.appendChild(buldCheckbox);
+                      
+                        const td1 = document.createElement('td');
+                        var img = document.createElement('img');
+                        img.src = row.product_image;
+                        td1.appendChild(img);
+                      
+                        tr.appendChild(td0);
+                      
+                        tr.appendChild(td1);
+                        
+                        const td2 = document.createElement('td');
+                      	const td2a = document.createElement('a');
+                      	td2a.setAttribute('href', row.product_link)
+                      	td2a.textContent = row.product_title
+                        td2.appendChild(td2a);
+                        tr.appendChild(td2);
+                        
+                        const td3 = document.createElement('td');
+                        td3.textContent = row.product_sku;
+                        tr.appendChild(td3);
+                    
+                        const td4 = document.createElement('td');
+                      	const btnShop = document.createElement('a');
+                        btnShop.setAttribute('href', `/cart/add?id=${ row.shopify_variant_id }`);
+                        btnShop.innerHTML = 'Shop Now';
+                        btnShop.classList.add('wishlist-shopnow-btn');
+                        const btn = document.createElement('button'); // Create a < button > element
+                        btn.innerHTML = 'Remove';
+                        btn.setAttribute('branded_wishlist_view_remove_item', '');
+                        btn.onclick = function() {
+                            console.log('Removing item from localStorage...');
+                            RemoveItemFromStorage(row);
+                            while (productsBody.firstChild) {
+                                productsBody.removeChild(productsBody.firstChild);
+                            }
+                            LoadProductsFromStorage();
+                          wishlist_counter_el.forEach( (value, index) => {
+                            value.textContent = JSON.parse(localStorage.getItem('wishlist_wizard')).length;  
+                            console.log('abc')
+                            if (JSON.parse(localStorage.getItem('wishlist_wizard')).length >= 1)
+                            {
+                              value.classList.add('active') 
+                              value.parentNode.classList.add('active')
+                            }
+                            else
+                            {
+                              value.classList.remove('active')
+                              value.parentNode.classList.remove('active')
+                            }
+                          })
+                        };
+                        const div_element = document.createElement('div');
+                        div_element.style.display = 'flex';
+                        div_element.classList.add('action-btn-wrap')
+                        const whatsapp_img = document.createElement('img');   // Create a <img> element
+                        whatsapp_img.src = 'https://wishlist-wizard-be.alche.cloud/static/whatsapp.png';
+                        whatsapp_img.style.width = '30px';
+                        const anchor = document.createElement('a');   // Create a <a> element
+                        const whatsapp_link = 'https://api.whatsapp.com/send?text=' + row.product_title + '%0a' + row.product_link
+                        anchor.href = whatsapp_link;
+                        anchor.target = '_blank';
+                        anchor.style.width = '30px';
+                        anchor.style.border = '0';
+                        anchor.style.marginLeft = '10px'
+                        anchor.appendChild(whatsapp_img);
+                        td4.appendChild(anchor);
+                      	div_element.appendChild(btnShop);
+                        div_element.appendChild(btn);
+                        div_element.appendChild(anchor);
+                        td4.appendChild(div_element);
+                        tr.appendChild(td4);
+                        
+                        productsBody.appendChild(tr);
+                    })
+                    
+//                     Bulk Add To cart Functionality;
+                    multipleSelectCheckbox = document.querySelectorAll('.bulkAddCheckboxes');
+                    bulkSelect(multipleSelectCheckbox)
+                }
+                function RemoveItemFromStorage(item) {
+                    var wishlist = localStorage.getItem('wishlist_wizard');
+                    var array = JSON.parse(wishlist)
+                    var newArray = array.filter(function(prod){ return prod.shopify_variant_id != String(item.shopify_variant_id) });
+                    localStorage.setItem('wishlist_wizard', JSON.stringify(newArray));
+                }
+            }
+            
+            document.getElementById('show_wishlist_whatsapp').addEventListener('click', () => {
+                console.log(this)
+                if(customer_id){
+                  window.open('https://api.whatsapp.com/send?text=Here is my wishlist.%0ahttps://wishlist-wizard-be.alche.cloud/wishlist_share?data=edit-watches.myshopify.comsplit' + String(customer_id), '_blank');
+                }
+                else {
+                  alert('You must login to share your wishlist!');
+                }
+            })
+            
+            
+          function bulkSelect(mulCheckbx)
+          {
+            let multipleCheckBoxes = mulCheckbx;
+            console.log(multipleCheckBoxes);
+
+            selectAllCheckbox.addEventListener('change', (event) => {
+              console.log(event.target.value);
+              if (event.target.checked)
+              {
+                multipleSelectCheckbox.forEach((el, index) => {
+                  el.checked = true;
+                  if (!checkedValues.includes(el.value))
+                  {
+                    checkedValues.push(el.value);
+                  }
+                })
+              }
+              else
+              {
+                multipleSelectCheckbox.forEach((el, index) => {
+                  el.checked = false;
+                  if (checkedValues.indexOf(el.value) > -1) {
+                    checkedValues.splice(checkedValues.indexOf(el.value), 1);
+                  }
+                })
+              }
+              console.log(checkedValues.length)
+              if (checkedValues.length)
+                {
+                  console.log('Has length');
+                  bulkAddToCartBtn.disabled = false;
+                }
+                else
+                {
+                  console.log('No length');
+                  bulkAddToCartBtn.disabled = true;
+                }
+//               bulkAddToCartBtn
+              console.log(checkedValues)
+            })
+
+            multipleCheckBoxes.forEach( (el, index) => {
+              el.addEventListener('change', (event) => {
+                if (event.target.checked)
+                {
+                  if (!checkedValues.includes(event.target.value))
+                  {
+                    checkedValues.push(event.target.value);
+                  }
+                }
+                else
+                {
+                  if (checkedValues.indexOf(event.target.value) > -1) {
+                    checkedValues.splice(checkedValues.indexOf(event.target.value), 1);
+                  }
+                }
+                console.log(checkedValues.length)
+                if (checkedValues.length)
+                {
+                  console.log('Has length');
+                  bulkAddToCartBtn.disabled = false;
+                }
+                else
+                {
+                  console.log('No length')
+                  bulkAddToCartBtn.disabled = true;
+                }
+                console.log(checkedValues)
+              })
+            })
+          }
+          
+          {%comment%}
+          updateCartInfo function(cart, e){
+            console.log("---cart--wis--");
+            var c = $(e); 
+            var t = $('.icon-cart-header .price');
+            var d = $('.icon-cart-header .cart-total');
+            if (c.length) {
+              c.empty();
+              t.empty();
+              $.each(cart, function(key,value){
+                if(key == 'items'){
+                  var $html ='';
+                  if(value.length){
+                    t.html(Shopify.formatMoney(cart.total_price, money_format));
+                    d.html('<span class="cart-qty">'+cart.item_count+'</span><span>'+cartData.totalNumb+'</span>');
+                    $html += '<div class="cart-content">';
+                    if($('.header-container').hasClass('type20')){
+                      $html += '<div class="total-count">';
+                      $html +=  '<span>'+cart.item_count+' '+cartData.totalNumb+'</span>';
+                      $html +=  '<a href="/cart" class="btn-button view-cart bordered uppercase"><span>'+cartData.buttonViewCart+'</span></a>';
+                      $html += '</div>';
+                    }
+                    $html += '<ul class="clearfix">';
+                    $.each(value, function(i, item) {
+                      $html += '<li class="item-cart">';
+                      $html += '<a class="product-image" href="'+ item.url +'"><img alt="'+ SW.page.translateText(item.title) +'" src="'+ Shopify.resizeImage(item.image, 'small') +'" /></a>';
+                      $html += '<div class="product-details row-fluid show-grid">';
+                      $html += '<p class="product-name"><a href="'+ item.url +'"><span>'+ SW.page.translateText(item.title) +'</span></a></p>';
+                      $html += '<div class="items"><span class="price">'+item.quantity+' × <span class="amount">'+ Shopify.formatMoney(item.price, money_format) +'</span></span></div>';
+                      $html += '<div class="access"><a href="javascript: void(0);" class="btn-remove btn-remove-cart" data-id="'+item.variant_id+'" title="'+cartData.removeItemLabel+'"><i class="icon-cancel"></i></a></div>';
+                      $html += '</div>';
+                      $html += '</li>';
+                    });
+                    $html += '</ul>'; 
+                    $html += '</div>';
+                    $html += '<div class="cart-checkout">';
+                    $html += '<div class="cart-info"><p class="subtotal"><span class="label">'+cartData.totalLabel+'</span><span class="price">'+Shopify.formatMoney(cart.total_price, money_format)+'</span></p></div>';
+                    $html += '<div class="actions">';
+                    if($('.header-container').hasClass('type20')){
+                      $html += '<a href="/checkout" class="btn-button checkout-cart bordered uppercase"><span>'+cartData.buttonCheckout+'</span></a>';
+                    }else{
+                      $html += '<a href="/cart" class="btn-button view-cart bordered uppercase"><span>'+cartData.buttonViewCart+'</span></a> ';
+                      $html += '<a href="/checkout" class="btn-button checkout-cart bordered uppercase"><span>'+cartData.buttonCheckout+'</span></a>';
+                    }
+                    $html += '</div>';
+                    $html += '</div>';
+                  }else{ 
+                    t.html(Shopify.formatMoney(cart.total_price, money_format)); 
+                    d.html('<span class="cart-qty">'+cart.item_count+'</span><span>'+cartData.totalNumb+'</span>');
+                    $html += '<div class="cart-content">';
+                    $html +=  '<i class="fa fa-close" aria-hidden="true"><img src="//cdn.shopify.com/s/files/1/2277/5269/t/3/assets/cross-03.svg?356403421105710705"></i>';
+                    $html += '<p class="no-items-in-cart">'+cartData.noItemLabel+'</p>';
+                    $html += '<p class="custom-cart-button-p"><a class="btn btn-primary cart-custom-button">CONTINUE SHOPPING</a></p>';
+                    $html += '</div>';
+                  }
+                } 
+                c.append($html);
+              });
+            }
+            if($('.icon-cart-header .cart-count').length > 0){
+              $('.icon-cart-header .cart-count').html(cart.item_count);
+            }
+            if(frontendData.enableCurrency){
+              currenciesCallbackSpecial('.cart-wrapper .cart-inner span.money');
+              currenciesCallbackSpecial('.icon-cart-header span.money');
+            } 
+          }
+          {%endcomment%}
+
+          function bulkAddToCart()
+          {
+            console.log('Buld Add to cart');
+            let bodyDataGen = []
+            
+            let bodyData = {
+              items: []
+            }
+            
+            checkedValues.forEach((value, index) => {
+              bodyDataGen.push({
+                id: parseInt(value),
+                quantity: 1
+              })
+            });
+            
+            console.log(bodyDataGen);
+            console.log(bodyData)
+            bodyData.items = bodyDataGen
+             console.log(bodyData)
+            
+            
+            fetch('/cart/add.js', {
+              method: 'post',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(bodyData)
+            })
+            .then(res => {
+            	return res.json()
+            })
+            .then(data => {
+              console.log('Bulk Add to cart Resp: ', data);
+              if (data.status === 422)
+              {
+                alert(data.description)
+              }
+              else if (data.status === 'bad_request')
+              {
+                alert('Please select atleast 1 Product to add in cart')
+              }
+              else
+              {
+                alert(`${ data.items.length } Products successfully added to cart.`)
+                //                 wish_updateCartInfo(data.items.length)
+                var pre_val = $('.icon-cart-header .cart-total .cart-qty').html();
+
+                var new_val = parseInt(pre_val) + data.items.length;
+                $('.icon-cart-header .cart-total .cart-qty').html(new_val);
+                
+                wishlist_cartUpdate();
+
+              }
+              
+            })
+            .catch(error => {
+            	console.log('Bulk Add to cart Error: ', error)
+            });
+          }
+            
+            
+//             $('#show_wishlist_whatsapp').click(function(e){
+//             if(customer_id){
+//                 window.open('https://api.whatsapp.com/send?text=Here is my wishlist.%0ahttps://wishlist-wizard-be.alche.cloud/wishlist_share?data=edit-watches.myshopify.comsplit' + String(customer_id), '_blank');
+//             }
+//             else {
+//                 alert('You must login to share your wishlist!');
+//             }
+//         });
+        </script>
+    

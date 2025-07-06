@@ -1,0 +1,418 @@
+<style>
+  @media screen and (min-width: 750px){
+  .newbrandsWrapper {
+     padding-top:{{section.settings.padding-top}}px;
+    padding-bottom:{{section.settings.padding-bottom}}px;
+    width: 100%;
+}
+.newbrandContainer {
+    width: 88%;
+    margin: 0 auto;
+    background:{{section.settings.newbrandcontainerbackg}};
+}
+  .newtxtBoxBrand {
+    text-align: center;
+    padding: 3.5em 0;
+}
+  .newtxtBoxBrand .subparaCstm {
+    font-size: 14px;
+    line-height: 22px;
+    color: {{section.settings.subparatext}};
+    font-weight:300;
+    padding-bottom: 10px!important;
+}
+  .newtxtBoxBrand .brndHeading {
+    color: {{section.settings.brndHeading}};
+    padding:0;
+    font-size: 32px;
+    line-height: 42px;
+    font-weight: 700;
+}
+  .newbrandContainer .txtBoxBrand .brndHeading {
+    font-size: 25px;
+    text-transform: uppercase;
+}
+  .newbrandsRowFlex,
+  .newbrandsbtnRowFlex{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 90%;
+    gap: 30px;
+    margin: 0 auto;
+}
+  .newimgLinkBrand {
+    all: unset;
+    cursor: pointer;
+}
+  .brandsheading h2.brandsheading {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+    font-family: 'Sequel Sans heavy Disp' !important;
+    color:{{section.settings.brandname}};
+}
+  .newbrandsColumn .brandImg{
+    width:100%;
+}
+    .newbrandsbtnRowFlex {
+    margin-top: 2em;
+}
+    a.newbtnLinkBrand {
+    all: unset;
+    cursor: pointer;
+    color: {{section.settings.btnlinkbrand}};
+     background: {{section.settings.btnlinkbrandbackg}};
+    border: 1px solid {{section.settings.brandborderbtn}};
+    padding: 0 2rem;
+    border-radius: 2px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    .newbrandBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7rem 0;
+}
+    .newbrandBtn a {
+    all: unset;
+    color: {{section.settings.brandallbtn}};
+    background: {{section.settings.brandallbtnbackg}};
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: Sequel Sans Medium Disp;
+    letter-spacing: .15rem;
+    border: 1px solid {{section.settings.brandallbtnborder}};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-radius: 2px;
+    padding: 0 2rem;
+}
+    a.newbrandLink:hover,
+    .newbtnLinkBrand:hover{
+    background: #888888e0 !important;
+    transition: all .3s ease-in-out !important;
+  }
+     .newbrandsbtnColumn {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.18rem;
+    font-weight: 300;
+}
+  }
+
+    @media screen and (max-width: 750px){
+  .newbrandsWrapper {
+    padding-top:{{section.settings.mobile-padding-top}}px;
+    padding-bottom:{{section.settings.mobile-padding-bottom}}px;
+    width: 100%;
+}
+.newbrandContainer {
+
+    background:{{section.settings.newbrandcontainerbackg}};
+}
+  .newtxtBoxBrand {
+    text-align: center;
+    padding: 3.5em 0;
+    width: 100%;
+    max-width: 88%;
+    margin: 0 auto;
+}
+  .newtxtBoxBrand .subparaCstm {
+    font-size: 12px;
+    line-height: 20px;
+    color: {{section.settings.subparatext}};
+    font-weight:300;
+    padding-bottom: 10px!important;
+}
+  .newtxtBoxBrand .brndHeading {
+    color: {{section.settings.brndHeading}};
+    padding:0;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+  .newbrandsRowFlex{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 88%;
+    gap: 20px;
+    margin: 0 auto;
+}
+    .newbrandsbtnRowFlex{
+    display: flex;
+    width: 91%;
+    gap: 20px;
+    margin: 0 auto;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+  .newimgLinkBrand {
+    all: unset;
+    cursor: pointer;
+}
+  .brandsheading h2 {
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color:{{section.settings.brandname}};
+}
+      .newbrandsbtnColumn {
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.18rem;
+    font-weight: 300;
+}
+  .newbrandsColumn .brandImg{
+    width:100%;
+}
+    .newbrandsbtnRowFlex {
+    margin-top: 2em;
+}
+    a.newbtnLinkBrand {
+    all: unset;
+    cursor: pointer;
+    color: {{section.settings.btnlinkbrand}};
+     background: {{section.settings.btnlinkbrandbackg}};
+    border: 1px solid {{section.settings.brandborderbtn}};
+    padding: 0 3.8rem;
+    border-radius: 2px;
+    min-width: 90px;
+    max-width: 90px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    .newbrandBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+    .newbrandBtn a {
+    all: unset;
+    color: {{section.settings.brandallbtn}};
+    background: {{section.settings.brandallbtnbackg}};
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: Sequel Sans Medium Disp;
+    letter-spacing: .15rem;
+    border: 1px solid {{section.settings.brandallbtnborder}};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-radius: 2px;
+    padding: 0 2rem;
+}
+    a.newbrandLink:hover,
+    .newbtnLinkBrand:hover{
+    background: #888888e0 !important;
+    transition: all .3s ease-in-out !important;
+  }
+  }
+</style>
+<div class="newbrandsWrapper">
+  <div class="newbrandContainer">
+    <div class="newtxtBoxBrand">
+      <p class="brandSubTxt subparaCstm">{{ section.settings.subTxtBrand }}</p>
+      <h2 class="brndHeading">{{ section.settings.headingTxtBrand }}</h2>
+    </div>
+    <div
+      class="newbrandsRowFlex">
+      {% for block in section.blocks %}
+        <a class="newimgLinkBrand" href="{{block.settings.brandUrl}}">
+          <div class="newbrandsColumn">
+
+            <img
+              class="brandImg"
+              src="{{block.settings.image1 | img_url: 'master'}}"
+              alt="brand"
+              loading="lazy"
+              width="{{ block.settings.image1.width }}"
+              height="{{ block.settings.image1.height }}"
+            />
+
+          </div>
+             <div class="brandsheading">
+               <h2 class="brandsheading">{{ block.settings.brandsheading }}</h2>
+          </div>
+        </a>
+
+      {% endfor %}
+    </div>
+     <div
+      class="newbrandsbtnRowFlex">
+      {% for block in section.blocks %}
+        <a class="newbtnLinkBrand" href="{{block.settings.brandbtnUrl}}">
+          <div class="newbrandsbtnColumn">
+            {{ block.settings.brndbtntext }}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="newbrandBtn">
+      <a href="{{section.settings.linkbtn}}" class="newbrandLink">{{ section.settings.btnTxtBrand }}</a>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "New-Home-Brand",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Color"
+      }, {
+        "type": "color",
+        "id": "newbrandcontainerbackg",
+        "label": "Add Background Color"
+      },{
+        "type": "color",
+        "id": "brndHeading",
+        "label": "Add Heading Color"
+      },{
+        "type": "color",
+        "id": "subparatext",
+        "label": "Add SubTitle Color"
+      },{
+        "type": "color",
+        "id": "brandname",
+        "label": "Add Brand Name color"
+      },{
+        "type": "color",
+        "id": "btnlinkbrand",
+        "label": "Add Brand Text Color"
+      },{
+        "type": "color",
+        "id": "btnlinkbrandbackg",
+        "label": "Add Brand Background"
+      },{
+        "type": "color",
+        "id": "brandborderbtn",
+        "label": "Add Brand Border color"
+      },{
+        "type": "color",
+        "id": "brandallbtn",
+        "label": "Add Color View All"
+      },{
+        "type": "color",
+        "id": "brandallbtnbackg",
+        "label": "Add Background View All"
+      },{
+        "type": "color",
+        "id": "brandallbtnborder",
+        "label": "Add Border View All"
+      },
+      {
+        "type": "text",
+        "id": "subTxtBrand",
+        "default": "From classic timepieces to modern designs",
+        "label": "Sub Text Section"
+      }, {
+        "type": "text",
+        "id": "headingTxtBrand",
+        "default": "Discover Our Iconic Brands",
+        "label": "Sub Text Section"
+      }, {
+        "type": "text",
+        "id": "btnTxtBrand",
+        "default": "View All BRANDS",
+        "label": "Button Text"
+      }, {
+        "type": "url",
+        "id": "linkbtn",
+        "label": "Banner Link"
+      },{
+      "type": "header",
+      "content": "Desktop Padding"
+    },{
+      "type": "range",
+      "id": "padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 50     
+    },{
+      "type": "range",
+      "id": "padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 50
+    },{
+      "type": "header",
+      "content": "Mobile Padding"
+    },{
+      "type": "range",
+      "id": "mobile-padding-top",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding top",
+      "unit": "px",
+      "default": 25
+    },{
+      "type": "range",
+      "id": "mobile-padding-bottom",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "label": "padding bottom",
+      "unit": "px",
+      "default": 25
+    }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Add Slider Image",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Brands Image"
+          },{
+            "type": "text",
+            "id": "brandsheading",
+            "label": "Add Heading"
+          }, {
+            "type": "url",
+            "id": "brandUrl",
+            "label": "Brands Link"
+          },{
+            "type": "text",
+            "id": "brndbtntext",
+            "label": "Add Button Text"
+          },{
+            "type": "url",
+            "id": "brandbtnUrl",
+            "label": "Brands Button Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "New-Home-Brand",
+        "category": "Theme"
+      }
+    ]
+  }
+{% endschema %}

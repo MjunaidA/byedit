@@ -1,0 +1,375 @@
+<style>
+  .statusTrack.cancelCstm svg rect {
+    fill: red;
+}
+.statusTrack.cancelCstm {
+  display: none;
+}
+  .order-tracking-shipping{
+  display:none;
+}
+  .trackingbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .iconstatus {
+    display: flex;
+  }
+  .txtStatus {
+    font-size: 14px;
+    font-family: 'Sequel Sans Medium Disp';
+    font-weight: 625;
+    line-height: 22px;
+    text-transform: uppercase;
+    color: black;
+    margin-top: 0;
+  }
+  .statusTrack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  .trackingContent {
+    display: flex;
+    margin-top: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .productWrapper {
+    width: 65%;
+    padding: 20px 0 20px 20px;
+  }
+  .trackingInfo {
+    width: 35%;
+    padding: 20px;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .trackingInfo p {
+    margin: 5px;
+    padding: 0;
+  }
+  .contentTrackingInfo {
+    color: rgba(0, 0, 0, 0.50);
+    font-size: 14px;
+    font-family: Sequel Sans;
+    font-weight: 310;
+    line-height: 22px;
+  }
+  .productTrack {
+    display: flex;
+    margin-bottom: 2rem;
+  }
+  .productImage {
+    width: 120px;
+    height: 126px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-right: 15px;
+  }
+  .productImage img {
+    width: 57%;
+  }
+  .productDetails p {
+    margin: 0;
+    padding: 0;
+  }
+  .vendorTrack {
+    color: rgba(0, 0, 0, 0.50));
+    font-size: 12px;
+    font-family: 'Sequel Sans';
+    font-weight: 310;
+    line-height: 20px;
+  }
+  .titleTrack {
+    color: black;
+    font-size: 14px;
+    font-family: 'Sequel Sans Medium Disp';
+    font-weight: 310;
+    line-height: 22px;
+    width: 100%;
+  }
+  .variant {
+    color: rgba(0, 0, 0, 0.70);
+    font-size: 12px;
+    font-family: 'Sequel Sans';
+    font-weight: 310;
+    line-height: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: fit-content;
+    padding: 2px;
+    margin-top: 10px;
+  }
+  .price {
+    color: #000;
+    font-size: 14px;
+    font-family: 'Sequel Sans Heavy Disp';
+    font-weight: 425;
+    line-height: 22px;
+    text-transform: uppercase;
+  }
+  .titleTrackingIngo {
+    color: black;
+    font-size: 14px;
+    font-family: 'Sequel Sans Heavy Disp';
+    font-weight: 425;
+    line-height: 22px;
+    text-transform: uppercase;
+  }
+  .checkBoxmainn {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    display:none;
+  }
+  .shipmentAlert {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: rgba(0, 0, 0, 0.50);
+    /* Web/Text-sm/Reg */
+    font-size: 12px;
+    font-family: 'Sequel Sans';
+    font-weight: 310;
+    line-height: 20px;
+  }
+  .btnTrackingContact {
+    margin-top: 2rem;
+  }
+  .shippingTitle {
+    color: black;
+    font-size: 22px;
+    font-family: 'Sequel Sans';
+    font-weight: 435;
+    line-height: 30px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .latestUpdate {
+    color: rgba(0, 0, 0, 0.50);
+    /* Web/TextBody/Normal/Reg */
+    font-size: 14px;
+    font-family: 'Sequel Sans';
+    font-weight: 310;
+    line-height: 22px;
+    margin: 0;
+  }
+  .tableShipping {
+    display: flex;
+  }
+  .tableCstm {
+    width: 50%;
+  }
+  .mapCstm {
+    width: 50%;
+  }
+  .mapCstm img {
+    filter: grayscale(1);
+  }
+  .rowShipping {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .statusDate {
+    display: flex;
+    align-items: center;
+  }
+  .dateEtc {
+    color: #000;
+    font-size: 14px;
+    font-family: 'Sequel Sans';
+    margin-left: 10px;
+
+  }
+  .detailInfo {
+    color: #000;
+    font-size: 14px;
+    font-family: 'Sequel Sans Medium Disp';
+    font-weight: 310;
+    line-height: 22px;
+  }
+  @media(max-width:767px) {
+    .txtStatus {
+      /* display: none; */
+      font-size: 10px;
+  }
+    .trackingContent {
+      display: flex;
+      flex-direction: column;
+    }
+    .productWrapper {
+      width: 100%;
+      padding: 10px;
+    }
+    .trackingInfo {
+      width: 100%;
+      padding: 20px;
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
+      border: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .tableShipping {
+      display: flex;
+      flex-direction: column;
+    }
+    .tableCstm {
+      width: 100%;
+    }
+    .mapCstm {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="orderTrackingWrapper">
+  <div class="trackingbar">
+
+    <div class="statusTrack orderedCstm">
+      <div class="iconstatus">
+        <div class="trackcompleted">
+          {% render 'icon-trackcompleted' %}
+        </div>
+      </div>
+      <p class="txtStatus">Ordered</p>
+    </div>
+
+    <div class="statusTrack readytoshipCstm">
+      <div class="iconstatus">
+        <div class="trackcompleted">
+          {% render 'icon-trackcompleted' %}
+        </div>
+        <div class="trackEmpty">
+          {% render 'icon-trackempty' %}
+        </div>
+        <div class="trackInProgress">
+          {% render 'icon-inprogress' %}
+        </div>
+      </div>
+      <p class="txtStatus">Ready to Ship</p>
+    </div>
+
+    <div class="statusTrack shippedCstm">
+      <div class="iconstatus">
+        <div class="trackcompleted">
+          {% render 'icon-trackcompleted' %}
+        </div>
+        <div class="trackEmpty">
+          {% render 'icon-trackempty' %}
+        </div>
+        <div class="trackInProgress">
+          {% render 'icon-inprogress' %}
+        </div>
+      </div>
+      <p class="txtStatus">Shipped</p>
+    </div>
+
+    <div class="statusTrack deliveredCstm">
+      <div class="iconstatus">
+        <div class="trackcompleted">
+          {% render 'icon-trackcompleted' %}
+        </div>
+        <div class="trackEmpty">
+          {% render 'icon-trackempty' %}
+        </div>
+        <div class="trackInProgress">
+          {% render 'icon-inprogress' %}
+        </div>
+      </div>
+      <p class="txtStatus">Delivered</p>
+    </div>
+
+    <div class="statusTrack cancelCstm">
+      <div class="iconstatus">
+        <div class="trackcompleted">
+          {% render 'icon-trackcompleted' %}
+        </div>
+      </div>
+      <p class="txtStatus">Canceled</p>
+    </div>
+
+
+  </div>
+
+  <div class="trackingContent">
+    <div class="productWrapper">
+      <div class="productInfo"><!-- JavaScript will generate product information here -->
+      </div>
+    </div>
+
+    <div class="trackingInfo">
+      <div class="orderId">
+        <p class="titleTrackingIngo">Order ID</p>
+        <p class="contentTrackingInfo"></p>
+      </div>
+      <div class="trackingId">
+        <p class="titleTrackingIngo">Tracking ID</p>
+        <p class="contentTrackingInfo"></p>
+      </div>
+      <div class="carrierId">
+        <p class="titleTrackingIngo">Carrier</p>
+        <p class="contentTrackingInfo"></p>
+      </div>
+      <div class="locationId">
+        <p class="titleTrackingIngo">Location</p>
+        <p class="contentTrackingInfo"></p>
+      </div>
+
+      <div class="checkBoxmainn">
+        <input
+          type="checkbox"
+          id="shipmentAlert"
+          name="shipmentAlert">
+        <p class="shipmentAlert">
+          Send alerts for shipment
+        </p>
+      </div>
+      <a class="btnTrackingContact cstmBtnBlack" href="/pages/contact-us">CONTACT US</a>
+
+    </div>
+  </div>
+
+
+
+  <div class="order-tracking-shipping">
+    <h3 class="shippingTitle">Shipping Details</h3>
+    <p class="latestUpdate">Latest Update May 23rd 2023</p>
+    <div class="tableShipping">
+      <div class="tableCstm"></div>
+      <div style="filter: grayscale(1);" class="mapCstm"></div>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+<script>
+  const url2 = 'https://unified-tracking-backend.alchemative.net/track_by_order_number';
+  const requestBody22 = {
+    domain: "edit-watches.myshopify.com",
+    order_name: 'EW1005'
+  };
+
+  fetch(url2, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer c797776558047e72ca0ca363fc11d60705718aef',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestBody22)
+  }).then(response => response.json()).then(data => {
+    console.log(data);
+
+// Process the response data here
+  }).catch(error => {
+    console.error('Error:', error);
+  });
+
+</script>
